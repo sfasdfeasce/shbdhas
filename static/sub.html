@@ -1013,6 +1013,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   outline-offset: 2px;
 }
 
+
+/* Shared SpiderPanel theme sync: buttons/text follow theme, borders keep accent */
+[data-theme="light"] .btn, [data-theme="light"] button, [data-theme="light"] .sub-copy-btn, [data-theme="light"] .icon-btn { color:#000 !important; }
+[data-theme="dark"] .btn, [data-theme="dark"] button, [data-theme="dark"] .sub-copy-btn, [data-theme="dark"] .icon-btn { color:#fff !important; }
+[data-theme="light"] .sub-card, [data-theme="light"] .sub-link-box, [data-theme="light"] .account-row, [data-theme="light"] input { border-color:#d5e3d8 !important; }
+[data-theme="dark"] .sub-card, [data-theme="dark"] .sub-link-box, [data-theme="dark"] .account-row, [data-theme="dark"] input { border-color:rgba(255,255,255,.16) !important; }
 </style>
 </head>
 <body>

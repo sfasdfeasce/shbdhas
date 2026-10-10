@@ -2813,6 +2813,9 @@ async function api(url, opts) {
     opts.body = JSON.stringify(opts.body);
   }
   var r = await fetch(url, opts);
+  if (opts.method && opts.method.toUpperCase() !== 'GET') {
+    setTimeout(function(){ window.dispatchEvent(new CustomEvent('spider:data-changed',{detail:{url:url,method:opts.method}})); }, 0);
+  }
   if (!r.ok) {
     var txt = await r.text();
     try { var j = JSON.parse(txt); throw new Error(j.detail || j.error || txt); } catch(e) { if (e.message && e.message !== txt) throw e; }
@@ -3125,6 +3128,16 @@ function switchTab(tab, el) {
 function openSidebar() { $id('sidebar').classList.add('open'); $id('sidebar-backdrop').classList.add('show'); }
 function closeSidebar() { $id('sidebar').classList.remove('open'); $id('sidebar-backdrop').classList.remove('show'); }
 function toggleSidebar() { $id('sidebar').classList.contains('open') ? closeSidebar() : openSidebar(); }
+
+// Instant UI refresh after create/update/delete actions without manual refresh
+window.addEventListener('spider:data-changed', function(e){
+  var u=e.detail.url||'';
+  if (u.includes('/users')) { if(typeof loadUsers==='function') loadUsers(); }
+  else if (u.includes('/inbounds')) { if(typeof loadInbounds==='function') loadInbounds(); }
+  else if (u.includes('/nodes')) { if(typeof loadNodes==='function') loadNodes(); }
+  else if (u.includes('/proxies')) { if(typeof loadProxies==='function') loadProxies(); }
+  if(typeof loadDashboard==='function') loadDashboard();
+});
 
 // ─── Load All ───
 async function loadAll() {
