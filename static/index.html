@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="dark" data-accent="red">
+<html lang="fa" dir="rtl" data-theme="dark" data-accent="blue">
 <head>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -658,7 +658,7 @@ th{text-align:right;padding:12px;font-size:10px;color:var(--txt2);font-weight:70
 td{padding:12px;font-size:13px;border-bottom:1px solid var(--border)}
 tr:hover td{background:rgba(43,127,255,.03)}
 tr:last-child td{border-bottom:none}
-tr{animation:fadeIn .3s ease}
+tr{animation:none}
 .act-row{display:flex;gap:4px;flex-wrap:wrap}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600}
 .badge-g{background:rgba(22,163,74,.15);color:var(--green)}
@@ -676,7 +676,7 @@ tr{animation:fadeIn .3s ease}
 
 /* Modal - Glass */
 .modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
+  position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:none;-webkit-backdrop-filter:none;
   z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
 }
 .modal.show{display:flex;animation:fadeIn .2s ease}
@@ -1015,31 +1015,44 @@ tr{animation:fadeIn .3s ease}
 .sidebar-tog{display:none}@media(max-width:900px){.sidebar-tog{display:inline-flex!important}}
 
 
-/* ═══ SpiderPanel monochrome flat-card theme ═══ */
+/* ═══ SpiderPanel matte monochrome theme ═══ */
 :root{
-  --neon:#ffffff;--neon2:#ffffff;--teal:#ffffff;--green:#ffffff;--success:#ffffff;--blue:#ffffff;--purple:#ffffff;--red:#ffffff;--danger:#ffffff;--gold:#ffffff;--warning:#ffffff;
-  --bg:#000000;--bg2:#000000;--bg3:#000000;--txt:#ffffff;--txt2:#cfcfcf;--input-bg:#111111;--border:#2a2a2a;--line:#2a2a2a;
-  --tab-bg:#ffffff;--tab-color:#000000;--nav-bg:#1b1b1b;--nav-color:#ffffff;--border-glow:#ffffff;--input-glow:#ffffff;
-  --grad1:#ffffff;--grad2:#ffffff;--grad:#ffffff;--gradient:#ffffff;
-  --glass:#000000;--surface-glass:#000000;--orb1:#000000;--orb2:#000000;--glow:none;--glow-strong:none;
+  --neon:#88a9cc;--neon2:#9bb8d5;--teal:#88a9cc;--green:#88a9cc;--success:#88a9cc;--blue:#88a9cc;--purple:#a4a2c7;--red:#c98c91;--danger:#c98c91;--gold:#b6a477;--warning:#b6a477;
+  --bg:#101216;--bg2:#14171c;--bg3:#20252c;--txt:#e6e9ed;--txt2:#9ca5b0;--input-bg:#171b21;--border:#2c4056;--line:#2c4056;
+  --tab-bg:#7899bd;--tab-color:#101216;--nav-bg:#1b2632;--nav-color:#a9c2de;--border-glow:#496582;--input-glow:rgba(105,143,184,.16);
+  --grad1:#7899bd;--grad2:#8caac9;--grad:linear-gradient(135deg,#7899bd,#8caac9);--gradient:linear-gradient(90deg,#7899bd,#8caac9);
+  --glass:#14171c;--surface-glass:#14171c;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
+  --shadow-sm:0 5px 18px rgba(0,0,0,.16);--shadow-md:0 8px 24px rgba(0,0,0,.2);--shadow-lg:0 14px 34px rgba(0,0,0,.24);--shadow-hover:0 8px 24px rgba(0,0,0,.2);
 }
-[data-theme="dark"]{--bg:#000000;--bg2:#000000;--bg3:#000000;--txt:#ffffff;--txt2:#cfcfcf;--input-bg:#111111;--border:#2a2a2a;--neon:#ffffff;--green:#ffffff;--blue:#ffffff;--purple:#ffffff;--red:#ffffff;--danger:#ffffff;--gold:#ffffff;--success:#ffffff;--tab-bg:#ffffff;--tab-color:#000000;--nav-bg:#1a1a1a;--nav-color:#ffffff;--border-glow:#ffffff;--grad1:#ffffff;--grad2:#ffffff;--grad:#ffffff;--gradient:#ffffff}
-[data-theme="light"]{--bg:#ffffff;--bg2:#ffffff;--bg3:#ffffff;--txt:#000000;--txt2:#3a3a3a;--input-bg:#ffffff;--border:#cfcfcf;--neon:#000000;--green:#000000;--blue:#000000;--purple:#000000;--red:#000000;--danger:#000000;--gold:#000000;--success:#000000;--tab-bg:#000000;--tab-color:#ffffff;--nav-bg:#f1f1f1;--nav-color:#000000;--border-glow:#000000;--grad1:#000000;--grad2:#000000;--grad:#000000;--gradient:#000000}
+[data-theme="dark"]{
+  --bg:#101216;--bg2:#14171c;--bg3:#20252c;--txt:#e6e9ed;--txt2:#9ca5b0;--input-bg:#171b21;--border:#2c4056;--line:#2c4056;
+  --neon:#88a9cc;--neon2:#9bb8d5;--teal:#88a9cc;--green:#88a9cc;--success:#88a9cc;--blue:#88a9cc;--purple:#a4a2c7;--red:#c98c91;--danger:#c98c91;--gold:#b6a477;--warning:#b6a477;
+  --tab-bg:#7899bd;--tab-color:#101216;--nav-bg:#1b2632;--nav-color:#a9c2de;--border-glow:#496582;--grad1:#7899bd;--grad2:#8caac9;--grad:linear-gradient(135deg,#7899bd,#8caac9);--gradient:linear-gradient(90deg,#7899bd,#8caac9);
+  --glass:#14171c;--surface-glass:#14171c;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
+}
+[data-theme="light"]{
+  --bg:#f3f6f4;--bg2:#ffffff;--bg3:#edf2ee;--txt:#354139;--txt2:#748078;--input-bg:#ffffff;--border:#d5e3d8;--line:#d5e3d8;
+  --neon:#7fa58c;--neon2:#8db49b;--teal:#7fa58c;--green:#7fa58c;--success:#7fa58c;--blue:#86a9a3;--purple:#a4a2b7;--red:#c98f90;--danger:#c98f90;--gold:#b4a273;--warning:#b4a273;
+  --tab-bg:#80a88f;--tab-color:#ffffff;--nav-bg:#edf4ef;--nav-color:#5d8169;--border-glow:#a8c8b2;--input-glow:rgba(127,165,140,.16);
+  --grad1:#80a88f;--grad2:#91b69d;--grad:linear-gradient(135deg,#80a88f,#91b69d);--gradient:linear-gradient(90deg,#80a88f,#91b69d);
+  --glass:#ffffff;--surface-glass:#ffffff;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
+  --shadow-sm:0 4px 16px rgba(47,76,56,.05);--shadow-md:0 7px 22px rgba(47,76,56,.07);--shadow-lg:0 12px 30px rgba(47,76,56,.09);--shadow-hover:0 7px 22px rgba(47,76,56,.07);
+}
 
 .bg-fx,.bg-grid,#particles,#shader-canvas,.login-bg{display:none!important}
-.sidebar,.topbar,.panel,.stat,.tbl,.u-card,.modal-c,.login-card,.settings-box{background:#000000!important;border-color:#2a2a2a!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 10px 28px rgba(0,0,0,.55)!important}
-[data-theme="light"] .sidebar,[data-theme="light"] .topbar,[data-theme="light"] .panel,[data-theme="light"] .stat,[data-theme="light"] .tbl,[data-theme="light"] .u-card,[data-theme="light"] .modal-c,[data-theme="light"] .login-card,[data-theme="light"] .settings-box{background:#ffffff!important;border-color:#cfcfcf!important;box-shadow:0 10px 28px rgba(0,0,0,.14)!important}
-.btn-p{background:#ffffff!important;color:#000000!important;box-shadow:0 6px 18px rgba(0,0,0,.45)!important}
-[data-theme="light"] .btn-p{background:#000000!important;color:#ffffff!important;box-shadow:0 6px 18px rgba(0,0,0,.18)!important}
-.btn-g,.lang-btn{background:#111111!important;color:#ffffff!important;border:1px solid #2a2a2a!important}
-[data-theme="light"] .btn-g,[data-theme="light"] .lang-btn{background:#ffffff!important;color:#000000!important;border-color:#cfcfcf!important}
-.btn-r{background:rgba(255,35,82,.25)!important;color:#ffffff!important}
-[data-theme="light"] .btn-r{background:rgba(255,35,82,.85)!important}
-.btn-b{background:rgba(68,138,255,.25)!important;color:#ffffff!important}
-[data-theme="light"] .btn-b{background:rgba(68,138,255,.85)!important}
-.nav-item:hover{background:#111111!important;color:#ffffff!important}.nav-item.active{background:#1a1a1a!important;color:#ffffff!important;border-color:#ffffff!important}
-[data-theme="light"] .nav-item:hover{background:#f1f1f1!important;color:#000000!important}.nav-item.active{border-color:#ffffff!important}
-[data-theme="light"] .nav-item.active{background:#eeeeee!important;color:#000000!important;border-color:#000000!important}
+.sidebar,.topbar,.panel,.stat,.tbl,.u-card,.modal-c,.login-card,.settings-box{background:#14171c!important;border-color:#2c4056!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 5px 18px rgba(0,0,0,.16)!important}
+[data-theme="light"] .sidebar,[data-theme="light"] .topbar,[data-theme="light"] .panel,[data-theme="light"] .stat,[data-theme="light"] .tbl,[data-theme="light"] .u-card,[data-theme="light"] .modal-c,[data-theme="light"] .login-card,[data-theme="light"] .settings-box{background:#ffffff!important;border-color:#d5e3d8!important;box-shadow:0 5px 18px rgba(47,76,56,.05)!important}
+.btn-p{background:#7899bd!important;color:#101216!important;box-shadow:none!important}
+[data-theme="light"] .btn-p{background:#80a88f!important;color:#ffffff!important;box-shadow:none!important}
+.btn-g,.lang-btn{background:#171b21!important;color:#dce4ec!important;border:1px solid #2c4056!important}
+[data-theme="light"] .btn-g,[data-theme="light"] .lang-btn{background:#ffffff!important;color:#354139!important;border-color:#d5e3d8!important}
+.btn-r{background:rgba(174,102,108,.12)!important;color:#d9a0a3!important;border-color:rgba(174,102,108,.28)!important}
+[data-theme="light"] .btn-r{background:#f8eeee!important;color:#a86e72!important;border-color:#ead0d1!important}
+.btn-b{background:rgba(105,143,184,.12)!important;color:#9cb8d8!important;border-color:rgba(105,143,184,.28)!important}
+[data-theme="light"] .btn-b{background:#eff5f1!important;color:#688b74!important;border-color:#d5e3d8!important}
+.nav-item:hover{background:#171f28!important;color:#b5cbe2!important}.nav-item.active{background:#1b2632!important;color:#a9c2de!important;border-color:#496582!important}
+[data-theme="light"] .nav-item:hover{background:#edf4ef!important;color:#5d8169!important}
+[data-theme="light"] .nav-item.active{background:#edf4ef!important;color:#5d8169!important;border-color:#a8c8b2!important}
 [data-theme="light"] .ib-pick{background:#fff!important;color:#000!important;border-color:#ccc!important}
 [data-theme="light"] .ib-pick-name{color:#000!important}
 [data-theme="light"] .ib-pick-meta{color:#666!important}
@@ -1225,6 +1238,109 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   outline-offset: 2px;
 }
 
+
+/* Matte UI refinements: avoid glow, saturated colors, and hover movement. */
+html[data-theme="dark"] body{background:#101216;color:#e6e9ed}
+html[data-theme="light"] body{background:#f3f6f4;color:#354139}
+.panel,.stat,.u-card,.tbl,.settings-box,.modal-c{border:1px solid var(--border)!important;border-radius:16px;box-shadow:none!important}
+.panel:hover,.stat:hover{transform:none!important;box-shadow:none!important}
+.panel-h .glow,.stat-v,.stat-icon{color:var(--neon)!important;text-shadow:none!important}
+.btn,.nav-item,.lang-btn,.ios-switch,.switch{box-shadow:none!important;filter:none!important}
+.btn-p:hover,.btn-g:hover,.nav-item:hover,.stat:hover{filter:none!important}
+[data-theme="light"] .panel-h .glow,[data-theme="light"] .stat-v,[data-theme="light"] .stat-icon{color:#70977d!important}
+[data-theme="light"] .input-glass:focus,[data-theme="light"] .f-g input:focus,[data-theme="light"] .f-g select:focus,[data-theme="light"] .f-g textarea:focus{border-color:#a8c8b2!important;box-shadow:0 0 0 3px rgba(127,165,140,.10)!important}
+[data-theme="dark"] .input-glass:focus,[data-theme="dark"] .f-g input:focus,[data-theme="dark"] .f-g select:focus,[data-theme="dark"] .f-g textarea:focus{border-color:#496582!important;box-shadow:0 0 0 3px rgba(105,143,184,.10)!important}
+
+/* Screenshot-inspired live system status dashboard card. */
+.system-status-card{margin-top:12px!important;padding:15px 14px 12px!important;border-radius:18px!important;background:#14171c!important;border:1px solid #2c4056!important;color:#e6e9ed}
+.system-status-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 1px 10px;border-bottom:1px solid rgba(115,143,173,.12);font-size:11px;letter-spacing:.6px;font-weight:800;color:#aab3bd}
+.system-status-live{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.35px;color:#92abc4}
+.system-status-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#7e9fbd;display:inline-block}
+.sys-resources{display:flex;flex-direction:column}
+.sys-resource{padding:10px 0 7px;border-bottom:1px solid rgba(125,148,170,.13)}
+.sys-resource-top{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:10px;direction:ltr}
+.sys-gauge{--percent:0;position:relative;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--sys-accent,#86a6c8) var(--percent),#2a3038 0);flex-shrink:0}
+.sys-gauge:before{content:"";position:absolute;inset:4px;border-radius:50%;background:#14171c}
+.sys-gauge .material-symbols-outlined{position:relative;font-size:17px;color:#a4afbb;line-height:1}
+.sys-resource-copy{min-width:0;direction:ltr;text-align:left}
+.sys-resource-label{font-size:12px;font-weight:750;color:#dce1e6;line-height:1.35}
+.sys-resource-meta{font-size:10px;color:#8e98a3;line-height:1.5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sys-resource-value{font-size:12px;font-weight:750;color:#dce1e6;white-space:nowrap;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.sys-sparkline{display:block;width:100%;height:24px;margin-top:4px;overflow:visible}
+.sys-sparkline polyline{fill:none;stroke:var(--sys-accent,#86a6c8);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.88;vector-effect:non-scaling-stroke}
+.sys-connection-block{padding:12px 0 10px;border-bottom:1px solid rgba(125,148,170,.13)}
+.sys-section-title{font-size:11px;font-weight:800;letter-spacing:.55px;color:#aab3bd;margin-bottom:11px}
+.sys-connection-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sys-connection{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.sys-connection-label{display:flex;align-items:center;gap:6px;font-size:11px;color:#8ca9c8;font-weight:700}
+.sys-connection-label .material-symbols-outlined{font-size:14px}
+.sys-connection-label.udp{color:#9ab2ce}
+.sys-connection-value{font-size:18px;font-weight:800;color:#e2e6ea;font-variant-numeric:tabular-nums;line-height:1.3}
+.sys-connection-track{height:5px;width:100%;display:flex;overflow:hidden;border-radius:999px;margin-top:11px;background:#282d34}
+.sys-connection-track span{display:block;height:100%;transition:none}
+.sys-tcp-fill{background:#7899bd}.sys-udp-fill{background:#8caac9}
+.sys-ip-block{padding-top:12px}
+.sys-ip-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.sys-ip-toggle{width:28px;height:26px;display:grid;place-items:center;padding:0;background:transparent;color:#8e98a3;border:0;border-radius:7px;cursor:pointer}
+.sys-ip-toggle:hover{background:rgba(130,157,186,.1);color:#b4c9df}
+.sys-ip-row{min-height:35px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;border-bottom:1px solid rgba(125,148,170,.13);font-size:11px;color:#8e98a3}
+.sys-ip-row:last-child{border-bottom:0}
+.sys-ip-value{color:#c9d0d7;font-weight:650;letter-spacing:.2px;direction:ltr;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.system-status-card .system-status-live,.system-status-card .sys-gauge,.system-status-card .sys-sparkline polyline,.system-status-card .sys-connection-track span{animation:none!important;box-shadow:none!important}
+[data-theme="light"] .system-status-card{background:#ffffff!important;border-color:#d5e3d8!important;color:#354139}
+[data-theme="light"] .system-status-head,[data-theme="light"] .sys-section-title{color:#6c7a70;border-color:#e6eee8}
+[data-theme="light"] .system-status-live{color:#6f987c}
+[data-theme="light"] .system-status-live:before{background:#80a88f}
+[data-theme="light"] .sys-gauge{background:conic-gradient(var(--sys-accent,#80a88f) var(--percent),#e7eee9 0)}
+[data-theme="light"] .sys-gauge:before{background:#ffffff}
+[data-theme="light"] .sys-gauge .material-symbols-outlined{color:#789282}
+[data-theme="light"] .sys-resource{border-color:#e7eee9}
+[data-theme="light"] .sys-resource-label,[data-theme="light"] .sys-resource-value{color:#38443c}
+[data-theme="light"] .sys-resource-meta{color:#7a877e}
+[data-theme="light"] .sys-connection-block{border-color:#e7eee9}
+[data-theme="light"] .sys-connection-label{color:#719980}
+[data-theme="light"] .sys-connection-label.udp{color:#6d9790}
+[data-theme="light"] .sys-connection-value{color:#354139}
+[data-theme="light"] .sys-connection-track{background:#e7eee9}
+[data-theme="light"] .sys-tcp-fill{background:#80a88f}[data-theme="light"] .sys-udp-fill{background:#8aaca3}
+[data-theme="light"] .sys-ip-row{border-color:#e7eee9;color:#7a877e}
+[data-theme="light"] .sys-ip-value{color:#4d5b51}
+[data-theme="light"] .sys-ip-toggle{color:#7a877e}
+[data-theme="light"] .sys-ip-toggle:hover{background:#edf4ef;color:#5d8169}
+@media(max-width:480px){.system-status-card{padding:13px 12px 10px!important}.sys-resource-top{grid-template-columns:40px minmax(0,1fr) auto;gap:8px}.sys-gauge{width:38px;height:38px}.sys-resource-value{font-size:11px}.sys-resource-label{font-size:11px}}
+
+/* Hardware-accelerated compositing for elements that actually move.
+   Avoid promoting every card: too many GPU layers can hurt mobile devices. */
+.sidebar,.modal-c,.toast,.login-card{
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+}
+@media(min-width:901px){.sidebar{transform:translate3d(0,0,0)}}
+@media(max-width:900px){
+  .sidebar{transform:translate3d(100%,0,0);will-change:transform;}
+  .sidebar.open{transform:translate3d(0,0,0)}
+  .sidebar-backdrop.show{will-change:opacity}
+}
+.modal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.modal.show{will-change:opacity}
+.modal.show .modal-c{transform:translateZ(0);will-change:transform,opacity}
+.toast.show{will-change:transform,opacity}
+.dot{transform:translateZ(0);will-change:opacity}
+.sys-gauge,.sys-connection-track span{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* Animate only compositor-friendly properties on frequently interactive controls. */
+.nav-item,.btn,.lang-btn,.modal-x,.theme-dot,.sys-ip-toggle{
+  transition-property:transform,opacity,color,background-color,border-color;
+  transition-duration:.18s;
+}
+/* Less work on small screens and devices that ask for reduced motion. */
+@media(max-width:900px),(prefers-reduced-motion:reduce){
+  .panel,.stat{animation:none!important}
+  .modal-c{animation:fadeIn .16s ease-out}
+  .bg-grid{animation:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
@@ -1326,6 +1442,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             <span class="nav-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span>
             <span data-i18n="settings">تنظیمات</span>
           </div>
+          <div class="nav-item" onclick="switchTab('proxy',this)">
+            <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">travel_explore</span></span>
+            <span data-i18n="proxy.nav">پروکسی</span>
+          </div>
         </div>
       </div>
 
@@ -1337,21 +1457,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
         <span class="nav-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10a8 8 0 0116 0v10"/><line x1="2" y1="20" x2="22" y2="20"/><line x1="9" y1="20" x2="9" y2="13"/><line x1="15" y1="20" x2="15" y2="13"/></svg></span>
         <span data-i18n="tunnel">Tunnel</span>
       </div>
-      <div class="nav-item" onclick="switchTab('proxy',this)">
-        <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">travel_explore</span></span>
-        <span data-i18n="proxy.nav">پروکسی</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('advanced',this)">
-        <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">tune</span></span>
-        <span data-i18n="tab.advanced">پیشرفته</span>
-      </div>
-      <div class="nav-item" onclick="switchTab('help',this)">
-        <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">help</span></span>
-        <span data-i18n="tab.help">راهنما</span>
-      </div>
-      <div class="nav-item" id="nav-notif" onclick="switchTab('notif',this)">
-        <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">campaign</span></span>
-        <span data-i18n="notif.nav">اعلان‌ها</span>
+
+      <div class="nav-accordion" id="system-nav-accordion">
+        <button class="nav-accordion-head" type="button" onclick="toggleSystemNavAccordion()" aria-expanded="false">
+          <span class="nav-accordion-title"><span class="material-symbols-outlined nav-accordion-ic">settings</span><span data-i18n="systemGroup">سیستم</span></span>
+          <span class="material-symbols-outlined nav-accordion-arrow">expand_more</span>
+        </button>
+        <div class="nav-accordion-body" id="system-nav-accordion-body">
+          <div class="nav-item" onclick="switchTab('help',this)">
+            <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">help</span></span>
+            <span data-i18n="tab.help">راهنما</span>
+          </div>
+          <div class="nav-item" id="nav-notif" onclick="switchTab('notif',this)">
+            <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">campaign</span></span>
+            <span data-i18n="notif.nav">اعلان‌ها</span>
+          </div>
+          <div class="nav-item" onclick="switchTab('advanced',this)">
+            <span class="nav-ic"><span class="material-symbols-outlined" style="font-size:18px">tune</span></span>
+            <span data-i18n="tab.advanced">پیشرفته</span>
+          </div>
+        </div>
       </div>
       <div class="nav-item" onclick="switchTab('contact',this)">
         <span class="nav-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
@@ -2086,34 +2211,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             <div class="f-g"><label data-i18n="advancedJson">Inbound JSON</label><textarea id="advanced-inbound-json" dir="ltr" spellcheck="false" style="min-height:360px;font-family:monospace;font-size:12px;white-space:pre;user-select:text;-webkit-user-select:text"></textarea></div>
             <button class="btn btn-p" type="button" onclick="saveAdvancedInbound()"><span data-i18n="advancedSave">ذخیره JSON</span></button>
           </div>
-        </div>
-      </div>
-
-      <!-- HELP TAB (last content tab) -->
-      <style>
-        .hl-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 8px}
-        .hl-controls input[type=search]{flex:1;min-width:170px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--txt);font-size:12px;box-sizing:border-box}
-        .hl-controls select{padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--txt);font-size:12px;max-width:150px}
-        .hl-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-        .hl-list{max-height:430px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:6px;direction:ltr;text-align:left}
-        .hl-list::-webkit-scrollbar{width:9px}
-        .hl-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:9px}
-        .hl-row{display:flex;gap:10px;align-items:flex-start;padding:6px 8px;border-radius:7px;font:11.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;border-bottom:1px solid rgba(128,128,128,.09)}
-        .hl-row:hover{background:rgba(43,127,255,.06)}
-        .hl-time{color:var(--txt2);white-space:nowrap;flex-shrink:0;min-width:64px}
-        .hl-kind{flex-shrink:0;min-width:74px;font-weight:700;opacity:.85}
-        .hl-msg{flex:1;min-width:0;word-break:break-word;white-space:pre-wrap;user-select:text;-webkit-user-select:text}
-        .hl-row.lvl-ok .hl-kind{color:var(--green)}
-        .hl-row.lvl-warn .hl-kind{color:var(--orange)}
-        .hl-row.lvl-err .hl-kind{color:var(--red)}
-        .hl-row.lvl-info .hl-kind{color:var(--neon)}
-        .hl-empty{padding:24px 10px;text-align:center;color:var(--txt2);font-size:12px}
-      </style>
-      <div class="tab-content hidden" id="tab-help">
-        <div class="panel">
-          <div class="panel-h"><span class="glow" data-i18n="tab.help">راهنما</span></div>
-          <div class="px-hint" data-i18n="helpIntro">راهنما و تنظیمات کانفیگ‌های پیش‌فرض</div>
-          <div class="spd-acc-list" style="margin-top:12px">
+          <div class="spd-acc-list" style="margin-top:14px">
             <!-- PANEL LOGS -->
             <div class="spd-acc">
               <button type="button" class="spd-acc-head" onclick="spdToggleAcc('help-logs',this);helpLogsToggled()" aria-expanded="false"><span class="spd-acc-title"><strong data-i18n="helpLogs">لاگ پنل</strong><span class="badge" id="hl-count" style="margin-right:6px"></span></span><span class="material-symbols-outlined spd-acc-arrow">expand_more</span></button>
@@ -2130,48 +2228,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
                     <option value="err">err</option>
                   </select>
                   <button class="btn btn-g btn-sm" type="button" onclick="loadHelpLogs()"><span class="material-symbols-outlined" style="font-size:15px">refresh</span></button>
-                  <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--txt2);cursor:pointer"><input type="checkbox" id="hl-auto" onchange="helpLogsAuto()"> <span data-i18n="helpLogsAuto">زنده</span></label>
                 </div>
                 <div class="hl-stats" id="hl-stats"></div>
                 <div class="hl-list" id="hl-list"><div class="hl-empty" data-i18n="helpLogsEmpty">در حال بارگذاری…</div></div>
-              </div>
-            </div>
-            <div class="spd-acc">
-              <button type="button" class="spd-acc-head" onclick="spdToggleAcc('help-template',this)" aria-expanded="false"><span class="spd-acc-title"><strong data-i18n="helpTemplate">Template</strong></span><span class="material-symbols-outlined spd-acc-arrow">expand_more</span></button>
-              <div class="spd-acc-body" id="acc-help-template">
-                <div class="px-hint" data-i18n="helpPromptHint">این Prompt منطق صفحه ساب فعلی را توضیح می‌دهد تا بتوانید آن را به هوش مصنوعی بدهید.</div>
-                <textarea id="help-template-text" readonly dir="ltr" spellcheck="false" style="width:100%;min-height:360px;margin:10px 0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--txt);font:12px/1.6 monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text">You are modifying SpiderPanel's user subscription page, static/sub.html. First inspect the existing page and its server-side data contract. Preserve the established behavior unless the requested change requires otherwise.
-
-PAGE AND DATA CONTRACT
-- The page is served for a user's subscription UUID and reads the final path segment as uname. It fetches GET /api/sub/{encodeURIComponent(uname)} with cache: no-store.
-- The API returns subscription data including config_uuid, username, status/is_active, configs (and a legacy single config), traffic_used_bytes, traffic_limit_bytes, max_ip_per_user, used_ips, expire_days, expire_at_ts. Treat absent optional fields safely.
-- Build the public subscription URL as window.location.origin + '/link/' + config_uuid. This is the import URL copied by the page and used by quick-connect apps.
-- The API can return a status/telemetry line in configs. Do not show entries containing the encoded 📊 marker %F0%9F%93%8A. If configs is empty, use the single config field when present.
-- Keep config strings byte-for-byte intact for copy and QR actions. Decode only the URI fragment to create the display name; do not rebuild a VLESS URI in the browser.
-- Per-config QR images come from GET /api/sub/{uuid}/qr?cfg={zero-based-config-index}. The server maps that index to the same filtered list of real configs. The QR must encode the configuration, not the subscription URL.
-
-PAGE BEHAVIOR
-- applyData populates the subscription URL and ID, active/inactive status, username, used/total/remaining traffic, usage percentage ring and bar, current/allowed connections, and remaining expiry in days, hours, and minutes. A zero traffic limit means unlimited; a missing expiry means no expiry.
-- renderConfigs groups links into TLS, Reality, and Telegram Proxy. Identify categories from the URI: Telegram proxy links begin with t.me/proxy or tg://proxy; Reality links contain security=reality; other configs belong to TLS. Translate category labels with the page's fa/en dictionaries.
-- Each config card shows its decoded remark and protocol and has copy and QR actions. Escape remarks before inserting them into HTML. Never insert server text as trusted markup.
-- The chips filter all/TLS/Reality/Telegram groups. Search filters by the decoded config name within the active category. Update group visibility and visible counts after either action.
-- Copy Subscription Link, Copy Sub Text, Copy All Configs, and per-config Copy use the Clipboard API with the existing textarea fallback. Keep localized success/error toast messages.
-- Quick Connect opens a modal with Android, iOS, and Windows choices. Existing app deep links are: Happ happ://add/{encoded-sub-url}; v2rayNG v2rayng://install-sub?url={encoded-sub-url}&name=SPiDER; V2Box v2box://install-sub?url={encoded-sub-url}&name=SPiDER; Hiddify hiddify://install-sub?url={encoded-sub-url}&name=SPiDER; Windows v2rayN v2rayn://install-sub?url={encoded-sub-url}. Copy the subscription URL before redirecting to the chosen client.
-- The QR modal requests the server image for the selected real config index, shows its decoded name, and can close from its button. Quick Connect closes from its close button, backdrop, or chosen action.
-- Keep event binding idempotent: dynamically rendered cards are recreated, so do not attach duplicate handlers. Existing code uses a _bound marker for this.
-
-LANGUAGE, THEME, AND LAYOUT
-- Language is shared with the main panel through localStorage key spider-lang (fa or en). Every human-readable UI string, including dynamically-created buttons, empty states, titles, toasts, and errors, needs both Persian and English dictionary entries. applyLang must update text, placeholders, direction, and the visible language button.
-- Theme is shared through spider-theme (dark or light) and data-theme on the root. Use the existing CSS variables for both themes; do not hard-code colors that break the light theme.
-- Preserve responsive mobile layout, RTL for Persian and LTR for English, accessible button types/labels, safe-area spacing, and reduced overflow on narrow screens. Keep selection disabled for decorative text only; inputs and the copyable subscription URL must remain selectable.
-- Keep the existing content structure and page identity. Do not copy the admin dashboard, expose private account fields, or mix this user page with the separate public group page at /p/{uuid_key}.
-
-IMPLEMENTATION RULES
-- Before coding, trace the matching API response in main.py and inspect current IDs/classes in sub.html. Do not assume a field or endpoint that the repository does not provide.
-- Make the smallest coherent HTML/CSS/JavaScript change, keep browser code compatible with the project's current style, and escape any API-derived text.
-- If a requested UI behavior needs new server data, describe and implement the API contract in main.py too; never silently depend on a field that the endpoint does not return.
-- Preserve existing client deep links, telemetry filtering, account calculations, QR index mapping, and copy semantics while editing. Return a concise summary of files changed and any behavior that cannot be guaranteed by the current server contract.</textarea>
-                <button class="btn btn-p" type="button" onclick="copyHelpPrompt()"><span data-i18n="helpCopyPrompt">کپی Prompt</span></button>
               </div>
             </div>
             <div class="spd-acc">
@@ -2211,6 +2270,77 @@ IMPLEMENTATION RULES
                 </div>
               </div>
             </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HELP TAB (last content tab) -->
+      <style>
+        .hl-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0 8px}
+        .hl-controls input[type=search]{flex:1;min-width:170px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--txt);font-size:12px;box-sizing:border-box}
+        .hl-controls select{padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--txt);font-size:12px;max-width:150px}
+        .hl-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+        .hl-list{max-height:430px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:6px;direction:ltr;text-align:left}
+        .hl-list::-webkit-scrollbar{width:9px}
+        .hl-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:9px}
+        .hl-row{display:flex;gap:10px;align-items:flex-start;padding:6px 8px;border-radius:7px;font:11.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;border-bottom:1px solid rgba(128,128,128,.09)}
+        .hl-row:hover{background:rgba(43,127,255,.06)}
+        .hl-time{color:var(--txt2);white-space:nowrap;flex-shrink:0;min-width:64px}
+        .hl-kind{flex-shrink:0;min-width:74px;font-weight:700;opacity:.85}
+        .hl-msg{flex:1;min-width:0;word-break:break-word;white-space:pre-wrap;user-select:text;-webkit-user-select:text}
+        .hl-row.lvl-ok .hl-kind{color:var(--green)}
+        .hl-row.lvl-warn .hl-kind{color:var(--orange)}
+        .hl-row.lvl-err .hl-kind{color:var(--red)}
+        .hl-row.lvl-info .hl-kind{color:var(--neon)}
+        .hl-empty{padding:24px 10px;text-align:center;color:var(--txt2);font-size:12px}
+      </style>
+      <div class="tab-content hidden" id="tab-help">
+        <div class="panel">
+          <div class="panel-h"><span class="glow" data-i18n="tab.help">راهنما</span></div>
+          <div class="px-hint" data-i18n="helpIntro">راهنما و تنظیمات کانفیگ‌های پیش‌فرض</div>
+          <div class="spd-acc-list" style="margin-top:12px">
+            
+            <div class="spd-acc">
+              <button type="button" class="spd-acc-head" onclick="spdToggleAcc('help-template',this)" aria-expanded="false"><span class="spd-acc-title"><strong data-i18n="helpTemplate">Template</strong></span><span class="material-symbols-outlined spd-acc-arrow">expand_more</span></button>
+              <div class="spd-acc-body" id="acc-help-template">
+                <div class="px-hint" data-i18n="helpPromptHint">این Prompt منطق صفحه ساب فعلی را توضیح می‌دهد تا بتوانید آن را به هوش مصنوعی بدهید.</div>
+                <textarea id="help-template-text" readonly dir="ltr" spellcheck="false" style="width:100%;min-height:360px;margin:10px 0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--txt);font:12px/1.6 monospace;white-space:pre-wrap;user-select:text;-webkit-user-select:text">You are modifying SpiderPanel's user subscription page, static/sub.html. First inspect the existing page and its server-side data contract. Preserve the established behavior unless the requested change requires otherwise.
+
+PAGE AND DATA CONTRACT
+- The page is served for a user's subscription UUID and reads the final path segment as uname. It fetches GET /api/sub/{encodeURIComponent(uname)} with cache: no-store.
+- The API returns subscription data including config_uuid, username, status/is_active, configs (and a legacy single config), traffic_used_bytes, traffic_limit_bytes, max_ip_per_user, used_ips, expire_days, expire_at_ts. Treat absent optional fields safely.
+- Build the public subscription URL as window.location.origin + '/link/' + config_uuid. This is the import URL copied by the page and used by quick-connect apps.
+- The API can return a status/telemetry line in configs. Do not show entries containing the encoded 📊 marker %F0%9F%93%8A. If configs is empty, use the single config field when present.
+- Keep config strings byte-for-byte intact for copy and QR actions. Decode only the URI fragment to create the display name; do not rebuild a VLESS URI in the browser.
+- Per-config QR images come from GET /api/sub/{uuid}/qr?cfg={zero-based-config-index}. The server maps that index to the same filtered list of real configs. The QR must encode the configuration, not the subscription URL.
+
+PAGE BEHAVIOR
+- applyData populates the subscription URL and ID, active/inactive status, username, used/total/remaining traffic, usage percentage ring and bar, current/allowed connections, and remaining expiry in days, hours, and minutes. A zero traffic limit means unlimited; a missing expiry means no expiry.
+- renderConfigs groups links into TLS, Reality, and Telegram Proxy. Identify categories from the URI: Telegram proxy links begin with t.me/proxy or tg://proxy; Reality links contain security=reality; other configs belong to TLS. Translate category labels with the page's fa/en dictionaries.
+- Each config card shows its decoded remark and protocol and has copy and QR actions. Escape remarks before inserting them into HTML. Never insert server text as trusted markup.
+- The chips filter all/TLS/Reality/Telegram groups. Search filters by the decoded config name within the active category. Update group visibility and visible counts after either action.
+- Copy Subscription Link, Copy Sub Text, Copy All Configs, and per-config Copy use the Clipboard API with the existing textarea fallback. Keep localized success/error toast messages.
+- Quick Connect opens a modal with Android, iOS, and Windows choices. Existing app deep links are: Happ happ://add/{encoded-sub-url}; v2rayNG v2rayng://install-sub?url={encoded-sub-url}&name=SPiDER; V2Box v2box://install-sub?url={encoded-sub-url}&name=SPiDER; Hiddify hiddify://install-sub?url={encoded-sub-url}&name=SPiDER; Windows v2rayN v2rayn://install-sub?url={encoded-sub-url}. Copy the subscription URL before redirecting to the chosen client.
+- The QR modal requests the server image for the selected real config index, shows its decoded name, and can close from its button. Quick Connect closes from its close button, backdrop, or chosen action.
+- Keep event binding idempotent: dynamically rendered cards are recreated, so do not attach duplicate handlers. Existing code uses a _bound marker for this.
+
+LANGUAGE, THEME, AND LAYOUT
+- Language is shared with the main panel through localStorage key spider-lang (fa or en). Every human-readable UI string, including dynamically-created buttons, empty states, titles, toasts, and errors, needs both Persian and English dictionary entries. applyLang must update text, placeholders, direction, and the visible language button.
+- Theme is shared through spider-theme (dark or light) and data-theme on the root. Use the existing CSS variables for both themes; do not hard-code colors that break the light theme.
+- Preserve responsive mobile layout, RTL for Persian and LTR for English, accessible button types/labels, safe-area spacing, and reduced overflow on narrow screens. Keep selection disabled for decorative text only; inputs and the copyable subscription URL must remain selectable.
+- Keep the existing content structure and page identity. Do not copy the admin dashboard, expose private account fields, or mix this user page with the separate public group page at /p/{uuid_key}.
+
+IMPLEMENTATION RULES
+- Before coding, trace the matching API response in main.py and inspect current IDs/classes in sub.html. Do not assume a field or endpoint that the repository does not provide.
+- Make the smallest coherent HTML/CSS/JavaScript change, keep browser code compatible with the project's current style, and escape any API-derived text.
+- If a requested UI behavior needs new server data, describe and implement the API contract in main.py too; never silently depend on a field that the endpoint does not return.
+- Preserve existing client deep links, telemetry filtering, account calculations, QR index mapping, and copy semantics while editing. Return a concise summary of files changed and any behavior that cannot be guaranteed by the current server contract.</textarea>
+                <button class="btn btn-p" type="button" onclick="copyHelpPrompt()"><span data-i18n="helpCopyPrompt">کپی Prompt</span></button>
+              </div>
+            </div>
+            
+            
           </div>
         </div>
       </div>
@@ -2429,11 +2559,11 @@ var selectedTheme = localStorage.getItem('spider-theme') || 'dark';
 var LANG = localStorage.getItem('spider-lang') || 'fa';
 var I18N = {
   fa: {
-    'dash': 'داشبورد', 'navGroup': 'مدیریت', 'advanced': 'پیشرفته', 'networkTotal': 'مجموع ارسال + دریافت', 'users': 'کاربران', 'inbounds': 'اینباندها', 'scanner': 'اسکنر IP', 'worker': 'ورکر (Worker)', 'settings': 'تنظیمات', 'contact': 'تماس با من', 'logout': 'خروج',
+    'dash': 'داشبورد', 'navGroup': 'مدیریت', 'systemGroup': 'سیستم', 'advanced': 'پیشرفته', 'networkTotal': 'مجموع ارسال + دریافت', 'users': 'کاربران', 'inbounds': 'اینباندها', 'scanner': 'اسکنر IP', 'worker': 'ورکر (Worker)', 'settings': 'تنظیمات', 'contact': 'تماس با من', 'logout': 'خروج',
     'workerSetupTip': 'پنل را به Cloudflare متصل کنید تا یک پروژه Pages اختصاصی ساخته شود، worker.js داخل آن Deploy شود و یک KV اختصاصی به آن متصل شود.', 'cfToken': 'توکن API کلادفلر', 'getToken': 'گرفتن توکن', 'cfAccountId': 'شناسه حساب', 'cfWorkerName': 'نام Worker', 'cfWorkerDomain': 'دامنه Worker', 'createNewWorker': 'ساخت Worker جدید', 'cfConnect': 'اتصال و Deploy', 'connected': 'متصل', 'disconnected': 'قطع', 'workerStatus': 'وضعیت', 'remoteStatus': 'وضعیت ریموت', 'lastHeartbeat': 'آخرین Heartbeat', 'workerId': 'پروژه Pages', 'kvId': 'KV ID', 'onlineUsers': 'کاربران آنلاین', 'workerTraffic': 'مصرف Worker', 'workerUrl': 'نشانی ورکر', 'lastSync': 'آخرین Sync', 'lastError': 'آخرین خطا', 'proxyPool': 'مخزن IP پروکسی', 'addProxy': 'افزودن کشور', 'workerSettings': 'تنظیمات Worker', 'removeConn': 'حذف اتصال Worker', 'noProxyYet': 'هنوز کشوری اضافه نکرده‌اید', 'connecting': 'در حال ساخت...', 'workerConnected': 'Worker جدید ساخته و Deploy شد', 'syncing': 'در حال Sync...', 'synced': 'Sync شد', 'confirmRemoveWorker': 'اتصال Worker حذف شود؟', 'workerRemoved': 'اتصال Worker حذف شد', 'proxyCodePrompt': 'کد کشور (مثلا de):', 'proxyCountryPrompt': 'نام کشور:', 'proxyHostPrompt': 'آدرس Proxy IP (مثلا de.example.com):', 'proxyPortPrompt': 'پورت Proxy IP:', 'proxySaved': 'کشور ذخیره و Worker بروزرسانی شد', 'confirmDelProxy': 'این کشور حذف شود؟', 'proxyDeleted': 'کشور حذف شد', 'workerFillAll': 'همه فیلدها را پر کنید', 'workerProxyEnabled': 'IP پروکسی Worker', 'workerProxyNone': 'بدون Proxy', 'workerRouteTip': 'کانفیگ کاربر روی دامنه Pages با مسیر /ws/{uuid} ساخته می‌شود و از Railway عبور نمی‌کند.', 'workerAutoName': 'یک پروژه Pages جدید با نام تصادفی (spider-xxxxxx) و KV اختصاصی ساخته می‌شود — نیازی به ورود نام نیست.', 'proxySource': 'منبع پروکسی روزانه', 'autoSyncHourly': 'بروزرسانی خودکار (ساعتی)', 'updateNow': 'بروزرسانی از منبع', 'updatingFromSource': 'در حال بروزرسانی از منبع', 'sourceUpdated': 'بروزرسانی شد', 'sourceError': 'خطا در بروزرسانی منبع', 'countries': 'کشور', 'syncsDone': 'تعداد بروزرسانی‌ها', 'pickCountry': 'یک کشور انتخاب کنید',
     'tab.dash': 'داشبورد', 'tab.users': 'مدیریت کاربران', 'tab.inbounds': 'مدیریت اینباندها', 'tab.scanner': 'اسکنر آی‌پی', 'tab.settings': 'تنظیمات', 'tab.advanced': 'پیشرفته', 'tab.help': 'راهنما',
     'helpTemplate': 'قالب', 'helpServerEdit': 'ویرایش سرور', 'helpConfigOptions': 'تنظیمات کانفیگ', 'helpCopyPrompt': 'کپی متن راهنما', 'helpPromptCopied': 'متن راهنما کپی شد', 'helpPromptCopyFailed': 'کپی متن راهنما ناموفق بود',
-    'helpIntro': 'راهنما و تنظیمات کانفیگ‌های پیش‌فرض', 'helpPromptHint': 'این Prompt منطق صفحه ساب فعلی را توضیح می‌دهد تا بتوانید آن را به هوش مصنوعی بدهید.',
+    'helpIntro': 'راهنمای صفحه ساب و قالب آن', 'helpPromptHint': 'این Prompt منطق صفحه ساب فعلی را توضیح می‌دهد تا بتوانید آن را به هوش مصنوعی بدهید.',
     'helpServerEditHint': 'آدرس اتصال کانفیگ‌های پیش‌فرض TLS + WS را تغییر دهید. Host و SNI دامنه پنل باقی می‌مانند.', 'helpChatgptAddress': 'قرار دادن chatgpt.com در Address', 'helpCustomAddress': 'ذخیره آدرس سفارشی', 'helpAddressLabel': 'آدرس سفارشی', 'helpAddressPlaceholder': 'دامنه یا IP (IPv4/IPv6)', 'helpPanelIpv6': 'استفاده از IPv6 دامنه پنل', 'helpResetAddress': 'استفاده از دامنه پنل',
     'helpAddressSaved': 'آدرس کانفیگ ذخیره شد', 'helpAddressInvalid': 'دامنه یا IP معتبر وارد کنید', 'helpIpv6NotFound': 'برای دامنه پنل IPv6 پیدا نشد', 'helpSettingsSaved': 'تنظیمات ذخیره شد',
     'helpFeatureHint': 'این گزینه‌ها فقط به کانفیگ‌های اینباند پیش‌فرض TLS + WS افزوده می‌شوند.', 'helpEch': 'افزودن ECH', 'helpEchHint': 'پارامتر ECH را به کانفیگ‌های TLS + WS پیش‌فرض اضافه می‌کند.', 'helpFf': 'افزودن F+F', 'helpFfHint': 'مجموعه cipher و تنظیمات fragment نمونه را به کانفیگ‌های TLS + WS پیش‌فرض اضافه می‌کند و هنگام فعال بودن، fingerprint را روی unsafe می‌گذارد.',
@@ -2497,11 +2627,11 @@ var I18N = {
     'login': { 'signIn': 'ورود' }
   },
   en: {
-    'dash': 'Dashboard', 'navGroup': 'Management', 'advanced': 'Advanced', 'networkTotal': 'Total sent + received', 'users': 'Users', 'inbounds': 'Inbounds', 'scanner': 'IP Scanner', 'worker': 'Worker', 'settings': 'Settings', 'contact': 'Contact Me', 'logout': 'Logout',
+    'dash': 'Dashboard', 'navGroup': 'Management', 'systemGroup': 'System', 'advanced': 'Advanced', 'networkTotal': 'Total sent + received', 'users': 'Users', 'inbounds': 'Inbounds', 'scanner': 'IP Scanner', 'worker': 'Worker', 'settings': 'Settings', 'contact': 'Contact Me', 'logout': 'Logout',
     'workerSetupTip': 'Connect the panel to Cloudflare to create a dedicated Pages project, deploy worker.js, and attach a private KV namespace automatically.', 'cfToken': 'Cloudflare API Token', 'getToken': 'Get Token', 'cfAccountId': 'Account ID', 'cfWorkerName': 'Worker Name', 'cfWorkerDomain': 'Worker Domain', 'createNewWorker': 'Create New Worker', 'cfConnect': 'Connect & Deploy', 'connected': 'Connected', 'disconnected': 'Disconnected', 'workerStatus': 'Status', 'remoteStatus': 'Remote Status', 'lastHeartbeat': 'Last Heartbeat', 'workerId': 'Pages Project', 'kvId': 'KV ID', 'onlineUsers': 'Online Users', 'workerTraffic': 'Worker Traffic', 'workerUrl': 'Worker URL', 'lastSync': 'Last Sync', 'lastError': 'Last Error', 'proxyPool': 'Proxy IP Pool', 'addProxy': 'Add Country', 'workerSettings': 'Worker Settings', 'removeConn': 'Remove Worker Connection', 'noProxyYet': 'No country added yet', 'connecting': 'Creating...', 'workerConnected': 'New worker created & deployed', 'syncing': 'Syncing...', 'synced': 'Synced', 'confirmRemoveWorker': 'Remove the Worker connection?', 'workerRemoved': 'Worker connection removed', 'proxyCodePrompt': 'Country code (e.g. de):', 'proxyCountryPrompt': 'Country name:', 'proxyHostPrompt': 'Proxy IP host (e.g. de.example.com):', 'proxyPortPrompt': 'Proxy IP port:', 'proxySaved': 'Country saved, worker updated', 'confirmDelProxy': 'Delete this country?', 'proxyDeleted': 'Country deleted', 'workerFillAll': 'Fill in all fields', 'workerProxyEnabled': 'Worker Proxy IP', 'workerProxyNone': 'No Proxy', 'workerRouteTip': 'The user config is built on the Pages Worker domain with the /ws/{uuid} path.', 'workerAutoName': 'A dedicated Pages project is created with a random name (spider-xxxxxx) and its own dedicated KV — no project name is needed.', 'proxySource': 'Daily Proxy Source', 'autoSyncHourly': 'Auto-update (hourly)', 'updateNow': 'Update Now', 'updatingFromSource': 'Updating from source', 'sourceUpdated': 'Updated', 'sourceError': 'Failed to update source', 'countries': 'countries', 'syncsDone': 'Syncs done', 'pickCountry': 'Pick a country',
     'tab.dash': 'Dashboard', 'tab.users': 'Manage Users', 'tab.inbounds': 'Manage Inbounds', 'tab.scanner': 'IP Scanner', 'tab.settings': 'Settings', 'tab.advanced': 'Advanced', 'tab.help': 'Help',
     'helpTemplate': 'Template', 'helpServerEdit': 'Server Edit', 'helpConfigOptions': 'Config Options', 'helpCopyPrompt': 'Copy Prompt', 'helpPromptCopied': 'Prompt copied', 'helpPromptCopyFailed': 'Could not copy the prompt',
-    'helpIntro': 'Help and default config settings', 'helpPromptHint': 'This prompt documents the current subscription page so you can give it to an AI.',
+    'helpIntro': 'Subscription page help and template', 'helpPromptHint': 'This prompt documents the current subscription page so you can give it to an AI.',
     'helpServerEditHint': 'Change the connect address in default TLS + WS configs. Host and SNI remain the panel domain.', 'helpChatgptAddress': 'Set Address to chatgpt.com', 'helpCustomAddress': 'Save custom address', 'helpAddressLabel': 'Custom Address', 'helpAddressPlaceholder': 'Domain or IP (IPv4/IPv6)', 'helpPanelIpv6': 'Use the panel domain IPv6', 'helpResetAddress': 'Use the panel domain',
     'helpAddressSaved': 'Config address saved', 'helpAddressInvalid': 'Enter a valid domain or IP address', 'helpIpv6NotFound': 'No IPv6 address was found for the panel domain', 'helpSettingsSaved': 'Settings saved',
     'helpFeatureHint': 'These options are added only to configs from the default TLS + WS inbound.', 'helpEch': 'Add ECH', 'helpEchHint': 'Adds the ECH parameter to default TLS + WS configs.', 'helpFf': 'Add F+F', 'helpFfHint': 'Adds the sample cipher suite and fragmentation parameters to default TLS + WS configs, and sets the fingerprint to unsafe while it is on.',
@@ -2577,7 +2707,7 @@ Object.assign(I18N.fa, {
   'notif.nav': 'اعلان‌ها', 'notif.title': 'اعلان‌ها', 'notif.refresh': 'بروزرسانی', 'notif.date': 'تاریخ و ساعت',
   'notif.hint': 'اعلان‌ها از مخزن گیت‌هاب دریافت می‌شوند. هر اعلان یک آکاردیون است؛ با زدن روی موضوع، متن کامل به همراه تاریخ و ساعت نمایش داده می‌شود.',
   'notif.loading': 'در حال دریافت اعلان‌ها...', 'notif.empty': 'فعلاً اعلانی ثبت نشده است.', 'notif.error': 'دریافت اعلان‌ها از گیت‌هاب ممکن نشد.',
-  'proxy.nav': 'پروکسی', 'proxy.intro': 'پروکسی SOCKS5 یا HTTP اضافه کنید و ترافیک هر کاربر را از آن عبور دهید. برای هر کاربرِ تیک‌خورده یک کانفیگ جدید TLS+WS ساخته می‌شود که فقط از همین پروکسی خروج می‌زند.',
+  'proxy.nav': 'پروکسی', 'proxy.detectedCountry': 'کشور شناسایی‌شده', 'proxy.intro': 'پروکسی SOCKS5 یا HTTP اضافه کنید و ترافیک هر کاربر را از آن عبور دهید. برای هر کاربرِ تیک‌خورده یک کانفیگ جدید TLS+WS ساخته می‌شود که فقط از همین پروکسی خروج می‌زند.',
   'proxy.add': 'افزودن پروکسی', 'proxy.host': 'آدرس (IP یا دامنه)', 'proxy.port': 'پورت', 'proxy.country': 'کشور (اختیاری)',
   'proxy.auth': 'نام کاربری و رمز (اختیاری)', 'proxy.authHint': 'اگر پروکسی شناسه نمی‌خواهد این بخش را باز نکنید.', 'proxy.username': 'Username', 'proxy.password': 'Password',
   'proxy.test': 'تست اتصال', 'proxy.testing': 'در حال تست', 'proxy.save': 'ذخیره پروکسی', 'proxy.working': 'سالم ✓', 'proxy.notWorking': 'کار نمی‌کند',
@@ -2614,7 +2744,7 @@ Object.assign(I18N.en, {
   'notif.nav': 'Notifications', 'notif.title': 'Notifications', 'notif.refresh': 'Refresh', 'notif.date': 'Date & time',
   'notif.hint': 'Announcements are pulled from the GitHub repository. Each one is an accordion: click the subject to reveal the full text together with its date and time.',
   'notif.loading': 'Loading announcements...', 'notif.empty': 'No announcements published yet.', 'notif.error': 'Could not fetch announcements from GitHub.',
-  'proxy.nav': 'Proxies', 'proxy.intro': 'Add a SOCKS5 or HTTP proxy and route each user\'s traffic through it. Every ticked user gets a brand-new TLS+WS config that only ever exits through this proxy.',
+  'proxy.nav': 'Proxies', 'proxy.detectedCountry': 'Detected country', 'proxy.intro': 'Add a SOCKS5 or HTTP proxy and route each user\'s traffic through it. Every ticked user gets a brand-new TLS+WS config that only ever exits through this proxy.',
   'proxy.add': 'Add proxy', 'proxy.host': 'Host (IP or domain)', 'proxy.port': 'Port', 'proxy.country': 'Country (optional)',
   'proxy.auth': 'Username & password (optional)', 'proxy.authHint': 'Leave this collapsed if the proxy needs no credentials.', 'proxy.username': 'Username', 'proxy.password': 'Password',
   'proxy.test': 'Test connection', 'proxy.testing': 'Testing', 'proxy.save': 'Save proxy', 'proxy.working': 'Working ✓', 'proxy.notWorking': 'Not working',
@@ -2730,8 +2860,8 @@ function toast(msg, type) {
 document.addEventListener('DOMContentLoaded', function() {
   loadAccent();
   loadTheme();
-  initLoginShader();
-  initParticles();
+  // The dashboard uses the dedicated /login route. Do not start hidden
+  // WebGL/Canvas animation loops on the admin page.
   applyLang();
   checkAuth();
 });
@@ -2822,12 +2952,12 @@ function showLogin() { $id('login-wrap').style.display = 'flex'; $id('app-wrap')
 function showApp() {
   $id('login-wrap').style.display = 'none';
   $id('app-wrap').classList.add('active');
+  // Load only the active dashboard on startup. Other tabs load their data
+  // when opened, avoiding a burst of API requests and large DOM renders.
   loadAll();
-  // Announcements are pulled once per panel open/refresh so the Notifications
-  // tab is already current by the time it is clicked.
+  // Notifications are fetched on demand when their tab is opened.
   NOTIF_DATA = null;
   NOTIF_PENDING = null;
-  loadNotifs(false);
   updateGreeting();
 }
 
@@ -2907,6 +3037,16 @@ function toggleNavAccordion(forceOpen) {
   if (head) head.setAttribute('aria-expanded', String(!open));
 }
 
+function toggleSystemNavAccordion(forceOpen) {
+  var wrap = $id('system-nav-accordion');
+  if (!wrap) return;
+  var open = wrap.classList.contains('open');
+  if (typeof forceOpen === 'boolean') open = !forceOpen;
+  wrap.classList.toggle('open', !open);
+  var head = wrap.querySelector('.nav-accordion-head');
+  if (head) head.setAttribute('aria-expanded', String(!open));
+}
+
 function spdToggleAcc(id, btn) {
   var body = $id('acc-' + id);
   if (!body) return;
@@ -2931,7 +3071,8 @@ function toggleNodeAccordion(btn) {
 }
 
 function switchTab(tab, el) {
-  if (['users','inbounds','scanner','worker','bot','settings'].indexOf(tab) >= 0) toggleNavAccordion(true);
+  if (['users','inbounds','scanner','worker','bot','settings','proxy'].indexOf(tab) >= 0) toggleNavAccordion(true);
+  if (['advanced','help','notif'].indexOf(tab) >= 0) toggleSystemNavAccordion(true);
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
   if (el) el.classList.add('active');
   var content = document.querySelector('.content');
@@ -2975,8 +3116,8 @@ function switchTab(tab, el) {
   if (tab === 'nodes') loadNodes();
   if (tab === 'bot') loadBot();
   if (tab === 'proxy') loadProxies();
-  if (tab === 'advanced') loadAdvancedInbounds();
-  if (tab === 'help') { loadHelpSettings(); loadHelpLogs(); }
+  if (tab === 'advanced') { loadAdvancedInbounds(); loadHelpSettings(); loadHelpLogs(); startHelpLogsAuto(); }
+  else stopHelpLogsAuto();
   if (tab === 'notif') loadNotifs(false);
   closeSidebar();
 }
@@ -2987,13 +3128,9 @@ function toggleSidebar() { $id('sidebar').classList.contains('open') ? closeSide
 
 // ─── Load All ───
 async function loadAll() {
+  // The dashboard is the default active tab. switchTab() loads each other
+  // section on demand, so preloading everything here only creates extra work.
   loadDashboard();
-  loadUsers();
-  loadInbounds();
-  loadProxyCountries();
-  // Keep the worker proxy pool warm so the create-user country dropdowns work
-  // even before the Worker tab is opened.
-  if (typeof loadWorker === 'function') loadWorker();
 }
 
 // ─── Dashboard ───
@@ -3001,13 +3138,31 @@ var liveInterval = null;
 
 function startLiveStats() {
   if (liveInterval) clearInterval(liveInterval);
+  liveInterval = null;
+  // Browsers throttle hidden tabs, but avoid waking the network and JS at all.
+  if (document.hidden) return;
   refreshLiveStats();
-  liveInterval = setInterval(refreshLiveStats, 4000);
+  liveInterval = setInterval(function() {
+    if (!document.hidden) refreshLiveStats();
+  }, 6000);
 }
 
 function stopLiveStats() {
   if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
 }
+
+// Avoid unnecessary API work and repaints while the browser tab is hidden.
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden) {
+    stopLiveStats();
+    return;
+  }
+  var dash = $id('tab-dashboard');
+  var app = $id('app-wrap');
+  if (dash && !dash.classList.contains('hidden') && app && app.classList.contains('active')) {
+    startLiveStats();
+  }
+});
 
 async function loadDashboard() {
   try {
@@ -3018,40 +3173,122 @@ async function loadDashboard() {
     html += statCard(iconConn, '<span id="dash-conn">' + (s.active_connections || '۰') + '</span>', t('activeConns'));
     html += statCard(iconUptime, '<span id="dash-uptime">...</span>', t('uptime'));
     html += '</div>';
-    html += '<div class="panel"><div class="panel-h" style="align-items:center"><span class="glow">' + t('srv') + '</span><span id="dash-server-status" class="badge badge-g" style="margin-right:auto;font-size:9px;animation:pulse 1.5s infinite">' + t('liveBadge') + '</span></div>';
-    html += '<div class="srv-bar"><div class="srv-bar-h"><strong>' + t('cpu') + '</strong><span id="live-cpu">--</span>%</div><div class="srv-bar-bg"><div class="srv-bar-f" id="bar-cpu" style="width:0%"></div></div></div>';
-    html += '<div class="srv-bar"><div class="srv-bar-h"><strong>' + t('ram') + '</strong><span id="live-ram">--</span></div><div class="srv-bar-bg"><div class="srv-bar-f" id="bar-ram" style="width:0%"></div></div></div>';
-    html += '<div class="srv-bar"><div class="srv-bar-h"><strong>' + t('disk') + '</strong><span id="live-disk">--</span></div><div class="srv-bar-bg"><div class="srv-bar-f" id="bar-disk" style="width:0%"></div></div></div>';
-    html += '<div style="font-size:10px;color:var(--txt2);margin-top:12px;padding-top:10px;border-top:1px solid var(--bg3)">';
-    html += '<div style="text-align:center;margin-top:6px"><span>Uptime: <strong style="color:var(--txt)" id="live-uptime">...</strong></span></div>';
-    html += '</div></div>';
+    var fa = LANG === 'fa';
+    var cpuLabel = fa ? 'پردازنده' : 'CPU';
+    var ramLabel = fa ? 'حافظه رم' : 'RAM';
+    var swapLabel = fa ? 'حافظه مجازی' : 'Swap';
+    var storageLabel = fa ? 'فضای ذخیره‌سازی' : 'Storage';
+    var systemTitle = fa ? 'وضعیت سیستم' : 'SYSTEM STATUS';
+    var connectionTitle = fa ? 'وضعیت اتصالات' : 'CONNECTION STATS';
+    var ipTitle = fa ? 'آدرس‌های IP' : 'IP ADDRESSES';
+    var unavailable = fa ? 'نامشخص' : 'Unavailable';
+    var coresLabel = fa ? 'هسته' : 'Cores';
+    html += '<section class="panel system-status-card" aria-label="System status">';
+    html += '<div class="system-status-head"><span>' + systemTitle + '</span><span class="system-status-live" id="dash-server-status">' + (fa ? 'زنده' : 'LIVE') + '</span></div>';
+    html += '<div class="sys-resources">';
+    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-cpu" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">memory</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + cpuLabel + '</div><div class="sys-resource-meta" id="live-cpu-meta">-- ' + coresLabel + '</div></div><div class="sys-resource-value" id="live-cpu">--%</div></div>' + sparklineSvg('spark-cpu') + '</div>';
+    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-ram" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">memory_alt</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + ramLabel + '</div><div class="sys-resource-meta" id="live-ram">-- / -- GB</div></div><div class="sys-resource-value" id="live-ram-percent">--%</div></div>' + sparklineSvg('spark-ram') + '</div>';
+    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-swap" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">swap_vert</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + swapLabel + '</div><div class="sys-resource-meta" id="live-swap">-- / -- GB</div></div><div class="sys-resource-value" id="live-swap-percent">--%</div></div>' + sparklineSvg('spark-swap') + '</div>';
+    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-disk" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">hard_drive</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + storageLabel + '</div><div class="sys-resource-meta" id="live-disk">-- / -- GB</div></div><div class="sys-resource-value" id="live-disk-percent">--%</div></div>' + sparklineSvg('spark-disk') + '</div>';
+    html += '</div>';
+    html += '<div class="sys-connection-block"><div class="sys-section-title">' + connectionTitle + '</div><div class="sys-connection-grid">';
+    html += '<div class="sys-connection"><div class="sys-connection-label"><span class="material-symbols-outlined">cable</span>TCP</div><div class="sys-connection-value" id="live-tcp">—</div></div>';
+    html += '<div class="sys-connection"><div class="sys-connection-label udp"><span class="material-symbols-outlined">hub</span>UDP</div><div class="sys-connection-value" id="live-udp">—</div></div>';
+    html += '</div><div class="sys-connection-track"><span class="sys-tcp-fill" id="live-tcp-bar" style="width:50%"></span><span class="sys-udp-fill" id="live-udp-bar" style="width:50%"></span></div></div>';
+    html += '<div class="sys-ip-block"><div class="sys-ip-heading"><div class="sys-section-title" style="margin:0">' + ipTitle + '</div><button class="sys-ip-toggle" type="button" onclick="toggleServerIpVisibility()" title="' + (fa ? 'نمایش یا مخفی کردن آدرس‌ها' : 'Show or hide IP addresses') + '" aria-label="Toggle IP visibility"><span class="material-symbols-outlined" id="server-ip-eye">visibility_off</span></button></div>';
+    html += '<div class="sys-ip-row"><span>IPv4</span><span class="sys-ip-value" id="server-ipv4">' + unavailable + '</span></div>';
+    html += '<div class="sys-ip-row"><span>IPv6</span><span class="sys-ip-value" id="server-ipv6">' + unavailable + '</span></div></div>';
+    html += '<div style="display:none" id="live-uptime">...</div>';
+    html += '</section>';
     $id('dashboard-content').innerHTML = html;
+    SERVER_IPS.ipv4 = '';
+    SERVER_IPS.ipv6 = '';
+    serverIpVisible = false;
     startLiveStats();
   } catch(e) { $id('dashboard-content').innerHTML = '<div class="empty">' + t('errLoadStats') + '</div>'; }
 }
 
+var SERVER_IPS = {ipv4: '', ipv6: ''};
+var serverIpVisible = false;
+var SERVER_HISTORY = {cpu: [], ram: [], swap: [], disk: []};
+
+function sparklineSvg(id) {
+  return '<svg class="sys-sparkline" viewBox="0 0 320 24" preserveAspectRatio="none" aria-hidden="true"><polyline id="' + id + '" points="0,12 320,12"></polyline></svg>';
+}
+function updateSparkline(id, key, value) {
+  var el = $id(id); if (!el) return;
+  var list = SERVER_HISTORY[key] || (SERVER_HISTORY[key] = []);
+  var n = Number(value); if (!Number.isFinite(n)) n = 0;
+  list.push(Math.max(0, Math.min(100, n)));
+  if (list.length > 28) list.shift();
+  var width = 320, height = 24, pad = 2;
+  var points = list.map(function(v, i) {
+    var x = list.length < 2 ? width : (i / (list.length - 1)) * width;
+    var y = height - pad - (v / 100) * (height - pad * 2);
+    return x.toFixed(1) + ',' + y.toFixed(1);
+  }).join(' ');
+  el.setAttribute('points', points || '0,12 320,12');
+}
+function setGauge(id, percent) {
+  var el = $id(id); if (el) el.style.setProperty('--percent', Math.max(0, Math.min(100, Number(percent) || 0)).toFixed(1) + '%');
+}
+function maskServerIp(value) {
+  var s = String(value || '').trim();
+  if (!s || s === '—' || s === '-') return LANG === 'fa' ? 'نامشخص' : 'Unavailable';
+  if (s.indexOf(':') >= 0) return '••••:••••:••••';
+  var parts = s.split('.');
+  return parts.length === 4 ? parts[0] + '.•••.•••.' + parts[3] : '•••.•••.•••.•••';
+}
+function renderServerIps() {
+  var v4 = $id('server-ipv4'), v6 = $id('server-ipv6'), eye = $id('server-ip-eye');
+  if (v4) v4.textContent = serverIpVisible ? (SERVER_IPS.ipv4 || (LANG === 'fa' ? 'نامشخص' : 'Unavailable')) : maskServerIp(SERVER_IPS.ipv4);
+  if (v6) v6.textContent = serverIpVisible ? (SERVER_IPS.ipv6 || (LANG === 'fa' ? 'نامشخص' : 'Unavailable')) : maskServerIp(SERVER_IPS.ipv6);
+  if (eye) eye.textContent = serverIpVisible ? 'visibility' : 'visibility_off';
+}
+function toggleServerIpVisibility() { serverIpVisible = !serverIpVisible; renderServerIps(); }
+
 async function refreshLiveStats() {
   try {
     var st = await api('/api/server/stats');
-    // Update bar fills
-    var barCpu = $id('bar-cpu'); if (barCpu) barCpu.style.width = Math.min(st.cpu_percent||0, 100) + '%';
-    var barRam = $id('bar-ram'); if (barRam) barRam.style.width = Math.min(st.ram_percent||0, 100) + '%';
-    var barDisk = $id('bar-disk'); if (barDisk) barDisk.style.width = Math.min(st.disk_percent||0, 100) + '%';
-    // Update text labels
-    var cpuEl = $id('live-cpu'); if (cpuEl) cpuEl.textContent = (st.cpu_percent||'--');
-    var ramEl = $id('live-ram'); if (ramEl) ramEl.textContent = (st.ram_used_gb||'?') + ' / ' + (st.ram_total_gb||'?') + ' GB';
-    var diskEl = $id('live-disk'); if (diskEl) diskEl.textContent = (st.disk_used_gb||'?') + ' / ' + (st.disk_total_gb||'?') + ' GB';
+    var cpu = Number(st.cpu_percent) || 0;
+    var ram = Number(st.ram_percent) || 0;
+    var swap = Number(st.swap_percent) || 0;
+    var disk = Number(st.disk_percent) || 0;
+    setGauge('gauge-cpu', cpu); setGauge('gauge-ram', ram); setGauge('gauge-swap', swap); setGauge('gauge-disk', disk);
+    updateSparkline('spark-cpu', 'cpu', cpu);
+    updateSparkline('spark-ram', 'ram', ram);
+    updateSparkline('spark-swap', 'swap', swap);
+    updateSparkline('spark-disk', 'disk', disk);
+
+    var cpuEl = $id('live-cpu'); if (cpuEl) cpuEl.textContent = cpu.toFixed(1) + '%';
+    var cpuMeta = $id('live-cpu-meta'); if (cpuMeta) cpuMeta.textContent = (st.cpu_cores || '—') + ' ' + (LANG === 'fa' ? 'هسته' : 'Cores');
+    var ramEl = $id('live-ram'); if (ramEl) ramEl.textContent = (st.ram_used_gb ?? '—') + ' / ' + (st.ram_total_gb ?? '—') + ' GB';
+    var ramPct = $id('live-ram-percent'); if (ramPct) ramPct.textContent = ram.toFixed(1) + '%';
+    var swapEl = $id('live-swap'); if (swapEl) swapEl.textContent = (st.swap_used_gb ?? '—') + ' / ' + (st.swap_total_gb ?? '—') + ' GB';
+    var swapPct = $id('live-swap-percent'); if (swapPct) swapPct.textContent = swap.toFixed(1) + '%';
+    var diskEl = $id('live-disk'); if (diskEl) diskEl.textContent = (st.disk_used_gb ?? '—') + ' / ' + (st.disk_total_gb ?? '—') + ' GB · ' + (Number(st.disk_io_kbs || 0)).toFixed(2) + ' KB/s';
+    var diskPct = $id('live-disk-percent'); if (diskPct) diskPct.textContent = disk.toFixed(1) + '%';
     var uptEl = $id('live-uptime'); if (uptEl) uptEl.textContent = fmtUptime(st.uptime_seconds);
     var duptEl = $id('dash-uptime'); if (duptEl) duptEl.textContent = fmtUptime(st.uptime_seconds);
     var connEl = $id('dash-conn'); if (connEl) connEl.textContent = String(st.active_connections || 0);
     var trEl = $id('dash-traffic'); if (trEl) trEl.textContent = (typeof st.total_traffic_used_gb !== 'undefined' ? st.total_traffic_used_gb + ' GB' : fmtBytes((st.total_traffic_used_tb || 0) * 1099511627776));
     var usrEl = $id('dash-users'); if (usrEl) usrEl.textContent = (st.active_users || 0) + ' / ' + (st.total_users || 0);
+    var tcpEl = $id('live-tcp'), udpEl = $id('live-udp');
+    var tcp = st.tcp_connections !== null && typeof st.tcp_connections !== 'undefined' && Number.isFinite(Number(st.tcp_connections)) ? Math.max(0, Number(st.tcp_connections)) : null;
+    var udp = st.udp_connections !== null && typeof st.udp_connections !== 'undefined' && Number.isFinite(Number(st.udp_connections)) ? Math.max(0, Number(st.udp_connections)) : null;
+    if (tcpEl) tcpEl.textContent = tcp === null ? '—' : String(tcp);
+    if (udpEl) udpEl.textContent = udp === null ? '—' : String(udp);
+    var total = (tcp || 0) + (udp || 0) || 1;
+    var tcpBar = $id('live-tcp-bar'), udpBar = $id('live-udp-bar');
+    if (tcpBar) tcpBar.style.width = ((tcp || 0) / total * 100) + '%';
+    if (udpBar) udpBar.style.width = ((udp || 0) / total * 100) + '%';
+    SERVER_IPS.ipv4 = st.ipv4 || '';
+    SERVER_IPS.ipv6 = st.ipv6 || '';
+    renderServerIps();
     var statusEl = $id('dash-server-status'); if (statusEl) {
-      var ss = String(st.server_status || 'healthy');
-      statusEl.textContent = ss === 'healthy' ? 'HEALTHY' : ss === 'degraded' ? 'DEGRADED' : 'DOWN';
-      statusEl.className = 'badge ' + (ss === 'healthy' ? 'badge-g' : ss === 'degraded' ? 'badge-b' : 'badge-r');
+      statusEl.textContent = LANG === 'fa' ? 'زنده' : 'LIVE';
     }
-  } catch(e) { /* keep old values */ }
+  } catch(e) { /* keep the last successful live values */ }
 }
 
 function statCard(icon, val, label) {
@@ -3167,10 +3404,11 @@ if (window.matchMedia) {
 // ─── User CRUD (SIMPLIFIED) ───
 async function openCreateUser() {
   cuInboundState = { picks: {}, countries: {} };
-  // Refresh worker proxy pool so the country dropdowns are current, then render.
-  if (typeof loadWorker === 'function') {
-    try { await loadWorker(); } catch(e) {}
-  }
+  // Load only the dependencies needed by this modal when the user opens it.
+  // Inbounds are no longer preloaded during the initial dashboard render.
+  var pendingLoads = [loadInbounds()];
+  if (typeof loadWorker === 'function') pendingLoads.push(loadWorker());
+  try { await Promise.all(pendingLoads); } catch(e) {}
   populateInboundSelects();
   $id('cu-name').value = '';
   $id('cu-vol').value = '';
@@ -4027,7 +4265,7 @@ async function copyHelpPrompt() {
   } catch(e) { toast(t('helpPromptCopyFailed'), 'err'); }
 }
 
-// ─── Panel logs box (Help tab) ───
+// ─── Panel logs box (Advanced tab) ───
 var HL_AUTO_TIMER = null;
 var HL_DEBOUNCE = null;
 
@@ -4043,14 +4281,16 @@ function helpLogsDebounced() {
   HL_DEBOUNCE = setTimeout(loadHelpLogs, 350);
 }
 
-function helpLogsAuto() {
-  var on = $id('hl-auto') && $id('hl-auto').checked;
-  if (HL_AUTO_TIMER) { clearInterval(HL_AUTO_TIMER); HL_AUTO_TIMER = null; }
-  if (on) HL_AUTO_TIMER = setInterval(function() {
-    var acc = $id('acc-help-logs');
-    if (acc && acc.parentElement.classList.contains('open')) loadHelpLogs(true);
-    else { if (HL_AUTO_TIMER) { clearInterval(HL_AUTO_TIMER); HL_AUTO_TIMER = null; } if ($id('hl-auto')) $id('hl-auto').checked = false; }
+function startHelpLogsAuto() {
+  if (HL_AUTO_TIMER) clearInterval(HL_AUTO_TIMER);
+  HL_AUTO_TIMER = setInterval(function() {
+    var tab = $id('tab-advanced');
+    if (tab && !tab.classList.contains('hidden')) loadHelpLogs(true);
   }, 5000);
+}
+
+function stopHelpLogsAuto() {
+  if (HL_AUTO_TIMER) { clearInterval(HL_AUTO_TIMER); HL_AUTO_TIMER = null; }
 }
 
 function hlKindColor(kind, level) {
@@ -4099,15 +4339,13 @@ async function loadHelpLogs(quiet) {
   var q = ($id('hl-q') && $id('hl-q').value || '').trim();
   var kind = ($id('hl-kind') && $id('hl-kind').value) || '';
   var level = ($id('hl-level') && $id('hl-level').value) || '';
-  var params = new URLSearchParams({limit: '400'});
+  var params = new URLSearchParams({limit: '50'});
   if (q) params.append('q', q);
   if (kind) params.append('kind', kind);
   if (level === 'err') params.append('level', 'err');
   else if (level) params.append('level', level);
   try {
     var d = await api('/api/logs?' + params.toString());
-    var box = $id('acc-help-logs');
-    if (quiet && box && !box.parentElement.classList.contains('open')) return;
     helpLogsHtml(d);
   } catch (e) {
     if (!quiet) list.innerHTML = '<div class="hl-empty">' + esc(e.message || t('toast.err')) + '</div>';
@@ -5510,6 +5748,7 @@ function pxTestHtml(r) {
     (ok ? '✔ ' : '✖ ') + esc(ok ? t('proxy.working') : t('proxy.notWorking')) + '</b><br>' +
     esc(t('proxy.ping')) + ': <b dir="ltr">' + (r.ping_ms != null ? esc(String(r.ping_ms)) + ' ms' : '—') + '</b><br>' +
     esc(t('proxy.egress')) + ': <b dir="ltr">' + esc(r.egress_ip || '—') + '</b>' +
+    (r.country_name ? '<br>' + esc(t('proxy.detectedCountry')) + ': <b>' + esc((r.country_flag || '') + ' ' + r.country_name) + '</b>' : '') +
     (r.error ? '<br><span style="color:var(--red)">' + esc(r.error) + '</span>' : '');
 }
 
@@ -5526,7 +5765,8 @@ async function pxTestNew() {
     if (out) out.innerHTML = pxTestHtml(r);
     if (r.working) {
       PX_STATE.tested = Object.assign({}, payload, {
-        working: true, ping_ms: r.ping_ms, egress_ip: r.egress_ip || ''
+        working: true, ping_ms: r.ping_ms, egress_ip: r.egress_ip || '',
+        country_code: r.country_code || '', country_flag: r.country_flag || '', country_name: r.country_name || ''
       });
       if (sv) sv.classList.remove('hidden');
       toast(t('proxy.testOk'), 'ok');

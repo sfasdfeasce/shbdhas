@@ -110,11 +110,18 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.14);
     z-index: 0;
     animation: breathe 7s ease-in-out infinite;
+    will-change: opacity, transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 @keyframes breathe {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.85; transform: scale(1.02); }
+    0%, 100% { opacity: 0.4; transform: translate3d(0,0,0) scale(1); }
+    50% { opacity: 0.85; transform: translate3d(0,0,0) scale(1.02); }
+}
+@keyframes breathe-mobile {
+    0%, 100% { opacity: 0.4; transform: translate3d(-50%,0,0) scale(1); }
+    50% { opacity: 0.75; transform: translate3d(-50%,0,0) scale(1.015); }
 }
 
 /* کلمه عمودی SPIDER روی مجسمه */
@@ -213,6 +220,7 @@ body {
 
 /* رفتار اختصاصی نسخه موبایل */
 @media (max-width: 768px) {
+    .hero-halo { animation-name: breathe-mobile; animation-duration: 12s; opacity: .55; }
     .hero-container {
         width: 100vw;
         max-width: none;
@@ -240,6 +248,11 @@ body {
         right: 16px;
         font-size: 0.65rem;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-halo { animation: none !important; will-change: auto; }
+    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
 
 /* Prevent Android/iOS blue touch highlight on tap. Keep focus styling under our control. */

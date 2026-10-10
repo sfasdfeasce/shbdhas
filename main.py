@@ -4161,7 +4161,7 @@ async def get_panel_logs(request: Request, _=Depends(require_auth)):
     """Everything the panel logged: connections, logins/logouts, CRUD, errors.
 
     Supports ?kind= ?level= ?q= (text search) ?since= (ISO timestamp) ?limit=
-    and returns newest-first entries so the Help tab can render a live log box.
+    and returns newest-first entries so the Advanced tab can render a live log box.
     """
     qp = request.query_params
     kind = (qp.get("kind") or "").strip().lower()
@@ -4169,10 +4169,10 @@ async def get_panel_logs(request: Request, _=Depends(require_auth)):
     q = (qp.get("q") or "").strip().lower()
     since = (qp.get("since") or "").strip()
     try:
-        limit = int(qp.get("limit") or 400)
+        limit = int(qp.get("limit") or 50)
     except Exception:
-        limit = 400
-    limit = max(10, min(2000, limit))
+        limit = 50
+    limit = max(1, min(50, limit))
 
     merged: list[dict] = []
     for e in activity_logs:
@@ -9591,12 +9591,96 @@ async def check_ip(request: Request, _=Depends(require_auth)):
 ws_client_count = 0
 WS_LIVE_CLIENTS: set = set()
 
+_LIVE_NET_CACHE = {"updated_at": 0.0, "tcp": None, "udp": None, "ipv4": "", "ipv6": ""}
+_DISK_IO_CACHE = {"updated_at": 0.0, "read_bytes": None, "write_bytes": None, "kbs": 0.0}
+
+def _get_disk_io_kbs(psutil_module) -> float:
+    """Estimate combined disk read/write throughput from non-blocking counters."""
+    now = time.monotonic()
+    try:
+        counters = psutil_module.disk_io_counters()
+        if not counters:
+            return 0.0
+        read_bytes = int(counters.read_bytes or 0)
+        write_bytes = int(counters.write_bytes or 0)
+        prev_time = float(_DISK_IO_CACHE.get("updated_at") or 0.0)
+        prev_read = _DISK_IO_CACHE.get("read_bytes")
+        prev_write = _DISK_IO_CACHE.get("write_bytes")
+        speed_kbs = float(_DISK_IO_CACHE.get("kbs") or 0.0)
+        elapsed = now - prev_time
+        if prev_time and elapsed > 0 and prev_read is not None and prev_write is not None:
+            transferred = max(0, read_bytes - int(prev_read)) + max(0, write_bytes - int(prev_write))
+            speed_kbs = transferred / elapsed / 1024.0
+        _DISK_IO_CACHE.update({"updated_at": now, "read_bytes": read_bytes, "write_bytes": write_bytes, "kbs": speed_kbs})
+        return round(max(0.0, speed_kbs), 2)
+    except Exception:
+        return 0.0
+
+
+def _get_live_network_details(psutil_module) -> dict:
+    """Return TCP/UDP counts and global IPs with a short cache to keep polling cheap."""
+    now = time.monotonic()
+    if _LIVE_NET_CACHE.get("updated_at") and now - float(_LIVE_NET_CACHE.get("updated_at", 0.0)) < 15:
+        return dict(_LIVE_NET_CACHE)
+
+    tcp_count = None
+    udp_count = None
+    ipv4 = ""
+    ipv6 = ""
+
+    # Prefer the configured server address when it is a literal IP.
+    configured_ip = str((SETTINGS or {}).get("server_ip") or "").strip()
+    try:
+        parsed = ipaddress.ip_address(configured_ip.split("%", 1)[0])
+        if parsed.version == 4:
+            ipv4 = str(parsed)
+        else:
+            ipv6 = str(parsed)
+    except Exception:
+        pass
+
+    try:
+        for interface_addresses in psutil_module.net_if_addrs().values():
+            for address in interface_addresses:
+                raw = str(getattr(address, "address", "") or "").split("%", 1)[0]
+                if not raw:
+                    continue
+                try:
+                    parsed = ipaddress.ip_address(raw)
+                except Exception:
+                    continue
+                if not parsed.is_global:
+                    continue
+                if parsed.version == 4 and not ipv4:
+                    ipv4 = str(parsed)
+                elif parsed.version == 6 and not ipv6:
+                    ipv6 = str(parsed)
+    except Exception:
+        pass
+
+    try:
+        tcp_count = 0
+        udp_count = 0
+        for connection in psutil_module.net_connections(kind="inet"):
+            if connection.type == socket.SOCK_STREAM and connection.status == psutil_module.CONN_ESTABLISHED:
+                tcp_count += 1
+            elif connection.type == socket.SOCK_DGRAM and (connection.laddr or connection.raddr):
+                udp_count += 1
+    except Exception:
+        # Socket enumeration can be restricted in containers. Keep it unknown instead of fabricating zeroes.
+        tcp_count = None
+        udp_count = None
+
+    _LIVE_NET_CACHE.update({"updated_at": now, "tcp": tcp_count, "udp": udp_count, "ipv4": ipv4, "ipv6": ipv6})
+    return dict(_LIVE_NET_CACHE)
+
+
 def get_live_stats() -> dict:
     """Get real server stats using psutil with fallback."""
     conn_count = len(connections)
     try:
         import psutil as _ps
-        cpu_pct = round(_ps.cpu_percent(interval=0.3), 1)
+        cpu_pct = round(_ps.cpu_percent(interval=None), 1)
         mem = _ps.virtual_memory()
         ram_pct = round(mem.percent, 1)
         ram_used_gb = round(mem.used / (1024**3), 2)
@@ -9605,6 +9689,13 @@ def get_live_stats() -> dict:
         disk_pct = round(disk.percent, 1)
         disk_used_gb = round(disk.used / (1024**3), 2)
         disk_total_gb = round(disk.total / (1024**3), 2)
+        disk_io_kbs = _get_disk_io_kbs(_ps)
+        swap = _ps.swap_memory()
+        swap_pct = round(swap.percent, 1)
+        swap_used_gb = round(swap.used / (1024**3), 2)
+        swap_total_gb = round(swap.total / (1024**3), 2)
+        cpu_cores = int(_ps.cpu_count(logical=True) or 1)
+        live_net = _get_live_network_details(_ps)
         net = _ps.net_io_counters()
         net_sent_mb = round(net.bytes_sent / (1024**2), 2)
         net_recv_mb = round(net.bytes_recv / (1024**2), 2)
@@ -9617,6 +9708,12 @@ def get_live_stats() -> dict:
         disk_pct = round(min(25 + len(LINKS) * 0.02 + len(USERS) * 0.1, 90), 1)
         disk_used_gb = round(disk_pct / 100 * 50, 2)
         disk_total_gb = 50
+        disk_io_kbs = 0.0
+        swap_pct = 0
+        swap_used_gb = 0
+        swap_total_gb = 0
+        cpu_cores = os.cpu_count() or 1
+        live_net = {"tcp": None, "udp": None, "ipv4": "", "ipv6": ""}
         net_sent_mb = 0
         net_recv_mb = 0
         network_mbps = 2.5
@@ -9625,12 +9722,21 @@ def get_live_stats() -> dict:
     total_limit = sum(u.get("traffic_limit_bytes", 0) for u in USERS.values())
     return {
         "cpu_percent": max(0, cpu_pct),
+        "cpu_cores": cpu_cores,
         "ram_percent": max(0, ram_pct),
         "ram_used_gb": ram_used_gb,
         "ram_total_gb": ram_total_gb,
         "disk_percent": max(0, disk_pct),
         "disk_used_gb": disk_used_gb,
         "disk_total_gb": disk_total_gb,
+        "disk_io_kbs": disk_io_kbs,
+        "swap_percent": max(0, swap_pct),
+        "swap_used_gb": swap_used_gb,
+        "swap_total_gb": swap_total_gb,
+        "tcp_connections": live_net.get("tcp"),
+        "udp_connections": live_net.get("udp"),
+        "ipv4": live_net.get("ipv4", ""),
+        "ipv6": live_net.get("ipv6", ""),
         "network_mbps": network_mbps,
         "net_sent_mb": net_sent_mb,
         "net_recv_mb": net_recv_mb,
@@ -12784,19 +12890,6 @@ def _country_from_flag_or_code(code: str) -> tuple[str, str]:
         return c, _flag(c)
     return "", ""
 
-def _detect_proxy_geo() -> dict:
-    info = {}
-    try:
-        ccode = str(SETTINGS.get("country_code") or "").strip().upper()
-        cname = str(SETTINGS.get("country") or "").strip()
-        cflag = str(SETTINGS.get("country_flag") or "").strip()
-    except Exception:
-        ccode = cname = cflag = ""
-    if ccode:
-        ccode, cflag = _country_from_flag_or_code(cflag or ccode)
-        return {"country_code": ccode, "country_flag": cflag or _flag(ccode), "country": cname or _COUNTRY_NAMES.get(ccode, ccode)}
-    return info
-
 def _flag(code: str) -> str:
     code = str(code or "").strip().upper()
     if len(code) != 2 or not code.isalpha():
@@ -12805,6 +12898,65 @@ def _flag(code: str) -> str:
         return chr(0x1F1E6 + ord(code[0]) - 65) + chr(0x1F1E6 + ord(code[1]) - 65)
     except Exception:
         return ""
+
+
+async def _proxy_ip_geo(ip: str) -> dict:
+    """Resolve the country of the IP observed *through a proxy*.
+
+    The panel host's own country is deliberately never used as a fallback here:
+    a proxy may egress from a completely different country than the panel server.
+    """
+    target = str(ip or "").strip()
+    try:
+        parsed = ipaddress.ip_address(target)
+        if not parsed.is_global:
+            return {}
+    except Exception:
+        return {}
+
+    endpoints = (
+        (f"https://ipwho.is/{target}", "country_code", "country", "success"),
+        (f"https://ipinfo.io/{target}/json", "country", "country_name", None),
+        (f"http://ip-api.com/json/{target}?fields=status,country,countryCode", "countryCode", "country", "status"),
+    )
+    try:
+        async with httpx.AsyncClient(timeout=httpx.Timeout(4.0, connect=2.5), follow_redirects=True) as client:
+            for url, code_key, name_key, status_key in endpoints:
+                try:
+                    response = await client.get(url)
+                    if response.status_code != 200:
+                        continue
+                    payload = response.json() or {}
+                    status = payload.get(status_key) if status_key else None
+                    if status_key == "success" and status is False:
+                        continue
+                    if status_key == "status" and status != "success":
+                        continue
+                    code = str(payload.get(code_key) or "").strip().upper()
+                    # ipinfo returns country codes such as DE; all supported endpoints
+                    # use ISO-3166 alpha-2 values here.
+                    if len(code) != 2 or not code.isalpha():
+                        continue
+                    name = str(payload.get(name_key) or "").strip()
+                    if not name:
+                        name = _COUNTRY_NAMES.get(code, "")
+                    if not name:
+                        try:
+                            import pycountry
+                            country_obj = pycountry.countries.get(alpha_2=code)
+                            name = country_obj.name if country_obj else ""
+                        except Exception:
+                            name = ""
+                    return {
+                        "country_code": code,
+                        "country_flag": _flag(code),
+                        "country_name": name or code,
+                    }
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    return {}
 
 def _mask_proxy_password(p: dict) -> dict:
     pw = str(p.get("password") or "")
@@ -12857,12 +13009,26 @@ async def _proxy_test_connect(proxy: dict) -> dict:
         try:
             writer.write(b"GET /?format=json HTTP/1.1\r\nHost: api.ipify.org\r\nConnection: close\r\n\r\n")
             await writer.drain()
-            data = await asyncio.wait_for(reader.read(1024), timeout=4)
-            body = data.decode("utf-8", errors="ignore")
-            # Extract IP from HTTP body or SOCKS handshake echo
-            m = re.search(r"\b(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\b", body)
-            if m:
-                result["egress_ip"] = m.group(1)
+            headers_raw = await asyncio.wait_for(reader.readuntil(b"\r\n\r\n"), timeout=4)
+            headers_text = headers_raw.decode("iso-8859-1", errors="ignore")
+            length_match = re.search(r"(?im)^content-length:\s*(\d+)", headers_text)
+            if length_match:
+                body_raw = await asyncio.wait_for(reader.readexactly(min(int(length_match.group(1)), 512)), timeout=4)
+            else:
+                body_raw = await asyncio.wait_for(reader.read(512), timeout=4)
+            body = body_raw.decode("utf-8", errors="ignore")
+            # Parse the actual IPify response body and support both IPv4 and IPv6.
+            candidates = re.findall(r'"ip"\s*:\s*"([^" ]+)"', body)
+            candidates.extend(re.findall(r"(?<![0-9])(?:\d{1,3}\.){3}\d{1,3}(?![0-9])", body))
+            candidates.extend(re.findall(r"(?<![A-Fa-f0-9:])[A-Fa-f0-9:]{3,}(?![A-Fa-f0-9:])", body))
+            for candidate_ip in candidates:
+                try:
+                    parsed_ip = ipaddress.ip_address(candidate_ip.strip())
+                    if parsed_ip.is_global:
+                        result["egress_ip"] = str(parsed_ip)
+                        break
+                except Exception:
+                    continue
         except Exception:
             pass
         result["working"] = True
@@ -12959,6 +13125,10 @@ async def test_proxy(request: Request, _=Depends(require_auth)):
             "password": str(body.get("password") or "").strip(),
         }
     result = await _proxy_test_connect(candidate)
+    if result.get("egress_ip"):
+        geo = await _proxy_ip_geo(result["egress_ip"])
+        if geo:
+            result.update(geo)
     if proxy_id:
         async with PROXIES_LOCK:
             if proxy_id in PROXIES:
@@ -12969,6 +13139,12 @@ async def test_proxy(request: Request, _=Depends(require_auth)):
                     "last_test_at": now_ir().isoformat(timespec="seconds"),
                     "error": result["error"],
                 })
+                if result.get("country_code"):
+                    PROXIES[proxy_id].update({
+                        "country_code": result["country_code"],
+                        "country_flag": result.get("country_flag") or _flag(result["country_code"]),
+                        "country": result.get("country_name") or result["country_code"],
+                    })
         await save_state()
     return {"ok": True, **result}
 
@@ -12985,22 +13161,50 @@ async def create_proxy(request: Request, _=Depends(require_auth)):
         raise HTTPException(status_code=400, detail="host and valid port required")
     username = str(body.get("username") or "").strip()[:128]
     password = str(body.get("password") or "").strip()[:256]
-    # Country/flag: explicit code or flag first, then a code hidden inside the
-    # country text, then a full-name lookup, then the panel's own geo.
-    ccode, cflag = _country_from_flag_or_code(str(body.get("country_code") or body.get("country_flag") or ""))
-    cname = str(body.get("country") or body.get("country_name") or "").strip()[:80]
-    if not ccode and cname:
-        ccode, _derived = _country_from_flag_or_code(cname)
+    # An explicitly typed country takes precedence over autodetection.
+    manual_country = str(body.get("country") or "").strip()[:80]
+    ccode = ""
+    cflag = ""
+    cname = ""
+    if manual_country:
+        ccode, cflag = _country_from_flag_or_code(manual_country)
         if not ccode:
-            _rev = {v.upper(): k for k, v in _COUNTRY_NAMES.items()}
-            ccode = _rev.get(cname.upper(), "")
-        if ccode and not cflag:
-            cflag = _flag(ccode)
-    if not ccode and not cname:
-        geo = _detect_proxy_geo()
-        ccode = geo.get("country_code", "")
-        cflag = geo.get("country_flag", "")
-        cname = geo.get("country", "")
+            reverse_names = {v.casefold(): k for k, v in _COUNTRY_NAMES.items()}
+            ccode = reverse_names.get(manual_country.casefold(), "")
+            if not ccode:
+                try:
+                    import pycountry
+                    country_obj = pycountry.countries.lookup(manual_country)
+                    ccode = str(country_obj.alpha_2 or "").upper()
+                except Exception:
+                    ccode = ""
+            if ccode:
+                cflag = _flag(ccode)
+        cname = _COUNTRY_NAMES.get(ccode, manual_country) if ccode else manual_country
+    else:
+        # These fields are produced by /api/proxies/test after geolocating the
+        # proxy's observed egress IP. Never fall back to the panel server country.
+        ccode, cflag = _country_from_flag_or_code(str(body.get("country_code") or body.get("country_flag") or ""))
+        cname = str(body.get("country_name") or "").strip()[:80]
+        if not ccode and cname:
+            reverse_names = {v.casefold(): k for k, v in _COUNTRY_NAMES.items()}
+            ccode = reverse_names.get(cname.casefold(), "")
+            if not ccode:
+                try:
+                    import pycountry
+                    country_obj = pycountry.countries.lookup(cname)
+                    ccode = str(country_obj.alpha_2 or "").upper()
+                except Exception:
+                    ccode = ""
+            if ccode:
+                cflag = _flag(ccode)
+        if not ccode and body.get("egress_ip"):
+            geo = await _proxy_ip_geo(str(body.get("egress_ip") or ""))
+            ccode = str(geo.get("country_code") or "").upper()
+            cflag = str(geo.get("country_flag") or "")
+            cname = str(geo.get("country_name") or cname or "")
+        if ccode and not cname:
+            cname = _COUNTRY_NAMES.get(ccode, ccode)
     if not cflag and ccode:
         cflag = _flag(ccode)
     if ccode and (not cname or len(cname) == 2):
@@ -13251,6 +13455,10 @@ async def ping_proxy(proxy_id: str, _=Depends(require_auth)):
             raise HTTPException(status_code=404, detail="proxy not found")
         candidate = {**PROXIES[proxy_id]}
     result = await _proxy_test_connect(candidate)
+    if result.get("egress_ip"):
+        geo = await _proxy_ip_geo(result["egress_ip"])
+        if geo:
+            result.update(geo)
     async with PROXIES_LOCK:
         if proxy_id in PROXIES:
             PROXIES[proxy_id].update({
@@ -13260,6 +13468,12 @@ async def ping_proxy(proxy_id: str, _=Depends(require_auth)):
                 "last_test_at": now_ir().isoformat(timespec="seconds"),
                 "error": result["error"],
             })
+            if result.get("country_code"):
+                PROXIES[proxy_id].update({
+                    "country_code": result["country_code"],
+                    "country_flag": result.get("country_flag") or _flag(result["country_code"]),
+                    "country": result.get("country_name") or result["country_code"],
+                })
     await save_state()
     return {"ok": True, **result}
 
