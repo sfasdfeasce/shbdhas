@@ -1055,6 +1055,9 @@ async def startup():
         limits=limits, timeout=timeout, follow_redirects=True,
     )
     await load_state()
+    # Warm the GitHub announcement cache during startup so the Notifications
+    # tab is ready on first open. This task is isolated from panel startup.
+    asyncio.create_task(_prime_notifications(), name="spider-notif-prefetch")
     # Learn the public endpoint from platform variables before generating any
     # default inbound/config. If the platform has not exposed a domain yet,
     # the background resolver keeps retrying until one becomes available.
@@ -1492,7 +1495,7 @@ async def startup():
         except Exception as e:
             logger.warning(f"Xray apply on boot failed: {e}")
     log_activity("system", "سرور راه‌اندازی شد", "ok")
-    logger.info(f"Spider Panel v9 (commit 24d7594) started on port {CONFIG['port']}")
+    logger.info(f"Spider Panel v10 (commit 24d7594) started on port {CONFIG['port']}")
     # Include XHTTP router for xhttp-siz10 endpoints (already merged into main.py)
     global xhttp_router
     # router is already defined in this module
@@ -4393,47 +4396,11 @@ async def _notif_commit_date(client: httpx.AsyncClient, path: str, sha: str):
     return iso
 
 
-def _notif_local_dir() -> Path:
-    """The notif/ folder that ships inside the panel checkout."""
-    return Path(__file__).resolve().parent / NOTIF_PATH
-
-
-def _notif_from_local() -> list:
-    """Announcements from the panel's own notif/*.txt — no network, no rate limit.
-
-    This is the primary source: the self-updater overlays the same folder, so a
-    panel that can reach GitHub gets remote files too, while a rate-limited or
-    offline panel still renders every announcement it already has.
-    """
-    base = _notif_local_dir()
-    if not base.is_dir():
-        return []
-    items: list = []
-    for path in sorted(base.glob("*.txt")):
-        try:
-            raw = path.read_text(encoding="utf-8", errors="ignore")
-            mtime = datetime.fromtimestamp(path.stat().st_mtime, tz=IRAN_TZ)
-        except (OSError, ValueError):
-            continue
-        if not raw.strip():
-            continue
-        parsed = _parse_notif_txt(raw)
-        items.append({
-            "name": path.name,
-            "title": parsed.get("title") or path.name,
-            "text": parsed.get("text") or "",
-            "date": _notif_format_dt(parsed.get("date") or mtime),
-            "date_raw": bool(parsed.get("date")),
-        })
-    return items
-
-
 async def _notif_from_remote() -> tuple[list, str | None]:
     """Read notif/*.txt from GitHub. Returns (items, error).
 
-    An error is only reported when GitHub itself could not be asked; a 403/404/
-    429 degrades to "no remote announcements" instead of being shown to the
-    admin, because the local files already render the list.
+    A 403/404/429 degrades quietly to an empty announcement list. Other
+    transport and HTTP errors are returned to the Notifications tab.
     """
     items: list = []
     base = f"https://api.github.com/repos/{NOTIF_REPO}/contents/{NOTIF_PATH}"
@@ -4494,16 +4461,9 @@ async def _notif_from_remote() -> tuple[list, str | None]:
 
 
 async def _fetch_notifs() -> dict:
-    """Merge the local announcement folder with GitHub, newest file first."""
-    local_items = _notif_from_local()
+    """Read only direct notif/*.txt files from GitHub, newest first."""
     remote_items, remote_error = await _notif_from_remote()
-
-    # Remote wins per file name (it is the fresher copy); local-only files are
-    # kept so an announcement that was removed upstream still shows locally.
-    merged: dict = {str(i.get("name")): i for i in local_items}
-    for item in remote_items:
-        merged[str(item.get("name"))] = item
-    items = list(merged.values())
+    items = list(remote_items)
 
     def _sort_key(item):
         dt = _notif_parse_dt(item.get("date")) if item.get("date") else None
@@ -4513,18 +4473,28 @@ async def _fetch_notifs() -> dict:
     items.sort(key=_sort_key)
 
     source = f"github.com/{NOTIF_REPO}/{NOTIF_PATH}"
-    if not remote_items and local_items:
-        source = f"local/{NOTIF_PATH}"
-    # Only surface the failure when there is nothing at all to show — an
-    # announcement list backed by local files must never read as an error.
-    error = remote_error if (remote_error and not items) else None
 
     return {
         "items": items,
         "source": source,
-        "error": error,
+        "error": remote_error,
         "fetched_at": datetime.now().isoformat(),
     }
+
+
+async def _prime_notifications():
+    """Fetch and cache GitHub announcements once while the app starts."""
+    try:
+        async with _NOTIF_LOCK:
+            cached = _NOTIF_CACHE.get("payload")
+            age = time.time() - float(_NOTIF_CACHE.get("at") or 0)
+            if cached is not None and age < NOTIF_TTL:
+                return
+            payload = await _fetch_notifs()
+            _NOTIF_CACHE["at"] = time.time()
+            _NOTIF_CACHE["payload"] = payload
+    except Exception as e:  # noqa: BLE001 — announcements must not block startup
+        logger.warning("GitHub announcement prefetch failed: %s", e)
 
 
 @app.get("/api/notifications")
