@@ -61,6 +61,31 @@ input, textarea, select {
     -webkit-user-select: text;
 }
 
+.password-mask-input {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    caret-color: #ffffff;
+    font-family: 'JetBrains Mono', monospace !important;
+}
+.password-mask-input::placeholder {
+    color: #6b7280 !important;
+    -webkit-text-fill-color: #6b7280 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+.password-mask {
+    position: absolute;
+    z-index: 2;
+    left: 3rem;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    overflow: hidden;
+    color: #ffffff;
+    font: 500 14px/1 'JetBrains Mono', monospace;
+    white-space: pre;
+    pointer-events: none;
+}
+
 body {
     background-color: #000000 !important;
     color: #e2e2e2 !important;
@@ -110,18 +135,11 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.14);
     z-index: 0;
     animation: breathe 7s ease-in-out infinite;
-    will-change: opacity, transform;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 @keyframes breathe {
-    0%, 100% { opacity: 0.4; transform: translate3d(0,0,0) scale(1); }
-    50% { opacity: 0.85; transform: translate3d(0,0,0) scale(1.02); }
-}
-@keyframes breathe-mobile {
-    0%, 100% { opacity: 0.4; transform: translate3d(-50%,0,0) scale(1); }
-    50% { opacity: 0.75; transform: translate3d(-50%,0,0) scale(1.015); }
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.85; transform: scale(1.02); }
 }
 
 /* کلمه عمودی SPIDER روی مجسمه */
@@ -220,7 +238,6 @@ body {
 
 /* رفتار اختصاصی نسخه موبایل */
 @media (max-width: 768px) {
-    .hero-halo { animation-name: breathe-mobile; animation-duration: 12s; opacity: .55; }
     .hero-container {
         width: 100vw;
         max-width: none;
@@ -248,11 +265,6 @@ body {
         right: 16px;
         font-size: 0.65rem;
     }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero-halo { animation: none !important; will-change: auto; }
-    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
 
 /* Prevent Android/iOS blue touch highlight on tap. Keep focus styling under our control. */
@@ -314,7 +326,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
             <label class="font-code-label text-xs text-on-surface-variant tracking-wider" for="password">PASSWORD</label>
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size: 20px;">lock</span>
-                <input class="input-glass w-full rounded-2xl py-3 pl-12 pr-4 text-sm text-white placeholder:text-gray-500 font-sans" id="password" placeholder="Enter password" type="password" autofocus required/>
+                <input class="input-glass password-mask-input w-full rounded-2xl py-3 pl-12 pr-4 text-sm text-white placeholder:text-gray-500 font-sans" id="password" placeholder="Enter password" type="password" autofocus required/>
+                <span class="password-mask" id="password-mask" aria-hidden="true"></span>
             </div>
         </div>
         
@@ -327,6 +340,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 <!-- لاجیک احراز هویت -->
 <script>
+var passwordInput = document.getElementById('password');
+var passwordMask = document.getElementById('password-mask');
+function syncPasswordMask() {
+    if (passwordInput && passwordMask) passwordMask.textContent = '*'.repeat(passwordInput.value.length);
+}
+passwordInput.addEventListener('input', syncPasswordMask);
+passwordInput.addEventListener('change', syncPasswordMask);
+setTimeout(syncPasswordMask, 0);
+
 document.getElementById('login-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     var btn = document.getElementById('loginBtn');

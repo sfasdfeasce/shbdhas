@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="dark" data-accent="blue">
+<html lang="fa" dir="rtl" data-theme="dark" data-accent="red">
 <head>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,31 +95,6 @@ html, body {
 [data-theme="light"] .f-g input::placeholder,[data-theme="light"] .f-g textarea::placeholder,
 [data-theme="light"] .input-glass::placeholder{color:#3a3a3e;opacity:.6}
 [data-theme="light"] .btn-g{background:rgba(0,0,0,.05)}
-/* Light: no colored/white glow on the background */
-[data-theme="light"] .bg-fx{background:none}
-[data-theme="light"] .bg-grid{background:none}
-
-/* ── Live background (matches /sub) ── */
-.bg-fx{
-  position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;
-  background:
-    radial-gradient(ellipse 900px 600px at 25% 20%, rgba(0,225,193,0.16) 0%, transparent 70%),
-    radial-gradient(ellipse 700px 500px at 75% 15%, rgba(64,120,255,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 600px 400px at 60% 75%, rgba(139,92,246,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 500px 400px at 10% 80%, rgba(0,180,255,0.07) 0%, transparent 55%);
-}
-.bg-grid{
-  position:fixed;inset:-2px;z-index:-2;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,225,193,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,225,193,0.04) 1px, transparent 1px);
-  background-size:48px 48px;
-  mask-image:radial-gradient(ellipse 90% 80% at 50% 45%, black 20%, transparent 70%);
-  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 45%, black 20%, transparent 70%);
-  animation:grid-drift 36s linear infinite;
-}
-@keyframes grid-drift{from{background-position:0 0}to{background-position:48px 48px}}
-
 *{margin:0;padding:0;box-sizing:border-box}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
@@ -168,17 +143,12 @@ html[lang="fa"] body{
   --logo-shadow:none;
   --spider-red:#ff6b6b;--red:#ff6b6b;--danger:#ff6b6b;
 }
-/* White grid for the live background in dark mode */
-[data-theme="dark"] .bg-grid{
-  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
-}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(43,127,255,.25);border-radius:4px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(43,127,255,.45)}
 input,select,button,textarea{font-family:inherit}
 
 /* ═══ LOGIN — Modern Glassmorphism ═══ */
-        #particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4}
         .login-wrap {
             display: flex;
             align-items: center;
@@ -188,23 +158,10 @@ input,select,button,textarea{font-family:inherit}
             position: relative;
             z-index: 1;
         }
-        .login-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-        }
-        #shader-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
         .login-card {
             position: relative;
             z-index: 1;
-            background: #0e0e12;
+            background: #000000;
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             padding: 32px 28px;
@@ -658,7 +615,7 @@ th{text-align:right;padding:12px;font-size:10px;color:var(--txt2);font-weight:70
 td{padding:12px;font-size:13px;border-bottom:1px solid var(--border)}
 tr:hover td{background:rgba(43,127,255,.03)}
 tr:last-child td{border-bottom:none}
-tr{animation:none}
+tr{animation:fadeIn .3s ease}
 .act-row{display:flex;gap:4px;flex-wrap:wrap}
 .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600}
 .badge-g{background:rgba(22,163,74,.15);color:var(--green)}
@@ -674,9 +631,44 @@ tr{animation:none}
 .srv-bar-h strong{font-size:11px}.srv-bar-bg{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden}
 .srv-bar-f{height:100%;border-radius:4px;transition:width .5s ease}
 
+/* Compact live server status, styled after the reference card. */
+.dash-system-card{width:100%;max-width:700px;padding:18px;margin-top:14px}
+.ds-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:11px;font-weight:800;letter-spacing:.7px;color:var(--txt2)}
+.ds-live{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.4px;color:#62c8b2}
+.ds-live::before{content:'';width:6px;height:6px;border-radius:50%;background:#62c8b2}
+.ds-row{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:12px;padding:9px 0 7px;border-bottom:1px solid var(--border)}
+.ds-gauge{--gauge-color:#62c8b2;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--gauge-color) 0 calc(var(--pct,0)*1%),rgba(128,128,128,.2) calc(var(--pct,0)*1%) 100%)}
+.ds-gauge::before{content:'';position:absolute;inset:4px;border-radius:50%;background:var(--bg)}
+.ds-gauge .material-symbols-outlined{z-index:1;font-size:16px;color:var(--txt2)}
+.ds-main{min-width:0}
+.ds-line{display:flex;align-items:center;justify-content:space-between;gap:8px;line-height:1.25}
+.ds-line strong{font-size:12px;font-weight:700}
+.ds-line b{font-size:13px;font-weight:800;white-space:nowrap}
+.ds-sub{font-size:10px;color:var(--txt2);margin-top:3px;line-height:1.3}
+.ds-spark{display:block;width:100%;height:22px;margin-top:5px;overflow:visible}
+.ds-spark polyline{fill:none;stroke:#62c8b2;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.ds-section{padding-top:12px;border-bottom:1px solid var(--border)}
+.ds-section-title{font-size:11px;font-weight:800;letter-spacing:.6px;color:var(--txt2);margin-bottom:9px}
+.ds-conn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center}
+.ds-conn-label{display:flex;justify-content:center;align-items:center;gap:6px;font-size:11px;color:var(--txt2)}
+.ds-conn-label .material-symbols-outlined{font-size:14px;color:#62c8b2}
+.ds-conn-label.udp .material-symbols-outlined{color:#4489e4}
+.ds-conn-count{display:block;font-size:18px;font-weight:800;margin-top:1px}
+.ds-conn-bar{height:6px;display:flex;overflow:hidden;border-radius:8px;background:rgba(128,128,128,.2);margin:10px 0 12px}
+.ds-conn-tcp{background:#62c8b2;width:0;transition:width .35s}.ds-conn-udp{background:#4489e4;flex:none;width:50%;transition:width .35s}
+.ds-ips{padding-top:11px}
+.ds-ips-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.ds-ip-toggle{padding:2px 5px;background:transparent;border:0;color:var(--txt2);cursor:pointer;display:inline-flex}
+.ds-ip-toggle .material-symbols-outlined{font-size:17px}
+.ds-ip-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px;border-bottom:1px solid var(--border);font-size:11px;color:var(--txt2)}
+.ds-ip-row:last-child{border:0}
+.ds-ip-value{max-width:75%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;font-weight:700;color:var(--txt)}
+.speed-limit-field .px-hint{margin-top:0}
+@media(max-width:640px){.dash-system-card{max-width:none;padding:15px}.ds-row{gap:10px}.ds-spark{height:20px}}
+
 /* Modal - Glass */
 .modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:none;-webkit-backdrop-filter:none;
+  position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);
   z-index:200;display:none;align-items:center;justify-content:center;padding:20px;
 }
 .modal.show{display:flex;animation:fadeIn .2s ease}
@@ -1015,44 +1007,32 @@ tr{animation:none}
 .sidebar-tog{display:none}@media(max-width:900px){.sidebar-tog{display:inline-flex!important}}
 
 
-/* ═══ SpiderPanel matte monochrome theme ═══ */
+/* ═══ SpiderPanel monochrome flat-card theme ═══ */
 :root{
-  --neon:#88a9cc;--neon2:#9bb8d5;--teal:#88a9cc;--green:#88a9cc;--success:#88a9cc;--blue:#88a9cc;--purple:#a4a2c7;--red:#c98c91;--danger:#c98c91;--gold:#b6a477;--warning:#b6a477;
-  --bg:#101216;--bg2:#14171c;--bg3:#20252c;--txt:#e6e9ed;--txt2:#9ca5b0;--input-bg:#171b21;--border:#2c4056;--line:#2c4056;
-  --tab-bg:#7899bd;--tab-color:#101216;--nav-bg:#1b2632;--nav-color:#a9c2de;--border-glow:#496582;--input-glow:rgba(105,143,184,.16);
-  --grad1:#7899bd;--grad2:#8caac9;--grad:linear-gradient(135deg,#7899bd,#8caac9);--gradient:linear-gradient(90deg,#7899bd,#8caac9);
-  --glass:#14171c;--surface-glass:#14171c;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
-  --shadow-sm:0 5px 18px rgba(0,0,0,.16);--shadow-md:0 8px 24px rgba(0,0,0,.2);--shadow-lg:0 14px 34px rgba(0,0,0,.24);--shadow-hover:0 8px 24px rgba(0,0,0,.2);
+  --neon:#ffffff;--neon2:#ffffff;--teal:#ffffff;--green:#ffffff;--success:#ffffff;--blue:#ffffff;--purple:#ffffff;--red:#ffffff;--danger:#ffffff;--gold:#ffffff;--warning:#ffffff;
+  --bg:#000000;--bg2:#000000;--bg3:#000000;--txt:#ffffff;--txt2:#cfcfcf;--input-bg:#000000;--border:#2a2a2a;--line:#2a2a2a;
+  --tab-bg:#ffffff;--tab-color:#000000;--nav-bg:#000000;--nav-color:#ffffff;--border-glow:#ffffff;--input-glow:#ffffff;
+  --grad1:#ffffff;--grad2:#ffffff;--grad:#ffffff;--gradient:#ffffff;
+  --glass:#000000;--surface-glass:#000000;--orb1:#000000;--orb2:#000000;--glow:none;--glow-strong:none;
 }
-[data-theme="dark"]{
-  --bg:#101216;--bg2:#14171c;--bg3:#20252c;--txt:#e6e9ed;--txt2:#9ca5b0;--input-bg:#171b21;--border:#2c4056;--line:#2c4056;
-  --neon:#88a9cc;--neon2:#9bb8d5;--teal:#88a9cc;--green:#88a9cc;--success:#88a9cc;--blue:#88a9cc;--purple:#a4a2c7;--red:#c98c91;--danger:#c98c91;--gold:#b6a477;--warning:#b6a477;
-  --tab-bg:#7899bd;--tab-color:#101216;--nav-bg:#1b2632;--nav-color:#a9c2de;--border-glow:#496582;--grad1:#7899bd;--grad2:#8caac9;--grad:linear-gradient(135deg,#7899bd,#8caac9);--gradient:linear-gradient(90deg,#7899bd,#8caac9);
-  --glass:#14171c;--surface-glass:#14171c;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
-}
-[data-theme="light"]{
-  --bg:#f3f6f4;--bg2:#ffffff;--bg3:#edf2ee;--txt:#354139;--txt2:#748078;--input-bg:#ffffff;--border:#d5e3d8;--line:#d5e3d8;
-  --neon:#7fa58c;--neon2:#8db49b;--teal:#7fa58c;--green:#7fa58c;--success:#7fa58c;--blue:#86a9a3;--purple:#a4a2b7;--red:#c98f90;--danger:#c98f90;--gold:#b4a273;--warning:#b4a273;
-  --tab-bg:#80a88f;--tab-color:#ffffff;--nav-bg:#edf4ef;--nav-color:#5d8169;--border-glow:#a8c8b2;--input-glow:rgba(127,165,140,.16);
-  --grad1:#80a88f;--grad2:#91b69d;--grad:linear-gradient(135deg,#80a88f,#91b69d);--gradient:linear-gradient(90deg,#80a88f,#91b69d);
-  --glass:#ffffff;--surface-glass:#ffffff;--orb1:transparent;--orb2:transparent;--glow:none;--glow-strong:none;
-  --shadow-sm:0 4px 16px rgba(47,76,56,.05);--shadow-md:0 7px 22px rgba(47,76,56,.07);--shadow-lg:0 12px 30px rgba(47,76,56,.09);--shadow-hover:0 7px 22px rgba(47,76,56,.07);
-}
+[data-theme="dark"]{--bg:#000000;--bg2:#000000;--bg3:#000000;--txt:#ffffff;--txt2:#cfcfcf;--input-bg:#000000;--border:#2a2a2a;--neon:#ffffff;--green:#ffffff;--blue:#ffffff;--purple:#ffffff;--red:#ffffff;--danger:#ffffff;--gold:#ffffff;--success:#ffffff;--tab-bg:#ffffff;--tab-color:#000000;--nav-bg:#000000;--nav-color:#ffffff;--border-glow:#ffffff;--grad1:#ffffff;--grad2:#ffffff;--grad:#ffffff;--gradient:#ffffff}
+[data-theme="light"]{--bg:#ffffff;--bg2:#ffffff;--bg3:#ffffff;--txt:#000000;--txt2:#3a3a3a;--input-bg:#ffffff;--border:#cfcfcf;--neon:#000000;--green:#000000;--blue:#000000;--purple:#000000;--red:#000000;--danger:#000000;--gold:#000000;--success:#000000;--tab-bg:#000000;--tab-color:#ffffff;--nav-bg:#ffffff;--nav-color:#000000;--border-glow:#000000;--grad1:#000000;--grad2:#000000;--grad:#000000;--gradient:#000000}
 
-.bg-fx,.bg-grid,#particles,#shader-canvas,.login-bg{display:none!important}
-.sidebar,.topbar,.panel,.stat,.tbl,.u-card,.modal-c,.login-card,.settings-box{background:#14171c!important;border-color:#2c4056!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 5px 18px rgba(0,0,0,.16)!important}
-[data-theme="light"] .sidebar,[data-theme="light"] .topbar,[data-theme="light"] .panel,[data-theme="light"] .stat,[data-theme="light"] .tbl,[data-theme="light"] .u-card,[data-theme="light"] .modal-c,[data-theme="light"] .login-card,[data-theme="light"] .settings-box{background:#ffffff!important;border-color:#d5e3d8!important;box-shadow:0 5px 18px rgba(47,76,56,.05)!important}
-.btn-p{background:#7899bd!important;color:#101216!important;box-shadow:none!important}
-[data-theme="light"] .btn-p{background:#80a88f!important;color:#ffffff!important;box-shadow:none!important}
-.btn-g,.lang-btn{background:#171b21!important;color:#dce4ec!important;border:1px solid #2c4056!important}
-[data-theme="light"] .btn-g,[data-theme="light"] .lang-btn{background:#ffffff!important;color:#354139!important;border-color:#d5e3d8!important}
-.btn-r{background:rgba(174,102,108,.12)!important;color:#d9a0a3!important;border-color:rgba(174,102,108,.28)!important}
-[data-theme="light"] .btn-r{background:#f8eeee!important;color:#a86e72!important;border-color:#ead0d1!important}
-.btn-b{background:rgba(105,143,184,.12)!important;color:#9cb8d8!important;border-color:rgba(105,143,184,.28)!important}
-[data-theme="light"] .btn-b{background:#eff5f1!important;color:#688b74!important;border-color:#d5e3d8!important}
-.nav-item:hover{background:#171f28!important;color:#b5cbe2!important}.nav-item.active{background:#1b2632!important;color:#a9c2de!important;border-color:#496582!important}
-[data-theme="light"] .nav-item:hover{background:#edf4ef!important;color:#5d8169!important}
-[data-theme="light"] .nav-item.active{background:#edf4ef!important;color:#5d8169!important;border-color:#a8c8b2!important}
+.sidebar.open,.modal.show .modal-c{will-change:transform;backface-visibility:hidden}
+.modal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.sidebar,.topbar,.panel,.stat,.tbl,.u-card,.modal-c,.login-card,.settings-box{background:#000000!important;border-color:#2a2a2a!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+[data-theme="light"] .sidebar,[data-theme="light"] .topbar,[data-theme="light"] .panel,[data-theme="light"] .stat,[data-theme="light"] .tbl,[data-theme="light"] .u-card,[data-theme="light"] .modal-c,[data-theme="light"] .login-card,[data-theme="light"] .settings-box{background:#ffffff!important;border-color:#cfcfcf!important;box-shadow:none!important}
+.btn-p{background:#ffffff!important;color:#000000!important;box-shadow:none!important}
+[data-theme="light"] .btn-p{background:#000000!important;color:#ffffff!important;box-shadow:none!important}
+.btn-g,.lang-btn{background:#000000!important;color:#ffffff!important;border:1px solid #2a2a2a!important}
+[data-theme="light"] .btn-g,[data-theme="light"] .lang-btn{background:#ffffff!important;color:#000000!important;border-color:#cfcfcf!important}
+.btn-r{background:rgba(255,35,82,.25)!important;color:#ffffff!important}
+[data-theme="light"] .btn-r{background:rgba(255,35,82,.85)!important}
+.btn-b{background:rgba(68,138,255,.25)!important;color:#ffffff!important}
+[data-theme="light"] .btn-b{background:rgba(68,138,255,.85)!important}
+.nav-item:hover{background:#000000!important;color:#ffffff!important}.nav-item.active{background:#000000!important;color:#ffffff!important;border-color:#ffffff!important}
+[data-theme="light"] .nav-item:hover{background:#ffffff!important;color:#000000!important}.nav-item.active{border-color:#ffffff!important}
+[data-theme="light"] .nav-item.active{background:#ffffff!important;color:#000000!important;border-color:#000000!important}
 [data-theme="light"] .ib-pick{background:#fff!important;color:#000!important;border-color:#ccc!important}
 [data-theme="light"] .ib-pick-name{color:#000!important}
 [data-theme="light"] .ib-pick-meta{color:#666!important}
@@ -1071,10 +1051,10 @@ tr{animation:none}
 .settings-inner-block:first-of-type{padding-top:0;margin-top:0;border-top:0}
 
 /* Main requested accordion */
-.nav-accordion{border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 8px 22px rgba(0,0,0,.45);margin:2px 0 4px}
-.nav-accordion-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 14px;background:#111;color:#fff;border:0;border-bottom:1px solid #2a2a2a;font:600 13px inherit;cursor:pointer}
-.nav-accordion-title{display:inline-flex;align-items:center;gap:8px}.nav-accordion-ic{font-size:18px}.nav-accordion-arrow{font-size:19px;transition:transform .2s}.nav-accordion-body{max-height:0;overflow:hidden;transition:max-height .25s ease;background:#000}.nav-accordion.open .nav-accordion-body{max-height:520px}.nav-accordion.open .nav-accordion-arrow{transform:rotate(180deg)}.nav-accordion-body .nav-item{border-radius:0!important;border:0!important;border-bottom:1px solid #1d1d1d!important;background:#000!important;margin:0!important}.nav-accordion-body .nav-item:last-child{border-bottom:0!important}.nav-accordion-body .nav-item.active{background:#171717!important;color:#fff!important;box-shadow:inset 3px 0 0 #fff}.nav-accordion-body .nav-item:hover{background:#101010!important}
-[data-theme="light"] .nav-accordion{background:#fff;border-color:#cfcfcf;box-shadow:0 8px 22px rgba(0,0,0,.12)}[data-theme="light"] .nav-accordion-head{background:#f3f3f3;color:#000;border-color:#d8d8d8}[data-theme="light"] .nav-accordion-body{background:#fff}[data-theme="light"] .nav-accordion-body .nav-item{background:#fff!important;border-bottom-color:#e6e6e6!important;color:#333}[data-theme="light"] .nav-accordion-body .nav-item.active{background:#f0f0f0!important;color:#000!important;box-shadow:inset 3px 0 0 #000}
+.nav-accordion{border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;background:#000;box-shadow:none;margin:2px 0 4px}
+.nav-accordion-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 14px;background:#000;color:#fff;border:0;border-bottom:1px solid #2a2a2a;font:600 13px inherit;cursor:pointer}
+.nav-accordion-title{display:inline-flex;align-items:center;gap:8px}.nav-accordion-ic{font-size:18px}.nav-accordion-arrow{font-size:19px;transition:transform .2s}.nav-accordion-body{max-height:0;overflow:hidden;transition:max-height .25s ease;background:#000}.nav-accordion.open .nav-accordion-body{max-height:520px}.nav-accordion.open .nav-accordion-arrow{transform:rotate(180deg)}.nav-accordion-body .nav-item{border-radius:0!important;border:0!important;border-bottom:1px solid #1d1d1d!important;background:#000!important;margin:0!important}.nav-accordion-body .nav-item:last-child{border-bottom:0!important}.nav-accordion-body .nav-item.active{background:#000!important;color:#fff!important;box-shadow:inset 3px 0 0 #fff}.nav-accordion-body .nav-item:hover{background:#000!important}
+[data-theme="light"] .nav-accordion{background:#fff;border-color:#cfcfcf;box-shadow:none}[data-theme="light"] .nav-accordion-head{background:#fff;color:#000;border-color:#d8d8d8}[data-theme="light"] .nav-accordion-body{background:#fff}[data-theme="light"] .nav-accordion-body .nav-item{background:#fff!important;border-bottom-color:#e6e6e6!important;color:#333}[data-theme="light"] .nav-accordion-body .nav-item.active{background:#fff!important;color:#000!important;box-shadow:inset 3px 0 0 #000}
 
 /* Node selector inside Node inbound editor */
 .node-select-wrap{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
@@ -1092,6 +1072,8 @@ tr{animation:none}
 
 /* Shared content accordion (users, inbounds, scanner, worker, settings) */
 .spd-acc-list{display:flex;flex-direction:column;gap:8px}
+#users-list .spd-acc-list,#inbounds-list .spd-acc-list{width:100%;max-width:900px;margin-inline:auto}
+@media(max-width:640px){#users-list .spd-acc-list,#inbounds-list .spd-acc-list{width:calc(100% - 14px)}}
 .spd-acc{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg2,transparent)}
 .spd-acc-head{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;background:transparent;color:var(--txt);border:0;cursor:pointer;font:600 13px inherit;text-align:right}
 .spd-acc-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1238,124 +1220,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   outline-offset: 2px;
 }
 
-
-/* Matte UI refinements: avoid glow, saturated colors, and hover movement. */
-html[data-theme="dark"] body{background:#101216;color:#e6e9ed}
-html[data-theme="light"] body{background:#f3f6f4;color:#354139}
-.panel,.stat,.u-card,.tbl,.settings-box,.modal-c{border:1px solid var(--border)!important;border-radius:16px;box-shadow:none!important}
-.panel:hover,.stat:hover{transform:none!important;box-shadow:none!important}
-.panel-h .glow,.stat-v,.stat-icon{color:var(--neon)!important;text-shadow:none!important}
-.btn,.nav-item,.lang-btn,.ios-switch,.switch{box-shadow:none!important;filter:none!important}
-.btn-p:hover,.btn-g:hover,.nav-item:hover,.stat:hover{filter:none!important}
-[data-theme="light"] .panel-h .glow,[data-theme="light"] .stat-v,[data-theme="light"] .stat-icon{color:#70977d!important}
-[data-theme="light"] .input-glass:focus,[data-theme="light"] .f-g input:focus,[data-theme="light"] .f-g select:focus,[data-theme="light"] .f-g textarea:focus{border-color:#a8c8b2!important;box-shadow:0 0 0 3px rgba(127,165,140,.10)!important}
-[data-theme="dark"] .input-glass:focus,[data-theme="dark"] .f-g input:focus,[data-theme="dark"] .f-g select:focus,[data-theme="dark"] .f-g textarea:focus{border-color:#496582!important;box-shadow:0 0 0 3px rgba(105,143,184,.10)!important}
-
-/* Screenshot-inspired live system status dashboard card. */
-.system-status-card{margin-top:12px!important;padding:15px 14px 12px!important;border-radius:18px!important;background:#14171c!important;border:1px solid #2c4056!important;color:#e6e9ed}
-.system-status-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 1px 10px;border-bottom:1px solid rgba(115,143,173,.12);font-size:11px;letter-spacing:.6px;font-weight:800;color:#aab3bd}
-.system-status-live{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.35px;color:#92abc4}
-.system-status-live:before{content:"";width:6px;height:6px;border-radius:50%;background:#7e9fbd;display:inline-block}
-.sys-resources{display:flex;flex-direction:column}
-.sys-resource{padding:10px 0 7px;border-bottom:1px solid rgba(125,148,170,.13)}
-.sys-resource-top{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:10px;direction:ltr}
-.sys-gauge{--percent:0;position:relative;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--sys-accent,#86a6c8) var(--percent),#2a3038 0);flex-shrink:0}
-.sys-gauge:before{content:"";position:absolute;inset:4px;border-radius:50%;background:#14171c}
-.sys-gauge .material-symbols-outlined{position:relative;font-size:17px;color:#a4afbb;line-height:1}
-.sys-resource-copy{min-width:0;direction:ltr;text-align:left}
-.sys-resource-label{font-size:12px;font-weight:750;color:#dce1e6;line-height:1.35}
-.sys-resource-meta{font-size:10px;color:#8e98a3;line-height:1.5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sys-resource-value{font-size:12px;font-weight:750;color:#dce1e6;white-space:nowrap;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
-.sys-sparkline{display:block;width:100%;height:24px;margin-top:4px;overflow:visible}
-.sys-sparkline polyline{fill:none;stroke:var(--sys-accent,#86a6c8);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.88;vector-effect:non-scaling-stroke}
-.sys-connection-block{padding:12px 0 10px;border-bottom:1px solid rgba(125,148,170,.13)}
-.sys-section-title{font-size:11px;font-weight:800;letter-spacing:.55px;color:#aab3bd;margin-bottom:11px}
-.sys-connection-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sys-connection{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
-.sys-connection-label{display:flex;align-items:center;gap:6px;font-size:11px;color:#8ca9c8;font-weight:700}
-.sys-connection-label .material-symbols-outlined{font-size:14px}
-.sys-connection-label.udp{color:#9ab2ce}
-.sys-connection-value{font-size:18px;font-weight:800;color:#e2e6ea;font-variant-numeric:tabular-nums;line-height:1.3}
-.sys-connection-track{height:5px;width:100%;display:flex;overflow:hidden;border-radius:999px;margin-top:11px;background:#282d34}
-.sys-connection-track span{display:block;height:100%;transition:none}
-.sys-tcp-fill{background:#7899bd}.sys-udp-fill{background:#8caac9}
-.sys-ip-block{padding-top:12px}
-.sys-ip-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
-.sys-ip-toggle{width:28px;height:26px;display:grid;place-items:center;padding:0;background:transparent;color:#8e98a3;border:0;border-radius:7px;cursor:pointer}
-.sys-ip-toggle:hover{background:rgba(130,157,186,.1);color:#b4c9df}
-.sys-ip-row{min-height:35px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;border-bottom:1px solid rgba(125,148,170,.13);font-size:11px;color:#8e98a3}
-.sys-ip-row:last-child{border-bottom:0}
-.sys-ip-value{color:#c9d0d7;font-weight:650;letter-spacing:.2px;direction:ltr;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.system-status-card .system-status-live,.system-status-card .sys-gauge,.system-status-card .sys-sparkline polyline,.system-status-card .sys-connection-track span{animation:none!important;box-shadow:none!important}
-[data-theme="light"] .system-status-card{background:#ffffff!important;border-color:#d5e3d8!important;color:#354139}
-[data-theme="light"] .system-status-head,[data-theme="light"] .sys-section-title{color:#6c7a70;border-color:#e6eee8}
-[data-theme="light"] .system-status-live{color:#6f987c}
-[data-theme="light"] .system-status-live:before{background:#80a88f}
-[data-theme="light"] .sys-gauge{background:conic-gradient(var(--sys-accent,#80a88f) var(--percent),#e7eee9 0)}
-[data-theme="light"] .sys-gauge:before{background:#ffffff}
-[data-theme="light"] .sys-gauge .material-symbols-outlined{color:#789282}
-[data-theme="light"] .sys-resource{border-color:#e7eee9}
-[data-theme="light"] .sys-resource-label,[data-theme="light"] .sys-resource-value{color:#38443c}
-[data-theme="light"] .sys-resource-meta{color:#7a877e}
-[data-theme="light"] .sys-connection-block{border-color:#e7eee9}
-[data-theme="light"] .sys-connection-label{color:#719980}
-[data-theme="light"] .sys-connection-label.udp{color:#6d9790}
-[data-theme="light"] .sys-connection-value{color:#354139}
-[data-theme="light"] .sys-connection-track{background:#e7eee9}
-[data-theme="light"] .sys-tcp-fill{background:#80a88f}[data-theme="light"] .sys-udp-fill{background:#8aaca3}
-[data-theme="light"] .sys-ip-row{border-color:#e7eee9;color:#7a877e}
-[data-theme="light"] .sys-ip-value{color:#4d5b51}
-[data-theme="light"] .sys-ip-toggle{color:#7a877e}
-[data-theme="light"] .sys-ip-toggle:hover{background:#edf4ef;color:#5d8169}
-@media(max-width:480px){.system-status-card{padding:13px 12px 10px!important}.sys-resource-top{grid-template-columns:40px minmax(0,1fr) auto;gap:8px}.sys-gauge{width:38px;height:38px}.sys-resource-value{font-size:11px}.sys-resource-label{font-size:11px}}
-
-/* Hardware-accelerated compositing for elements that actually move.
-   Avoid promoting every card: too many GPU layers can hurt mobile devices. */
-.sidebar,.modal-c,.toast,.login-card{
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;
-}
-@media(min-width:901px){.sidebar{transform:translate3d(0,0,0)}}
-@media(max-width:900px){
-  .sidebar{transform:translate3d(100%,0,0);will-change:transform;}
-  .sidebar.open{transform:translate3d(0,0,0)}
-  .sidebar-backdrop.show{will-change:opacity}
-}
-.modal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-.modal.show{will-change:opacity}
-.modal.show .modal-c{transform:translateZ(0);will-change:transform,opacity}
-.toast.show{will-change:transform,opacity}
-.dot{transform:translateZ(0);will-change:opacity}
-.sys-gauge,.sys-connection-track span{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
-/* Animate only compositor-friendly properties on frequently interactive controls. */
-.nav-item,.btn,.lang-btn,.modal-x,.theme-dot,.sys-ip-toggle{
-  transition-property:transform,opacity,color,background-color,border-color;
-  transition-duration:.18s;
-}
-/* Less work on small screens and devices that ask for reduced motion. */
-@media(max-width:900px),(prefers-reduced-motion:reduce){
-  .panel,.stat{animation:none!important}
-  .modal-c{animation:fadeIn .16s ease-out}
-  .bg-grid{animation:none!important}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
-
 </style>
 </head>
 <body>
 
-<canvas id="particles"></canvas>
-
-<!-- Live animated background (matches /sub) -->
-<div class="bg-fx"></div>
-<div class="bg-grid"></div>
-
 <!-- ═══════ LOGIN ═══════ -->
 <div class="login-wrap" id="login-wrap" style="display:none">
-  <div class="login-bg">
-    <canvas id="shader-canvas"></canvas>
-  </div>
   <div class="login-card">
     <div class="login-header">
       <img src="/static/spider-logo.svg" alt="Spider" onerror="this.style.display='none'" style="width:96px;height:96px;margin-bottom:6px">
@@ -1965,7 +1835,11 @@ html[data-theme="light"] body{background:#f3f6f4;color:#354139}
           <div class="settings-inner-block">
             <div class="panel-h"><span class="glow" data-i18n="panelUpdate">بروزرسانی پنل</span></div>
             <div class="px-hint" data-i18n="panelUpdateHint">با زدن این دکمه، آخرین نسخه ریپو از GitHub دریافت و روی سرور نصب می‌شود (amirh00sain/SpiderPanel). بعد از اتمام، پنل را در Railway ری‌استارت/ری‌دپلوی کنید تا نسخه جدید اعمال شود.</div>
-            <button class="btn btn-p" style="width:100%;margin-top:10px" id="upd-btn" onclick="runPanelUpdate()"><span data-i18n="updatePanel">بروزرسانی</span></button>
+            <div id="upd-ver" style="font-size:11px;color:var(--txt2);margin-top:8px;line-height:1.8"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="btn btn-g" style="flex:1" type="button" id="upd-check-btn" onclick="checkPanelUpdate()"><span data-i18n="checkUpdate">بررسی نسخه</span></button>
+              <button class="btn btn-p" style="flex:2" type="button" id="upd-btn" onclick="runPanelUpdate()"><span data-i18n="updatePanel">بروزرسانی</span></button>
+            </div>
             <pre id="upd-log" dir="ltr" style="display:none;margin-top:10px;padding:10px;border-radius:8px;background:var(--bg2,#111);color:var(--green);font-size:11px;max-height:220px;overflow-y:auto;white-space:pre-wrap;font-family:monospace"></pre>
           </div>
           <div class="settings-inner-block">
@@ -2095,15 +1969,6 @@ html[data-theme="light"] body{background:#f3f6f4;color:#354139}
         .px-card.open .px-body{display:block}
         .px-rows{margin-top:4px}
         .px-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-        .px-users{margin-top:12px;border-top:1px dashed var(--border);padding-top:10px}
-        .px-users-list{max-height:270px;overflow-y:auto;border:1px solid var(--border);border-radius:10px;background:var(--bg);margin-top:8px;padding:6px}
-        .px-users-list::-webkit-scrollbar{width:8px}
-        .px-users-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
-        .px-urow{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:8px;cursor:pointer;font-size:12px}
-        .px-urow:hover{background:rgba(43,127,255,.07)}
-        .px-urow input{accent-color:var(--nav-color);width:15px;height:15px;cursor:pointer}
-        .px-urow .uname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txt)}
-        .px-usearch{width:100%;margin-top:8px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--txt);font-size:12px;box-sizing:border-box}
         .px-empty{padding:22px 10px;text-align:center;color:var(--txt2);font-size:12px;border:1px dashed var(--border);border-radius:12px}
       </style>
       <div class="tab-content hidden" id="tab-proxy">
@@ -2112,7 +1977,7 @@ html[data-theme="light"] body{background:#f3f6f4;color:#354139}
             <span class="glow">🌐 <span data-i18n="proxy.nav">پروکسی خارجی</span></span>
             <span id="px-count" class="badge" style="margin-right:auto"></span>
           </div>
-          <div class="px-hint" data-i18n="proxy.intro">پروکسی SOCKS5 یا HTTP اضافه کنید و ترافیک هر کاربر را از آن عبور دهید. برای هر کاربرِ تیک‌خورده یک کانفیگ جدید TLS+WS ساخته می‌شود که فقط از همین پروکسی خروج می‌زند.</div>
+          <div class="px-hint" data-i18n="proxy.intro">پروکسی SOCKS5 یا HTTP اضافه کنید. برای هر پروکسی یک اینباند TLS+WS روی دامنه جاری پنل ساخته می‌شود؛ کاربران را با انتخاب همان اینباند در فرم ساخت یا ویرایش کاربر وصل کنید.</div>
 
           <button class="btn btn-p" style="width:100%;margin-top:12px" type="button" onclick="pxToggleAdd(this)" aria-expanded="false">
             <span class="material-symbols-outlined" style="font-size:16px">add_circle</span>
@@ -2373,7 +2238,7 @@ IMPLEMENTATION RULES
       <div class="f-r">
         <div class="f-g"><label data-i18n="username">نام کاربری</label><input type="text" id="cu-name" placeholder="خالی = تصادفی"></div>
         <div class="f-g"><label data-i18n="conn">اتصال همزمان</label><input type="number" id="cu-conn" placeholder="∞ نامحدود"></div>
-        <div class="f-g"><label data-i18n="speedLimit">محدودیت سرعت (Mbps - صفر=نامحدود)</label><input type="number" id="cu-speed" min="0" step="0.1" value="0"><div class="px-hint" data-i18n="speedLimitHint">سقف سرعت مجموع اتصال‌های WebSocket این کاربر؛ صفر یعنی نامحدود.</div></div>
+        <div class="f-g speed-limit-field"><label data-i18n="speedLimit">محدودیت سرعت (Mbps)</label><input type="number" id="cu-speed" min="0" step="0.1" value="0"><div class="px-hint" data-i18n="speedLimitHint">سقف مجموع سرعت اتصال‌های رله‌شده WebSocket/XHTTP؛ صفر یعنی نامحدود.</div></div>
     </div>
     <div class="f-r">
       <div class="f-g"><label data-i18n="volume">حجم</label><input type="number" id="cu-vol" placeholder="∞ نامحدود"></div>
@@ -2402,7 +2267,7 @@ IMPLEMENTATION RULES
     <div class="f-g"><label data-i18n="volEdit">حجم (GB - ۰=نامحدود)</label><input type="number" id="eu-vol" value="20"></div>
     <div class="f-g"><label data-i18n="daysEdit">روز اعتبار (۰=نامحدود)</label><input type="number" id="eu-exp" value="30"></div>
     <div class="f-g"><label data-i18n="conn">اتصال همزمان</label><input type="number" id="eu-conn" value="0" placeholder="۰=نامحدود"></div>
-    <div class="f-g"><label data-i18n="speedLimit">محدودیت سرعت (Mbps - صفر=نامحدود)</label><input type="number" id="eu-speed" min="0" step="0.1" value="0"></div>
+    <div class="f-g speed-limit-field"><label data-i18n="speedLimit">محدودیت سرعت (Mbps)</label><input type="number" id="eu-speed" min="0" step="0.1" value="0"><div class="px-hint" data-i18n="speedLimitHint">سقف مجموع سرعت اتصال‌های رله‌شده WebSocket/XHTTP؛ صفر یعنی نامحدود.</div></div>
     <div class="f-g"><label data-i18n="status">وضعیت</label><select id="eu-status"><option value="active" data-i18n="active">فعال</option><option value="inactive" data-i18n="inactive">غیرفعال</option></select></div>
     <div class="f-g" style="display:flex;align-items:center;gap:8px">
       <input type="checkbox" id="eu-reset" style="width:auto">
@@ -2583,7 +2448,7 @@ var I18N = {
     'red': 'قرمز', 'green': 'سبز', 'blue': 'آبی',
     'panelMusic': 'موسیقی پنل', 'bgMusic': 'موسیقی پس‌زمینه', 'toggleMusic': 'روشن/خاموش', 'changePassword': 'تغییر رمز عبور', 'curPass': 'رمز فعلی', 'newPass': 'رمز جدید', 'changePassBtn': 'تغییر رمز',
     'contactSub': 'برای پشتیبانی و همکاری با من در ارتباط باشید',
-    'createUser': 'ایجاد کاربر جدید', 'editUser': 'ویرایش کاربر', 'username': 'نام کاربری', 'conn': 'اتصال همزمان', 'speedLimit': 'محدودیت سرعت (Mbps - صفر=نامحدود)', 'speedLimitHint': 'سقف سرعت مجموع اتصال‌های WebSocket این کاربر؛ صفر یعنی نامحدود.', 'volume': 'حجم', 'unit': 'واحد', 'expire': 'اعتبار', 'day': 'روز', 'month': 'ماه',
+    'createUser': 'ایجاد کاربر جدید', 'editUser': 'ویرایش کاربر', 'username': 'نام کاربری', 'conn': 'اتصال همزمان', 'speedLimit': 'محدودیت سرعت (Mbps)', 'speedLimitHint': 'سقف مجموع سرعت اتصال‌های رله‌شده WebSocket/XHTTP؛ صفر یعنی نامحدود.', 'volume': 'حجم', 'unit': 'واحد', 'expire': 'اعتبار', 'day': 'روز', 'month': 'ماه',
     'inboundsMulti': 'اینباندها (چندتایی)', 'noInboundOpt': 'اینباندی وجود ندارد',
     'inboundPickHint': 'برای هر اینباند، گزینه‌های مخصوصش نمایش داده می‌شود: Worker → انتخاب کشور؛ VLESS غیرپیش‌فرض → Cloudflare و Railway؛ Reality → بدون گزینه.',
     'workerCountries': 'کشورهای چندمنطقه‌ای (برای هر کشور یک تیک فعال کنید):',
@@ -2612,7 +2477,7 @@ var I18N = {
     'goodMorning': 'صبح بخیر', 'goodNoon': 'ظهر بخیر', 'goodEvening': 'عصر بخیر', 'admin': 'ادمین',
     'toast.userCreated': 'کاربر ایجاد شد', 'toast.userUpdated': 'کاربر بروزرسانی شد', 'toast.userDeleted': 'کاربر حذف شد', 'toast.userToggled': 'وضعیت کاربر تغییر کرد', 'toast.inboundSaved': 'اینباند ذخیره شد', 'toast.domainSaved': 'دامنه ذخیره شد', 'toast.passChanged': 'رمز تغییر کرد', 'toast.err': 'خطا',
     'backupDownloaded': 'بکاپ دانلود شد', 'restoreDone': 'بازیابی انجام شد', 'restoreFailed': 'بازیابی ناموفق', 'restoreUploading': 'در حال آپلود و بازیابی...', 'restoreUploadFailed': 'آپلود ناموفق',
-    'panelUpdate': 'بروزرسانی پنل', 'updatePanel': 'بروزرسانی', 'confirmUpdate': 'پنل از GitHub بروزرسانی شود؟', 'updateStarted': 'بروزرسانی شروع شد...', 'updateDone': 'بروزرسانی کامل شد — پنل را ری‌استارت کنید', 'updateFailed': 'بروزرسانی ناموفق بود', 'updateRunning': 'در حال بروزرسانی...',
+    'panelUpdate': 'بروزرسانی پنل', 'updatePanel': 'بروزرسانی', 'checkUpdate': 'بررسی نسخه', 'confirmUpdate': 'پنل از GitHub بروزرسانی شود؟', 'updateStarted': 'بروزرسانی شروع شد...', 'updateDone': 'بروزرسانی کامل شد — پنل را ری‌استارت کنید', 'updateFailed': 'بروزرسانی ناموفق بود', 'updateRunning': 'در حال بروزرسانی...',
     'panelUpdateHint': 'با زدن این دکمه، آخرین نسخه ریپو از GitHub دریافت و روی سرور نصب می‌شود (amirh00sain/SpiderPanel). بعد از اتمام، پنل را در Railway ری‌استارت کنید تا نسخه جدید اعمال شود.',
     'backupRestore': 'بکاپ و بازیابی', 'backup': 'بکاپ', 'restore': 'ریستور', 'backupRestoreHint': 'بکاپ کامل شامل: کاربران، لینک‌ها، اینباندها، اسکن‌ها، تنظیمات، رمز، گروه‌ها و تنظیمات Worker. فایل JSON دانلود/آپلود می‌شود.',
     'autoconfig': 'پیکربندی خودکار', 'tunnel': 'تونل', 'qrCode': 'کد QR',
@@ -2651,7 +2516,7 @@ var I18N = {
     'red': 'Red', 'green': 'Green', 'blue': 'Blue',
     'panelMusic': 'Panel Music', 'bgMusic': 'Background Music', 'toggleMusic': 'On/Off', 'changePassword': 'Change Password', 'curPass': 'Current Password', 'newPass': 'New Password', 'changePassBtn': 'Change Password',
     'contactSub': 'Get in touch with me for support and collaboration',
-    'createUser': 'Create New User', 'editUser': 'Edit User', 'username': 'Username', 'conn': 'Concurrent Connections', 'speedLimit': 'Speed limit (Mbps - 0=unlimited)', 'speedLimitHint': 'Combined bandwidth cap for this user’s WebSocket connections; 0 means unlimited.', 'volume': 'Traffic', 'unit': 'Unit', 'expire': 'Expiry', 'day': 'Day', 'month': 'Month',
+    'createUser': 'Create New User', 'editUser': 'Edit User', 'username': 'Username', 'conn': 'Concurrent Connections', 'speedLimit': 'Speed limit (Mbps)', 'speedLimitHint': 'Combined WebSocket/XHTTP relay cap; 0 means unlimited.', 'volume': 'Traffic', 'unit': 'Unit', 'expire': 'Expiry', 'day': 'Day', 'month': 'Month',
     'inboundsMulti': 'Inbounds (multi-select)', 'noInboundOpt': 'No inbounds available',
     'inboundPickHint': 'Each inbound shows its own options: Worker → choose countries, TLS → scanned-IP switch, Reality → no extra options.',
     'workerCountries': 'Multi-location countries (tick each country you want):',
@@ -2680,7 +2545,7 @@ var I18N = {
     'goodMorning': 'Good morning', 'goodNoon': 'Good afternoon', 'goodEvening': 'Good evening', 'admin': 'Admin',
     'toast.userCreated': 'User created', 'toast.userUpdated': 'User updated', 'toast.userDeleted': 'User deleted', 'toast.userToggled': 'User status changed', 'toast.inboundSaved': 'Inbound saved', 'toast.domainSaved': 'Domain saved', 'toast.passChanged': 'Password changed', 'toast.err': 'Error',
     'backupDownloaded': 'Backup downloaded', 'restoreDone': 'Restore completed', 'restoreFailed': 'Restore failed', 'restoreUploading': 'Uploading and restoring...', 'restoreUploadFailed': 'Upload failed',
-    'panelUpdate': 'Panel Update', 'updatePanel': 'Update', 'confirmUpdate': 'Update the panel from GitHub?', 'updateStarted': 'Update started...', 'updateDone': 'Update finished — restart the panel to apply', 'updateFailed': 'Update failed', 'updateRunning': 'Updating...',
+    'panelUpdate': 'Panel Update', 'updatePanel': 'Update', 'checkUpdate': 'Check version', 'confirmUpdate': 'Update the panel from GitHub?', 'updateStarted': 'Update started...', 'updateDone': 'Update finished — restart the panel to apply', 'updateFailed': 'Update failed', 'updateRunning': 'Updating...',
     'panelUpdateHint': 'Clicking this pulls the latest repo from GitHub and installs it on the server (amirh00sain/SpiderPanel). When finished, restart the panel on Railway to apply the new version.',
     'backupRestore': 'Backup & Restore', 'backup': 'Backup', 'restore': 'Restore', 'backupRestoreHint': 'Full backup includes: users, links, inbounds, scans, settings, password, groups, and Worker config. JSON file is downloaded/uploaded.',
     'autoconfig': 'Auto Config', 'tunnel': 'Tunnel', 'qrCode': 'QR Code',
@@ -2707,7 +2572,7 @@ Object.assign(I18N.fa, {
   'notif.nav': 'اعلان‌ها', 'notif.title': 'اعلان‌ها', 'notif.refresh': 'بروزرسانی', 'notif.date': 'تاریخ و ساعت',
   'notif.hint': 'اعلان‌ها از مخزن گیت‌هاب دریافت می‌شوند. هر اعلان یک آکاردیون است؛ با زدن روی موضوع، متن کامل به همراه تاریخ و ساعت نمایش داده می‌شود.',
   'notif.loading': 'در حال دریافت اعلان‌ها...', 'notif.empty': 'فعلاً اعلانی ثبت نشده است.', 'notif.error': 'دریافت اعلان‌ها از گیت‌هاب ممکن نشد.',
-  'proxy.nav': 'پروکسی', 'proxy.detectedCountry': 'کشور شناسایی‌شده', 'proxy.intro': 'پروکسی SOCKS5 یا HTTP اضافه کنید و ترافیک هر کاربر را از آن عبور دهید. برای هر کاربرِ تیک‌خورده یک کانفیگ جدید TLS+WS ساخته می‌شود که فقط از همین پروکسی خروج می‌زند.',
+  'proxy.nav': 'پروکسی', 'proxy.detectedCountry': 'کشور شناسایی‌شده', 'proxy.intro': 'پروکسی SOCKS5 یا HTTP اضافه کنید. برای هر پروکسی یک اینباند TLS+WS روی دامنه جاری پنل ساخته می‌شود؛ کاربرها را با انتخاب همان اینباند در فرم ساخت یا ویرایش کاربر وصل کنید.', 'proxy.inboundHint': 'ترافیک این اینباند از پروکسی انتخاب‌شده عبور می‌کند.',
   'proxy.add': 'افزودن پروکسی', 'proxy.host': 'آدرس (IP یا دامنه)', 'proxy.port': 'پورت', 'proxy.country': 'کشور (اختیاری)',
   'proxy.auth': 'نام کاربری و رمز (اختیاری)', 'proxy.authHint': 'اگر پروکسی شناسه نمی‌خواهد این بخش را باز نکنید.', 'proxy.username': 'Username', 'proxy.password': 'Password',
   'proxy.test': 'تست اتصال', 'proxy.testing': 'در حال تست', 'proxy.save': 'ذخیره پروکسی', 'proxy.working': 'سالم ✓', 'proxy.notWorking': 'کار نمی‌کند',
@@ -2744,7 +2609,7 @@ Object.assign(I18N.en, {
   'notif.nav': 'Notifications', 'notif.title': 'Notifications', 'notif.refresh': 'Refresh', 'notif.date': 'Date & time',
   'notif.hint': 'Announcements are pulled from the GitHub repository. Each one is an accordion: click the subject to reveal the full text together with its date and time.',
   'notif.loading': 'Loading announcements...', 'notif.empty': 'No announcements published yet.', 'notif.error': 'Could not fetch announcements from GitHub.',
-  'proxy.nav': 'Proxies', 'proxy.detectedCountry': 'Detected country', 'proxy.intro': 'Add a SOCKS5 or HTTP proxy and route each user\'s traffic through it. Every ticked user gets a brand-new TLS+WS config that only ever exits through this proxy.',
+  'proxy.nav': 'Proxies', 'proxy.detectedCountry': 'Detected country', 'proxy.intro': 'Add a SOCKS5 or HTTP proxy. Each proxy creates a TLS+WS inbound on the panel’s current domain; assign it by selecting that inbound when creating or editing a user.', 'proxy.inboundHint': 'Traffic on this inbound exits through the selected proxy.',
   'proxy.add': 'Add proxy', 'proxy.host': 'Host (IP or domain)', 'proxy.port': 'Port', 'proxy.country': 'Country (optional)',
   'proxy.auth': 'Username & password (optional)', 'proxy.authHint': 'Leave this collapsed if the proxy needs no credentials.', 'proxy.username': 'Username', 'proxy.password': 'Password',
   'proxy.test': 'Test connection', 'proxy.testing': 'Testing', 'proxy.save': 'Save proxy', 'proxy.working': 'Working ✓', 'proxy.notWorking': 'Not working',
@@ -2813,9 +2678,6 @@ async function api(url, opts) {
     opts.body = JSON.stringify(opts.body);
   }
   var r = await fetch(url, opts);
-  if (opts.method && opts.method.toUpperCase() !== 'GET') {
-    setTimeout(function(){ window.dispatchEvent(new CustomEvent('spider:data-changed',{detail:{url:url,method:opts.method}})); }, 0);
-  }
   if (!r.ok) {
     var txt = await r.text();
     try { var j = JSON.parse(txt); throw new Error(j.detail || j.error || txt); } catch(e) { if (e.message && e.message !== txt) throw e; }
@@ -2860,61 +2722,16 @@ function toast(msg, type) {
 })();
 
 // ─── Init ───
+// The particle canvas (2D) and the login shader (WebGL) used to start here.
+// Both were hidden by CSS yet still ran an infinite requestAnimationFrame loop
+// per frame on the main thread / GPU, so they were removed outright instead of
+// being "switched off" while their loops kept burning battery.
 document.addEventListener('DOMContentLoaded', function() {
   loadAccent();
   loadTheme();
-  // The dashboard uses the dedicated /login route. Do not start hidden
-  // WebGL/Canvas animation loops on the admin page.
   applyLang();
   checkAuth();
 });
-
-function initParticles() {
-  var c = $id('particles'), ctx = c.getContext('2d');
-  var w, h, particles = [];
-  function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
-
-  for (var i = 0; i < 40; i++) {
-    particles.push({
-      x: Math.random() * w, y: Math.random() * h,
-      r: Math.random() * 1.5 + 0.5,
-      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
-      alpha: Math.random() * 0.5 + 0.1
-    });
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    var color = getComputedStyle(document.documentElement).getPropertyValue('--neon').trim();
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = color.replace(')', ', ' + p.alpha + ')').replace('rgb', 'rgba');
-      if (color.startsWith('#')) {
-        var hex = color.replace('#', '');
-        var rr = parseInt(hex.substring(0,2), 16), gg = parseInt(hex.substring(2,4), 16), bb = parseInt(hex.substring(4,6), 16);
-        ctx.fillStyle = 'rgba(' + rr + ',' + gg + ',' + bb + ',' + p.alpha + ')';
-      }
-      ctx.fill();
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      // Draw connections
-      for (var j = i + 1; j < particles.length; j++) {
-        var p2 = particles[j], dx = p.x - p2.x, dy = p.y - p2.y, dist = Math.sqrt(dx*dx+dy*dy);
-        if (dist < 120) {
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = 'rgba(255,255,255,' + (0.03 * (1 - dist/120)) + ')';
-          ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
 
 // ─── Theme ───
 // ─── Light / Dark mode ───
@@ -2955,12 +2772,10 @@ function showLogin() { $id('login-wrap').style.display = 'flex'; $id('app-wrap')
 function showApp() {
   $id('login-wrap').style.display = 'none';
   $id('app-wrap').classList.add('active');
-  // Load only the active dashboard on startup. Other tabs load their data
-  // when opened, avoiding a burst of API requests and large DOM renders.
+  // Opening the panel fetches the dashboard only. Every other tab loads the
+  // first time it is opened (see switchTab), which keeps the initial request
+  // burst — and the DOM built from its responses — to a single screen.
   loadAll();
-  // Notifications are fetched on demand when their tab is opened.
-  NOTIF_DATA = null;
-  NOTIF_PENDING = null;
   updateGreeting();
 }
 
@@ -2975,45 +2790,6 @@ async function doLogin() {
     errText.textContent = e.message || 'Connection error'; errEl.classList.add('show');
   }
   btn.disabled = false; btnText.classList.remove('hidden'); btnSpinner.classList.remove('show');
-}
-
-// ─── Shader Canvas Init ───
-function initLoginShader() {
-  var canvas = $id('shader-canvas');
-  if (!canvas) return;
-  function syncSize() {
-    var w = canvas.clientWidth || 1280;
-    var h = canvas.clientHeight || 720;
-    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-  }
-  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(syncSize).observe(canvas);
-  syncSize();
-  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-  if (!gl) return;
-  var vs = 'attribute vec2 a_position; varying vec2 v_texCoord; void main() { v_texCoord = a_position * 0.5 + 0.5; gl_Position = vec4(a_position, 0.0, 1.0); }';
-  var fs = 'precision highp float; uniform float u_time; uniform vec2 u_resolution; uniform vec2 u_mouse; varying vec2 v_texCoord; float noise(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); } float smoothNoise(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f); float a = noise(i); float b = noise(i + vec2(1.0, 0.0)); float c = noise(i + vec2(0.0, 1.0)); float d = noise(i + vec2(1.0, 1.0)); return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); } void main() { vec2 uv = v_texCoord; vec2 p1 = uv * 3.0 + u_time * 0.05; vec2 p2 = uv * 5.0 - u_time * 0.08; float n = smoothNoise(p1) * 0.5 + smoothNoise(p2) * 0.3; float wave = sin(uv.y * 10.0 + n * 5.0 + u_time * 0.2) * 0.5 + 0.5; wave *= sin(uv.x * 8.0 - u_time * 0.1) * 0.5 + 0.5; vec3 c1 = vec3(0.047, 0.047, 0.047); vec3 c2 = vec3(0.106, 0.106, 0.106); vec3 fc = mix(c1, c2, wave * 0.4); float d = distance(uv, u_mouse / u_resolution); fc += 0.03 * (1.0 - smoothstep(0.0, 0.5, d)); gl_FragColor = vec4(fc, 1.0); }';
-  function cs(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
-  var prog = gl.createProgram(); gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); gl.useProgram(prog);
-  var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-  var pos = gl.getAttribLocation(prog, 'a_position'); gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-  var uTime = gl.getUniformLocation(prog, 'u_time'), uRes = gl.getUniformLocation(prog, 'u_resolution'), uMouse = gl.getUniformLocation(prog, 'u_mouse');
-  var mouse = {x: canvas.width / 2, y: canvas.height / 2};
-  canvas.addEventListener('mousemove', function(e) {
-    var rect = canvas.getBoundingClientRect();
-    if (rect.width && rect.height) {
-      mouse.x = (e.clientX - rect.left) / rect.width * canvas.width;
-      mouse.y = (1.0 - (e.clientY - rect.top) / rect.height) * canvas.height;
-    }
-  });
-  (function render(t) {
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    if (uTime) gl.uniform1f(uTime, t * 0.001);
-    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
-    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(render);
-  })(0);
 }
 
 async function doLogout() {
@@ -3110,18 +2886,10 @@ function switchTab(tab, el) {
   requestAnimationFrame(resetScroll);
 
   stopLiveStats();
-  if (tab === 'dashboard') loadDashboard();
-  if (tab === 'users') loadUsers();
-  if (tab === 'inbounds') loadInbounds();
-  if (tab === 'scanner') scnInit();
-  if (tab === 'worker') loadWorker();
-  if (tab === 'tunnel') loadTunnel();
-  if (tab === 'nodes') loadNodes();
-  if (tab === 'bot') loadBot();
-  if (tab === 'proxy') loadProxies();
-  if (tab === 'advanced') { loadAdvancedInbounds(); loadHelpSettings(); loadHelpLogs(); startHelpLogsAuto(); }
-  else stopHelpLogsAuto();
-  if (tab === 'notif') loadNotifs(false);
+  if (tab !== 'advanced') stopHelpLogsAuto();
+  // Data for this tab arrives now, not at panel open. `TAB_LOADERS` coalesces
+  // repeat visits so a quick tab flip cannot stack duplicate requests.
+  loadTabData(tab);
   closeSidebar();
 }
 
@@ -3129,53 +2897,92 @@ function openSidebar() { $id('sidebar').classList.add('open'); $id('sidebar-back
 function closeSidebar() { $id('sidebar').classList.remove('open'); $id('sidebar-backdrop').classList.remove('show'); }
 function toggleSidebar() { $id('sidebar').classList.contains('open') ? closeSidebar() : openSidebar(); }
 
-// Instant UI refresh after create/update/delete actions without manual refresh
-window.addEventListener('spider:data-changed', function(e){
-  var u=e.detail.url||'';
-  if (u.includes('/users')) { if(typeof loadUsers==='function') loadUsers(); }
-  else if (u.includes('/inbounds')) { if(typeof loadInbounds==='function') loadInbounds(); }
-  else if (u.includes('/nodes')) { if(typeof loadNodes==='function') loadNodes(); }
-  else if (u.includes('/proxies')) { if(typeof loadProxies==='function') loadProxies(); }
-  if(typeof loadDashboard==='function') loadDashboard();
-});
-
 // ─── Load All ───
 async function loadAll() {
-  // The dashboard is the default active tab. switchTab() loads each other
-  // section on demand, so preloading everything here only creates extra work.
+  // Only the dashboard is pulled when the panel opens. Everything else is
+  // fetched by switchTab() the first time its tab is shown, so opening the
+  // panel costs one request instead of five and never builds hidden DOM.
   loadDashboard();
+}
+
+// Per-tab loaders. Each visit re-runs its loader (data stays current) but two
+// visits that overlap share one in-flight request instead of doubling up.
+var TAB_BUSY = {};
+var TAB_LOADERS = {
+  dashboard: function () { return loadDashboard(); },
+  // Users needs the inbound list for the create/edit pickers and the Worker
+  // country pool for the Worker inbound's chips, both of which used to arrive
+  // with loadAll() and would otherwise render empty on first open.
+  users: function () { return Promise.all([loadUsers(), ensureInbounds(), ensureWorkerPool()]); },
+  inbounds: function () { return loadInbounds(); },
+  scanner: function () { return scnInit(); },
+  worker: function () { return loadWorker(); },
+  tunnel: function () { return loadTunnel(); },
+  nodes: function () { return loadNodes(); },
+  bot: function () { return loadBot(); },
+  proxy: function () { return loadProxies(); },
+  advanced: function () {
+    startHelpLogsAuto();
+    return Promise.all([loadAdvancedInbounds(), loadHelpSettings(), loadHelpLogs()]);
+  },
+  settings: function () { return Promise.all([checkPanelUpdate(), loadServerInfo()]); },
+  notif: function () { return loadNotifs(false); },
+  help: function () {},
+  contact: function () {}
+};
+
+function loadTabData(tab) {
+  var run = TAB_LOADERS[tab];
+  if (!run) return Promise.resolve();
+  if (TAB_BUSY[tab]) return TAB_BUSY[tab];
+  var p = Promise.resolve()
+    .then(run)
+    .catch(function (e) { console.error('tab load failed:', tab, e); })
+    .then(function (v) { TAB_BUSY[tab] = null; return v; });
+  TAB_BUSY[tab] = p;
+  return p;
+}
+
+// The inbound picker must not render before ALL_IB is filled. The memo only
+// coalesces requests that are still in flight; it is cleared on settle so the
+// next visit fetches again instead of serving a stale list.
+var INBOUNDS_PROMISE = null;
+function ensureInbounds() {
+  if (INBOUNDS_PROMISE) return INBOUNDS_PROMISE;
+  INBOUNDS_PROMISE = settle(function () { return loadInbounds(); }, function (v) { INBOUNDS_PROMISE = null; return v; });
+  return INBOUNDS_PROMISE;
+}
+
+var WORKER_POOL_PROMISE = null;
+function ensureWorkerPool() {
+  if (WORKER_POOL_PROMISE) return WORKER_POOL_PROMISE;
+  if (typeof loadWorker !== 'function') return Promise.resolve();
+  WORKER_POOL_PROMISE = settle(loadWorker, function (v) { WORKER_POOL_PROMISE = null; return v; });
+  return WORKER_POOL_PROMISE;
+}
+
+// Run `fn` and always release its memo slot when the call settles.
+function settle(fn, done) {
+  return Promise.resolve()
+    .then(fn)
+    .then(done, function (e) { done(undefined); throw e; });
 }
 
 // ─── Dashboard ───
 var liveInterval = null;
+var DASH_HISTORY = {cpu: [], ram: [], swap: [], disk: []};
+var DASH_IPS_VISIBLE = false;
+var DASH_IP_VALUES = {ipv4: '', ipv6: ''};
 
 function startLiveStats() {
   if (liveInterval) clearInterval(liveInterval);
-  liveInterval = null;
-  // Browsers throttle hidden tabs, but avoid waking the network and JS at all.
-  if (document.hidden) return;
   refreshLiveStats();
-  liveInterval = setInterval(function() {
-    if (!document.hidden) refreshLiveStats();
-  }, 6000);
+  liveInterval = setInterval(refreshLiveStats, 4000);
 }
 
 function stopLiveStats() {
   if (liveInterval) { clearInterval(liveInterval); liveInterval = null; }
 }
-
-// Avoid unnecessary API work and repaints while the browser tab is hidden.
-document.addEventListener('visibilitychange', function() {
-  if (document.hidden) {
-    stopLiveStats();
-    return;
-  }
-  var dash = $id('tab-dashboard');
-  var app = $id('app-wrap');
-  if (dash && !dash.classList.contains('hidden') && app && app.classList.contains('active')) {
-    startLiveStats();
-  }
-});
 
 async function loadDashboard() {
   try {
@@ -3186,122 +2993,95 @@ async function loadDashboard() {
     html += statCard(iconConn, '<span id="dash-conn">' + (s.active_connections || '۰') + '</span>', t('activeConns'));
     html += statCard(iconUptime, '<span id="dash-uptime">...</span>', t('uptime'));
     html += '</div>';
-    var fa = LANG === 'fa';
-    var cpuLabel = fa ? 'پردازنده' : 'CPU';
-    var ramLabel = fa ? 'حافظه رم' : 'RAM';
-    var swapLabel = fa ? 'حافظه مجازی' : 'Swap';
-    var storageLabel = fa ? 'فضای ذخیره‌سازی' : 'Storage';
-    var systemTitle = fa ? 'وضعیت سیستم' : 'SYSTEM STATUS';
-    var connectionTitle = fa ? 'وضعیت اتصالات' : 'CONNECTION STATS';
-    var ipTitle = fa ? 'آدرس‌های IP' : 'IP ADDRESSES';
-    var unavailable = fa ? 'نامشخص' : 'Unavailable';
-    var coresLabel = fa ? 'هسته' : 'Cores';
-    html += '<section class="panel system-status-card" aria-label="System status">';
-    html += '<div class="system-status-head"><span>' + systemTitle + '</span><span class="system-status-live" id="dash-server-status">' + (fa ? 'زنده' : 'LIVE') + '</span></div>';
-    html += '<div class="sys-resources">';
-    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-cpu" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">memory</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + cpuLabel + '</div><div class="sys-resource-meta" id="live-cpu-meta">-- ' + coresLabel + '</div></div><div class="sys-resource-value" id="live-cpu">--%</div></div>' + sparklineSvg('spark-cpu') + '</div>';
-    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-ram" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">memory_alt</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + ramLabel + '</div><div class="sys-resource-meta" id="live-ram">-- / -- GB</div></div><div class="sys-resource-value" id="live-ram-percent">--%</div></div>' + sparklineSvg('spark-ram') + '</div>';
-    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-swap" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">swap_vert</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + swapLabel + '</div><div class="sys-resource-meta" id="live-swap">-- / -- GB</div></div><div class="sys-resource-value" id="live-swap-percent">--%</div></div>' + sparklineSvg('spark-swap') + '</div>';
-    html += '<div class="sys-resource"><div class="sys-resource-top"><div class="sys-gauge" id="gauge-disk" style="--percent:0%;--sys-accent:var(--neon)"><span class="material-symbols-outlined">hard_drive</span></div><div class="sys-resource-copy"><div class="sys-resource-label">' + storageLabel + '</div><div class="sys-resource-meta" id="live-disk">-- / -- GB</div></div><div class="sys-resource-value" id="live-disk-percent">--%</div></div>' + sparklineSvg('spark-disk') + '</div>';
-    html += '</div>';
-    html += '<div class="sys-connection-block"><div class="sys-section-title">' + connectionTitle + '</div><div class="sys-connection-grid">';
-    html += '<div class="sys-connection"><div class="sys-connection-label"><span class="material-symbols-outlined">cable</span>TCP</div><div class="sys-connection-value" id="live-tcp">—</div></div>';
-    html += '<div class="sys-connection"><div class="sys-connection-label udp"><span class="material-symbols-outlined">hub</span>UDP</div><div class="sys-connection-value" id="live-udp">—</div></div>';
-    html += '</div><div class="sys-connection-track"><span class="sys-tcp-fill" id="live-tcp-bar" style="width:50%"></span><span class="sys-udp-fill" id="live-udp-bar" style="width:50%"></span></div></div>';
-    html += '<div class="sys-ip-block"><div class="sys-ip-heading"><div class="sys-section-title" style="margin:0">' + ipTitle + '</div><button class="sys-ip-toggle" type="button" onclick="toggleServerIpVisibility()" title="' + (fa ? 'نمایش یا مخفی کردن آدرس‌ها' : 'Show or hide IP addresses') + '" aria-label="Toggle IP visibility"><span class="material-symbols-outlined" id="server-ip-eye">visibility_off</span></button></div>';
-    html += '<div class="sys-ip-row"><span>IPv4</span><span class="sys-ip-value" id="server-ipv4">' + unavailable + '</span></div>';
-    html += '<div class="sys-ip-row"><span>IPv6</span><span class="sys-ip-value" id="server-ipv6">' + unavailable + '</span></div></div>';
-    html += '<div style="display:none" id="live-uptime">...</div>';
+    html += '<section class="panel dash-system-card">';
+    html += '<div class="ds-title"><span>SYSTEM STATUS</span></div>';
+    html += dashResourceRow('cpu', 'CPU', 'developer_board', '#62c8b2');
+    html += dashResourceRow('ram', 'RAM', 'memory', '#62c8b2');
+    html += dashResourceRow('swap', 'Swap', 'swap_vert', '#62c8b2');
+    html += dashResourceRow('disk', 'Storage', 'storage', '#4489e4');
+    html += '<div class="ds-section"><div class="ds-section-title">CONNECTION STATS</div>';
+    html += '<div class="ds-conn-grid"><div><div class="ds-conn-label"><span class="material-symbols-outlined">cable</span>TCP</div><b class="ds-conn-count" id="ds-tcp">0</b></div>';
+    html += '<div><div class="ds-conn-label udp"><span class="material-symbols-outlined">cable</span>UDP</div><b class="ds-conn-count" id="ds-udp">0</b></div></div>';
+    html += '<div class="ds-conn-bar"><span class="ds-conn-tcp" id="ds-tcp-bar"></span><span class="ds-conn-udp" id="ds-udp-bar"></span></div></div>';
+    html += '<div class="ds-ips"><div class="ds-ips-heading"><div class="ds-section-title" style="margin:0">IP ADDRESSES</div>';
+    html += '<button class="ds-ip-toggle" id="ds-ip-toggle" type="button" onclick="toggleDashIps()" aria-label="Show or hide IP addresses" title="Show or hide IP addresses"><span class="material-symbols-outlined">visibility_off</span></button></div>';
+    html += '<div class="ds-ip-row"><span>IPv4</span><b class="ds-ip-value" id="ds-ipv4">—</b></div>';
+    html += '<div class="ds-ip-row"><span>IPv6</span><b class="ds-ip-value" id="ds-ipv6">—</b></div></div>';
     html += '</section>';
     $id('dashboard-content').innerHTML = html;
-    SERVER_IPS.ipv4 = '';
-    SERVER_IPS.ipv6 = '';
-    serverIpVisible = false;
+    DASH_HISTORY = {cpu: [], ram: [], swap: [], disk: []};
+    DASH_IPS_VISIBLE = false;
     startLiveStats();
   } catch(e) { $id('dashboard-content').innerHTML = '<div class="empty">' + t('errLoadStats') + '</div>'; }
 }
 
-var SERVER_IPS = {ipv4: '', ipv6: ''};
-var serverIpVisible = false;
-var SERVER_HISTORY = {cpu: [], ram: [], swap: [], disk: []};
+function dashResourceRow(key, label, icon, color) {
+  return '<div class="ds-row"><div class="ds-gauge" id="ds-gauge-' + key + '" style="--pct:0;--gauge-color:' + color + '"><span class="material-symbols-outlined">' + icon + '</span></div>' +
+    '<div class="ds-main"><div class="ds-line"><strong>' + label + '</strong><b id="ds-' + key + '-pct">0%</b></div>' +
+    '<div class="ds-sub" id="ds-' + key + '-sub">—</div><svg class="ds-spark" viewBox="0 0 320 24" preserveAspectRatio="none" aria-hidden="true"><polyline id="ds-' + key + '-spark" points="0,12 320,12"></polyline></svg></div></div>';
+}
 
-function sparklineSvg(id) {
-  return '<svg class="sys-sparkline" viewBox="0 0 320 24" preserveAspectRatio="none" aria-hidden="true"><polyline id="' + id + '" points="0,12 320,12"></polyline></svg>';
+function dashSetResource(key, percent, detail) {
+  var pct = Math.max(0, Math.min(100, Number(percent) || 0));
+  var gauge = $id('ds-gauge-' + key); if (gauge) gauge.style.setProperty('--pct', pct);
+  var label = $id('ds-' + key + '-pct'); if (label) label.textContent = pct.toFixed(2).replace(/0+$/, '').replace(/\.$/, '') + '%';
+  var sub = $id('ds-' + key + '-sub'); if (sub) sub.textContent = detail;
+  var history = DASH_HISTORY[key] || (DASH_HISTORY[key] = []);
+  history.push(pct); if (history.length > 32) history.shift();
+  var line = $id('ds-' + key + '-spark');
+  if (line) {
+    var low = Math.min.apply(Math, history), high = Math.max.apply(Math, history), spread = Math.max(high - low, 1);
+    var points = history.map(function(v, i) {
+      var x = history.length < 2 ? 320 : i * 320 / (history.length - 1);
+      var y = 20 - ((v - low) / spread) * 15;
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ');
+    if (history.length === 1) {
+      var flatY = (20 - ((history[0] - low) / spread) * 15).toFixed(1);
+      points = '0,' + flatY + ' 320,' + flatY;
+    }
+    line.setAttribute('points', points);
+  }
 }
-function updateSparkline(id, key, value) {
-  var el = $id(id); if (!el) return;
-  var list = SERVER_HISTORY[key] || (SERVER_HISTORY[key] = []);
-  var n = Number(value); if (!Number.isFinite(n)) n = 0;
-  list.push(Math.max(0, Math.min(100, n)));
-  if (list.length > 28) list.shift();
-  var width = 320, height = 24, pad = 2;
-  var points = list.map(function(v, i) {
-    var x = list.length < 2 ? width : (i / (list.length - 1)) * width;
-    var y = height - pad - (v / 100) * (height - pad * 2);
-    return x.toFixed(1) + ',' + y.toFixed(1);
-  }).join(' ');
-  el.setAttribute('points', points || '0,12 320,12');
+
+function dashGb(value) { return (Number(value) || 0).toFixed(2); }
+
+function dashMaskIp(value, family) {
+  if (!value) return '—';
+  return family === 'ipv4' ? '•••.•••.•••.•••' : '••••:••••:••••:••••';
 }
-function setGauge(id, percent) {
-  var el = $id(id); if (el) el.style.setProperty('--percent', Math.max(0, Math.min(100, Number(percent) || 0)).toFixed(1) + '%');
+
+function renderDashIps() {
+  var v4 = $id('ds-ipv4'), v6 = $id('ds-ipv6'), toggle = $id('ds-ip-toggle');
+  if (v4) v4.textContent = DASH_IPS_VISIBLE ? (DASH_IP_VALUES.ipv4 || '—') : dashMaskIp(DASH_IP_VALUES.ipv4, 'ipv4');
+  if (v6) v6.textContent = DASH_IPS_VISIBLE ? (DASH_IP_VALUES.ipv6 || '—') : dashMaskIp(DASH_IP_VALUES.ipv6, 'ipv6');
+  if (toggle) toggle.innerHTML = '<span class="material-symbols-outlined">' + (DASH_IPS_VISIBLE ? 'visibility' : 'visibility_off') + '</span>';
 }
-function maskServerIp(value) {
-  var s = String(value || '').trim();
-  if (!s || s === '—' || s === '-') return LANG === 'fa' ? 'نامشخص' : 'Unavailable';
-  if (s.indexOf(':') >= 0) return '••••:••••:••••';
-  var parts = s.split('.');
-  return parts.length === 4 ? parts[0] + '.•••.•••.' + parts[3] : '•••.•••.•••.•••';
-}
-function renderServerIps() {
-  var v4 = $id('server-ipv4'), v6 = $id('server-ipv6'), eye = $id('server-ip-eye');
-  if (v4) v4.textContent = serverIpVisible ? (SERVER_IPS.ipv4 || (LANG === 'fa' ? 'نامشخص' : 'Unavailable')) : maskServerIp(SERVER_IPS.ipv4);
-  if (v6) v6.textContent = serverIpVisible ? (SERVER_IPS.ipv6 || (LANG === 'fa' ? 'نامشخص' : 'Unavailable')) : maskServerIp(SERVER_IPS.ipv6);
-  if (eye) eye.textContent = serverIpVisible ? 'visibility' : 'visibility_off';
-}
-function toggleServerIpVisibility() { serverIpVisible = !serverIpVisible; renderServerIps(); }
+
+function toggleDashIps() { DASH_IPS_VISIBLE = !DASH_IPS_VISIBLE; renderDashIps(); }
 
 async function refreshLiveStats() {
   try {
     var st = await api('/api/server/stats');
-    var cpu = Number(st.cpu_percent) || 0;
-    var ram = Number(st.ram_percent) || 0;
-    var swap = Number(st.swap_percent) || 0;
-    var disk = Number(st.disk_percent) || 0;
-    setGauge('gauge-cpu', cpu); setGauge('gauge-ram', ram); setGauge('gauge-swap', swap); setGauge('gauge-disk', disk);
-    updateSparkline('spark-cpu', 'cpu', cpu);
-    updateSparkline('spark-ram', 'ram', ram);
-    updateSparkline('spark-swap', 'swap', swap);
-    updateSparkline('spark-disk', 'disk', disk);
-
-    var cpuEl = $id('live-cpu'); if (cpuEl) cpuEl.textContent = cpu.toFixed(1) + '%';
-    var cpuMeta = $id('live-cpu-meta'); if (cpuMeta) cpuMeta.textContent = (st.cpu_cores || '—') + ' ' + (LANG === 'fa' ? 'هسته' : 'Cores');
-    var ramEl = $id('live-ram'); if (ramEl) ramEl.textContent = (st.ram_used_gb ?? '—') + ' / ' + (st.ram_total_gb ?? '—') + ' GB';
-    var ramPct = $id('live-ram-percent'); if (ramPct) ramPct.textContent = ram.toFixed(1) + '%';
-    var swapEl = $id('live-swap'); if (swapEl) swapEl.textContent = (st.swap_used_gb ?? '—') + ' / ' + (st.swap_total_gb ?? '—') + ' GB';
-    var swapPct = $id('live-swap-percent'); if (swapPct) swapPct.textContent = swap.toFixed(1) + '%';
-    var diskEl = $id('live-disk'); if (diskEl) diskEl.textContent = (st.disk_used_gb ?? '—') + ' / ' + (st.disk_total_gb ?? '—') + ' GB · ' + (Number(st.disk_io_kbs || 0)).toFixed(2) + ' KB/s';
-    var diskPct = $id('live-disk-percent'); if (diskPct) diskPct.textContent = disk.toFixed(1) + '%';
-    var uptEl = $id('live-uptime'); if (uptEl) uptEl.textContent = fmtUptime(st.uptime_seconds);
+    dashSetResource('cpu', st.cpu_percent, (st.cpu_count || '?') + ' Cores');
+    dashSetResource('ram', st.ram_percent, dashGb(st.ram_used_gb) + ' GB / ' + dashGb(st.ram_total_gb) + ' GB');
+    dashSetResource('swap', st.swap_percent, dashGb(st.swap_used_gb) + ' GB / ' + dashGb(st.swap_total_gb) + ' GB');
+    dashSetResource('disk', st.disk_percent, dashGb(st.disk_used_gb) + ' GB / ' + dashGb(st.disk_total_gb) + ' GB');
     var duptEl = $id('dash-uptime'); if (duptEl) duptEl.textContent = fmtUptime(st.uptime_seconds);
     var connEl = $id('dash-conn'); if (connEl) connEl.textContent = String(st.active_connections || 0);
     var trEl = $id('dash-traffic'); if (trEl) trEl.textContent = (typeof st.total_traffic_used_gb !== 'undefined' ? st.total_traffic_used_gb + ' GB' : fmtBytes((st.total_traffic_used_tb || 0) * 1099511627776));
     var usrEl = $id('dash-users'); if (usrEl) usrEl.textContent = (st.active_users || 0) + ' / ' + (st.total_users || 0);
-    var tcpEl = $id('live-tcp'), udpEl = $id('live-udp');
-    var tcp = st.tcp_connections !== null && typeof st.tcp_connections !== 'undefined' && Number.isFinite(Number(st.tcp_connections)) ? Math.max(0, Number(st.tcp_connections)) : null;
-    var udp = st.udp_connections !== null && typeof st.udp_connections !== 'undefined' && Number.isFinite(Number(st.udp_connections)) ? Math.max(0, Number(st.udp_connections)) : null;
-    if (tcpEl) tcpEl.textContent = tcp === null ? '—' : String(tcp);
-    if (udpEl) udpEl.textContent = udp === null ? '—' : String(udp);
-    var total = (tcp || 0) + (udp || 0) || 1;
-    var tcpBar = $id('live-tcp-bar'), udpBar = $id('live-udp-bar');
-    if (tcpBar) tcpBar.style.width = ((tcp || 0) / total * 100) + '%';
-    if (udpBar) udpBar.style.width = ((udp || 0) / total * 100) + '%';
-    SERVER_IPS.ipv4 = st.ipv4 || '';
-    SERVER_IPS.ipv6 = st.ipv6 || '';
-    renderServerIps();
-    var statusEl = $id('dash-server-status'); if (statusEl) {
-      statusEl.textContent = LANG === 'fa' ? 'زنده' : 'LIVE';
-    }
-  } catch(e) { /* keep the last successful live values */ }
+    var tcp = Number(st.tcp_connections != null ? st.tcp_connections : st.active_connections) || 0;
+    var udp = Number(st.udp_connections) || 0;
+    var tcpEl = $id('ds-tcp'); if (tcpEl) tcpEl.textContent = String(tcp);
+    var udpEl = $id('ds-udp'); if (udpEl) udpEl.textContent = String(udp);
+    var totalProto = tcp + udp, tcpPct = totalProto ? tcp * 100 / totalProto : 50;
+    var tcpBar = $id('ds-tcp-bar'); if (tcpBar) tcpBar.style.width = tcpPct + '%';
+    var udpBar = $id('ds-udp-bar'); if (udpBar) udpBar.style.width = (100 - tcpPct) + '%';
+    DASH_IP_VALUES.ipv4 = String(st.public_ipv4 || st.public_ip || '');
+    DASH_IP_VALUES.ipv6 = String(st.public_ipv6 || '');
+    renderDashIps();
+  } catch(e) { /* keep old values */ }
 }
 
 function statCard(icon, val, label) {
@@ -3417,11 +3197,11 @@ if (window.matchMedia) {
 // ─── User CRUD (SIMPLIFIED) ───
 async function openCreateUser() {
   cuInboundState = { picks: {}, countries: {} };
-  // Load only the dependencies needed by this modal when the user opens it.
-  // Inbounds are no longer preloaded during the initial dashboard render.
-  var pendingLoads = [loadInbounds()];
-  if (typeof loadWorker === 'function') pendingLoads.push(loadWorker());
-  try { await Promise.all(pendingLoads); } catch(e) {}
+  await ensureInbounds();
+  // Worker locations are only needed when a Worker inbound is selected.
+  if (ALL_IB.some(function(ib) { return (ib.protocol || '').toLowerCase() === 'worker'; })) {
+    try { await ensureWorkerPool(); } catch(e) {}
+  }
   populateInboundSelects();
   $id('cu-name').value = '';
   $id('cu-vol').value = '';
@@ -3475,7 +3255,7 @@ async function submitCreateUser(e) {
     }});
     toast(r.username + ' ' + t('userCreated'), 'ok');
     closeModal('mod-user');
-    loadAll();
+    loadTabData('users');
   } catch(e) { toast(e.message || t('toast.err'), 'err'); }
   btn.disabled = false; btn.textContent = t('submitUser');
 }
@@ -3511,7 +3291,9 @@ function renderEditInboundPicker(u) {
       '</div>' +
       '<div class="ib-pick-check"><span class="material-symbols-outlined">check</span></div>' +
     '</div>';
-    if (selected && type === 'worker') {
+    if (selected && ib.proxy_managed) {
+      html += '<div style="flex-basis:100%;padding:8px 12px;color:var(--txt2);font-size:11px">' + t('proxy.inboundHint') + '</div>';
+    } else if (selected && type === 'worker') {
       var sel = EU_COUNTRIES[id] || {};
       var chipHtml = '';
       (window.cuWorkerProxies ? cuWorkerProxies() : []).forEach(function(p) {
@@ -3550,7 +3332,8 @@ function selectedEditInboundIds() {
   return Object.keys(EU_INBOUND_PICKS).filter(function(k) { return EU_INBOUND_PICKS[k]; });
 }
 
-function editUser(uid) {
+async function editUser(uid) {
+  await ensureInbounds();
   var u = ALL_USERS.find(function(x) { return x.user_id === uid; });
   if (!u) return;
   EU_COUNTRIES = {};
@@ -3600,7 +3383,7 @@ async function submitEditUser(e) {
     }});
     toast(t('toast.userUpdated'), 'ok');
     closeModal('mod-edit-user');
-    loadAll();
+    loadTabData('users');
   } catch(e) { toast(e.message || t('toast.err'), 'err'); }
 }
 
@@ -3610,7 +3393,7 @@ async function toggleUser(uid) {
 
 async function deleteUser(uid) {
   if (!confirm(t('confirmDeleteUser'))) return;
-  try { await api('/api/users/' + uid, {method: 'DELETE'}); toast(t('toast.userDeleted'), 'ok'); loadAll(); } catch(e) { toast(e.message, 'err'); }
+  try { await api('/api/users/' + uid, {method: 'DELETE'}); toast(t('toast.userDeleted'), 'ok'); loadTabData('users'); } catch(e) { toast(e.message, 'err'); }
 }
 
 // ─── Config & Sub ───
@@ -3702,10 +3485,10 @@ function renderInbounds() {
       '</button>' +
       '<div class="spd-acc-body" id="acc-ia-' + ib.inbound_id + '">' +
         _ibDetail(ib) +
-        '<div class="spd-acc-btns">' +
+        (ib.proxy_managed ? '' : '<div class="spd-acc-btns">' +
           '<button class="btn btn-sm btn-g" onclick="editInbound(\'' + ib.inbound_id + '\')">' + t('edit') + '</button>' +
           ((ib.system || ib.inbound_id === 'Node') ? '' : '<button class="btn btn-sm btn-g" onclick="deleteInbound(\'' + ib.inbound_id + '\')">' + t('delete') + '</button>') +
-        '</div>' +
+        '</div>') +
       '</div>' +
     '</div>';
   }
@@ -3717,7 +3500,7 @@ function populateInboundSelects() {
   // Default-select every inbound so per-inbound options show immediately.
   if (!Object.keys(cuInboundState.picks).length) {
     cuInboundState.picks = {};
-    ALL_IB.forEach(function(ib){ cuInboundState.picks[ib.inbound_id] = true; });
+    ALL_IB.forEach(function(ib){ cuInboundState.picks[ib.inbound_id] = !ib.proxy_managed; });
     cuInboundState.countries = {};
   }
   cuRenderInboundOpts();
@@ -4379,6 +4162,35 @@ async function changePassword(e) {
 
 // ─── Panel self-update (Settings tab) ───
 var UPD_POLL = null;
+
+function renderUpdVersion(s) {
+  var el = $id('upd-ver');
+  if (!el || !s) return;
+  var rows = [
+    [LANG === 'en' ? 'Installed' : 'نسخه نصب‌شده', s.current || '—'],
+    [LANG === 'en' ? 'Latest' : 'آخرین نسخه', s.latest || '—'],
+    [LANG === 'en' ? 'Repository' : 'مخزن', (s.repo || '') + ' @ ' + (s.branch || '')],
+  ];
+  el.innerHTML = rows.map(function(r) {
+    return '<div style="display:flex;gap:8px"><span style="opacity:.7">' + esc(r[0]) + ':</span>' +
+      '<b dir="ltr" style="margin-right:auto">' + esc(r[1]) + '</b></div>';
+  }).join('') + (s.running ? '<div style="color:var(--green)">' + esc(LANG === 'en' ? 'Update in progress…' : 'بروزرسانی در حال اجراست…') + '</div>' : '');
+}
+
+// Show the installed/remote versions without starting an update. This used to
+// be impossible: the block only rendered while an update was running, so a
+// "Not found" from an older panel looked like an empty, broken section.
+async function checkPanelUpdate() {
+  var btn = $id('upd-check-btn');
+  if (btn) btn.disabled = true;
+  try {
+    renderUpdVersion(await api('/api/settings/update/status'));
+  } catch(e) {
+    toast(e.message || t('toast.err'), 'err');
+  }
+  if (btn) btn.disabled = false;
+}
+
 async function runPanelUpdate() {
   var btn = $id('upd-btn');
   var logEl = $id('upd-log');
@@ -4394,6 +4206,7 @@ async function runPanelUpdate() {
     UPD_POLL = setInterval(async function() {
       try {
         var s = await api('/api/settings/update/status');
+        renderUpdVersion(s);
         if (s.log && s.log.length) {
           logEl.textContent = s.log.join('\n');
           logEl.scrollTop = logEl.scrollHeight;
@@ -4404,11 +4217,18 @@ async function runPanelUpdate() {
           if (s.success) toast(t('updateDone'), 'ok');
           else toast(t('updateFailed'), 'err');
         }
-      } catch(e) {}
+      } catch(e) {
+        clearInterval(UPD_POLL); UPD_POLL = null;
+        btn.disabled = false;
+        logEl.style.display = 'block';
+        logEl.textContent = e.message || t('toast.err');
+        toast(e.message || t('toast.err'), 'err');
+      }
     }, 1200);
   } catch(e) {
     btn.disabled = false;
-    logEl.style.display = 'none';
+    logEl.style.display = 'block';
+    logEl.textContent = e.message || t('toast.err');
     toast(e.message || t('toast.err'), 'err');
   }
 }
@@ -4574,28 +4394,31 @@ function togglePanelAudio() {
   if (!p) return;
   p.volume = 0.3;
   var sw = $id('audio-autoplay');
+  if (!sw) return;
   var saved = localStorage.getItem('spider_audio');
   var on = saved === null ? true : saved !== '0';
+  var loading = false;
   if (saved === null) { try { localStorage.setItem('spider_audio', '1'); } catch(e) {} }
   sw.classList.toggle('on', on);
   p.addEventListener('ended', function(){ if (sw.classList.contains('on')) musixPlayRandom(); });
-  api('/api/musix').then(function(d) {
-    MUSIX_TRACKS = (d.tracks || []).map(function(x){ return x.url; });
-    if (!MUSIX_TRACKS.length) { var lbl = $id('audio-file'); if (lbl) lbl.textContent = 'musix: empty'; return; }
-    var started = false;
-    function start(){
-      if (started) return; started = true;
-      if (on) musixPlayRandom();
-      document.removeEventListener('click', start);
-      document.removeEventListener('touchstart', start);
-      document.removeEventListener('keydown', start);
-    }
-    if (on) {
-      document.addEventListener('click', start);
-      document.addEventListener('touchstart', start);
-      document.addEventListener('keydown', start);
-    }
-  }).catch(function(){});
+  function startAfterGesture() {
+    if (!sw.classList.contains('on') || loading) return;
+    loading = true;
+    document.removeEventListener('click', startAfterGesture);
+    document.removeEventListener('touchstart', startAfterGesture);
+    document.removeEventListener('keydown', startAfterGesture);
+    api('/api/musix').then(function(d) {
+      MUSIX_TRACKS = (d.tracks || []).map(function(x){ return x.url; });
+      if (MUSIX_TRACKS.length && sw.classList.contains('on')) musixPlayRandom();
+      else if (!MUSIX_TRACKS.length) {
+        var lbl = $id('audio-file');
+        if (lbl) lbl.textContent = 'musix: empty';
+      }
+    }).catch(function(){ loading = false; });
+  }
+  document.addEventListener('click', startAfterGesture);
+  document.addEventListener('touchstart', startAfterGesture);
+  document.addEventListener('keydown', startAfterGesture);
 })();
 
 // The old Leaflet map + proxy-IP selector was removed — per-inbound options
@@ -5706,7 +5529,7 @@ async function wkDelLocation(code) {
 // Flow: fill the form → «تست اتصال» → a ping/working report appears → only then
 // does the Save button show up. Each saved proxy renders as an accordion whose
 // body holds ping / delete / active / users (a scrollable checklist).
-var PX_STATE = {list: [], openId: null, users: {}, tested: null};
+var PX_STATE = {list: [], tested: null};
 
 function pxToggleAdd(btn) {
   var box = $id('px-add');
@@ -5804,6 +5627,7 @@ async function pxSaveNew() {
     var add = $id('px-add');
     if (add) add.classList.add('hidden');
     await loadProxies();
+    await loadInbounds();
   } catch (e) {
     toast(e.message || t('toast.err'), 'err');
   }
@@ -5834,22 +5658,19 @@ function pxRow(label, value) {
 }
 
 function pxCardHtml(p) {
-  var open = PX_STATE.openId === p.id;
   var statusTxt = p.active ? (p.working ? t('proxy.ok') : t('proxy.untested')) : t('proxy.off');
   var statusCls = p.active ? (p.working ? 'badge-g' : 'badge-b') : 'badge-r';
-  return '<div class="px-card' + (open ? ' open' : '') + (p.active ? '' : ' off') + '" id="px-card-' + escAttr(p.id) + '">' +
-    '<div class="px-head" onclick="pxToggleCard(\'' + escAttr(p.id) + '\')">' +
+  return '<div class="px-card open' + (p.active ? '' : ' off') + '" id="px-card-' + escAttr(p.id) + '">' +
+    '<div class="px-head">' +
       '<span class="px-flag">' + esc(p.country_flag || '🌐') + '</span>' +
       '<div class="px-meta"><b>' + esc(p.country || p.host) + '</b>' +
         '<span>' + esc(p.protocol) + ' · ' + esc(p.host) + ':' + esc(String(p.port)) + (p.username ? ' · ' + esc(p.username) : '') + '</span></div>' +
       '<span class="badge ' + statusCls + '">' + esc(statusTxt) + '</span>' +
-      '<span class="material-symbols-outlined" style="color:var(--txt2);transition:transform .2s;' + (open ? 'transform:rotate(180deg)' : '') + '">expand_more</span>' +
     '</div>' +
     '<div class="px-body">' +
       '<div class="px-rows">' +
         pxRow(t('proxy.ping'), p.ping_ms != null ? p.ping_ms + ' ms' : '—') +
         pxRow(t('proxy.egress'), p.egress_ip || '—') +
-        pxRow(t('proxy.users'), String(p.users_count || 0)) +
         pxRow(t('proxy.lastTest'), p.last_test_at ? String(p.last_test_at).replace('T', ' ').slice(0, 19) : '—') +
         (p.error ? pxRow(t('proxy.error'), p.error) : '') +
       '</div>' +
@@ -5858,10 +5679,6 @@ function pxCardHtml(p) {
         '<button class="btn btn-sm ' + (p.active ? 'btn-r' : 'btn-p') + '" type="button" onclick="event.stopPropagation();pxToggleActive(\'' + escAttr(p.id) + '\',' + (p.active ? 'false' : 'true') + ')">' +
           esc(p.active ? t('proxy.deactivate') : t('proxy.activate')) + '</button>' +
         '<button class="btn btn-sm btn-r" type="button" onclick="event.stopPropagation();pxDelete(\'' + escAttr(p.id) + '\')">🗑 ' + esc(t('proxy.delete')) + '</button>' +
-      '</div>' +
-      '<div class="px-users">' +
-        '<button class="btn btn-g btn-sm" type="button" onclick="event.stopPropagation();pxToggleUsers(\'' + escAttr(p.id) + '\')">👥 ' + esc(t('proxy.usersBtn')) + ' (' + (p.users_count || 0) + ')</button>' +
-        '<div id="px-users-' + escAttr(p.id) + '"></div>' +
       '</div>' +
     '</div>' +
   '</div>';
@@ -5877,108 +5694,12 @@ function renderProxies() {
   list.innerHTML = PX_STATE.list.map(pxCardHtml).join('');
 }
 
-function pxToggleCard(id) {
-  var el = $id('px-card-' + id);
-  if (!el) return;
-  var wasOpen = el.classList.contains('open');
-  document.querySelectorAll('.px-card.open').forEach(function(c) { if (c !== el) c.classList.remove('open'); });
-  el.classList.toggle('open', !wasOpen);
-  PX_STATE.openId = wasOpen ? null : id;
-}
-
-function pxUserRow(pid, u) {
-  return '<label class="px-urow" onclick="event.stopPropagation()">' +
-    '<input type="checkbox" ' + (u.assigned ? 'checked' : '') +
-      ' onchange="pxToggleUser(\'' + escAttr(pid) + '\',\'' + escAttr(String(u.user_id)) + '\',this)">' +
-    '<span class="uname">' + esc(u.username) + '</span>' +
-    '<span class="badge ' + (u.status === 'active' ? 'badge-g' : 'badge-b') + '" style="font-size:9px;padding:2px 6px">' + esc(u.status) + '</span>' +
-    '<span style="font-size:10px;color:var(--txt2);direction:ltr;white-space:nowrap">' + esc(u.traffic_used_fmt || '') + '</span>' +
-  '</label>';
-}
-
-function pxUsersHtml(pid, users, total, assigned) {
-  return '<div class="px-hint" style="margin-top:8px">' + esc(t('proxy.usersHint')) + '</div>' +
-    '<input class="px-usearch" type="search" placeholder="' + esc(t('proxy.searchUsers')) + '" ' +
-      'oninput="pxFilterUsers(\'' + escAttr(pid) + '\')" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()">' +
-    '<div class="px-users-list" id="px-ulist-' + escAttr(pid) + '" onclick="event.stopPropagation()" onscroll="event.stopPropagation()">' +
-      '<div class="px-hint" style="padding:2px 8px 6px;position:sticky;top:0;background:var(--bg)">' +
-        esc(t('proxy.selected')) + ': ' + assigned + ' / ' + total + '</div>' +
-      users.map(function(u) { return pxUserRow(pid, u); }).join('') +
-    '</div>';
-}
-
-async function pxToggleUsers(pid) {
-  var box = $id('px-users-' + pid);
-  if (!box) return;
-  if (box.dataset.loaded === '1') { box.innerHTML = ''; box.dataset.loaded = ''; return; }
-  box.innerHTML = '<div class="px-empty" style="margin-top:8px">' + esc(t('proxy.loading')) + '</div>';
-  try {
-    var d = await api('/api/proxies/' + encodeURIComponent(pid) + '/users');
-    PX_STATE.users[pid] = d.users || [];
-    box.dataset.loaded = '1';
-    box.innerHTML = pxUsersHtml(pid, d.users || [], d.total || 0, d.assigned || 0);
-  } catch (e) {
-    box.innerHTML = '<div class="px-empty" style="margin-top:8px">' + esc(e.message || t('toast.err')) + '</div>';
-  }
-}
-
-function pxFilterUsers(pid) {
-  var box = $id('px-ulist-' + pid);
-  var input = box && box.previousElementSibling;
-  if (!box || !input) return;
-  var q = (input.value || '').trim().toLowerCase();
-  var n = 0;
-  box.querySelectorAll('.px-urow').forEach(function(row) {
-    var hit = !q || row.textContent.toLowerCase().indexOf(q) >= 0;
-    row.style.display = hit ? '' : 'none';
-    if (hit) n++;
-  });
-  var counter = box.querySelector('.px-hint');
-  if (counter) {
-    counter.textContent = t('proxy.visible') + ': ' + n;
-  }
-}
-
-async function pxToggleUser(pid, uid, input) {
-  var checked = !!input.checked;
-  input.disabled = true;
-  try {
-    await api('/api/proxies/' + encodeURIComponent(pid) + '/users', {
-      method: 'POST',
-      body: checked ? {add: [uid]} : {remove: [uid]}
-    });
-    toast(checked ? t('proxy.userAdded') : t('proxy.userRemoved'), 'ok');
-    await loadProxies();
-    // Keep the open card and its user list in sync without collapsing it.
-    var card = $id('px-card-' + pid);
-    if (card) card.classList.add('open');
-    PX_STATE.openId = pid;
-    await pxRefreshUsers(pid);
-  } catch (e) {
-    input.checked = !checked;
-    toast(e.message || t('toast.err'), 'err');
-  }
-  input.disabled = false;
-}
-
-async function pxRefreshUsers(pid) {
-  try {
-    var d = await api('/api/proxies/' + encodeURIComponent(pid) + '/users');
-    PX_STATE.users[pid] = d.users || [];
-    var box = $id('px-users-' + pid);
-    if (box && box.dataset.loaded === '1') {
-      box.innerHTML = pxUsersHtml(pid, d.users || [], d.total || 0, d.assigned || 0);
-    }
-  } catch (e) {}
-}
-
 async function pxPing(pid) {
   try {
     var r = await api('/api/proxies/' + encodeURIComponent(pid) + '/ping', {method: 'POST'});
     toast(t('proxy.ping') + ': ' + (r.ping_ms != null ? r.ping_ms + ' ms' : '—'), r.working ? 'ok' : 'err');
   } catch (e) { toast(e.message || t('toast.err'), 'err'); }
   await loadProxies();
-  if (PX_STATE.openId === pid) { var c = $id('px-card-' + pid); if (c) c.classList.add('open'); }
 }
 
 async function pxToggleActive(pid, on) {
@@ -5987,16 +5708,15 @@ async function pxToggleActive(pid, on) {
     toast(on ? t('proxy.activated') : t('proxy.deactivated'), 'ok');
   } catch (e) { toast(e.message || t('toast.err'), 'err'); }
   await loadProxies();
-  if (PX_STATE.openId === pid) { var c = $id('px-card-' + pid); if (c) c.classList.add('open'); }
 }
 
 async function pxDelete(pid) {
   if (!confirm(t('proxy.confirmDelete'))) return;
   try {
     await api('/api/proxies/' + encodeURIComponent(pid), {method: 'DELETE'});
-    if (PX_STATE.openId === pid) PX_STATE.openId = null;
     toast(t('proxy.deleted'), 'ok');
     await loadProxies();
+    await loadInbounds();
   } catch (e) { toast(e.message || t('toast.err'), 'err'); }
 }
 
@@ -6098,7 +5818,9 @@ function cuRenderInboundOpts() {
     '</div>';
     if (selected) {
       html += '<div class="ib-opts" data-for="' + esc(id) + '" style="flex-basis:100%">';
-      if (type === 'worker') {
+      if (ib.proxy_managed) {
+        html += '<div class="px-hint" style="margin:0">' + t('proxy.inboundHint') + '</div>';
+      } else if (type === 'worker') {
         var sel = cuInboundState.countries[id] || {};
         var chipHtml = '';
         cuWorkerProxies().forEach(function(p) {
@@ -6462,12 +6184,6 @@ async function generateApiKey() {
     }
   } catch(e) { toast(e.message || 'خطا', 'err'); }
 }
-
-// Add server info to settings on load
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(loadServerInfo, 500);
-  setTimeout(loadBot, 600);
-});
 
 // Start neon bars when tab opens
 setTimeout(updateNeonBars, 500);
